@@ -17,18 +17,25 @@
             android:text="안녕하세염"
             android:layout_weight="0.5"/>
         <LinearLayout
+            android:layout_marginBottom="7dp"
+            android:layout_marginRight="3dp"
+            android:layout_marginLeft="7dp"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:text="즐겨찾는 메뉴"
+                android:background="#77bbccee"
+                android:layout_marginRight="25dp"
                 android:layout_height="wrap_content" />
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
                 android:text="지난 주문"
-                android:background="#bbcc11"
+                android:background="#44bbccee"
                 android:layout_weight="3"/>
         </LinearLayout>
         <LinearLayout
@@ -44,14 +51,16 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="25dp">
                 <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="170dp"
+                    android:src="@drawable/ice5"
                     android:id="@+id/favoriteImg"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:layout_gravity="center"
+                    android:text="아무말"
                     android:id="@+id/favoriteText"/>
             </LinearLayout>
             <LinearLayout
@@ -61,7 +70,7 @@
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:weightSum="3">
                     <LinearLayout
@@ -71,10 +80,11 @@
                         android:orientation="vertical"
                         android:layout_marginRight="10dp">
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="170dp"
+                            android:layout_height="170dp"
                             android:id="@+id/lastOrderImg1"/>
                         <TextView
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
@@ -88,10 +98,11 @@
                         android:orientation="vertical"
                         android:layout_marginRight="10dp">
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="170dp"
+                            android:layout_height="170dp"
                             android:id="@+id/lastOrderImg2"/>
                         <TextView
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textSize="16sp"
@@ -105,10 +116,11 @@
                         android:orientation="vertical"
                         android:layout_marginRight="10dp">
                         <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_width="170dp"
+                            android:layout_height="170dp"
                             android:id="@+id/lastOrderImg3"/>
                         <TextView
+                            android:gravity="center"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingLeft="15dp"
@@ -123,9 +135,10 @@
             android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="0dp">
-            <TextView
+            <Button
                 android:text="전체"
-                android:layout_width="wrap_content"
+                android:background="#77bbccee"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
