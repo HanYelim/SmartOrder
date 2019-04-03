@@ -15,4 +15,7 @@ interface MenuService {
     @GET("recent_menu.php")
     fun getRecentMenu(@Query("mCustomer") name: String): Observable<ArrayList<Menu>>
 
+    @GET("favorite_menu.php")
+    fun getFavoriteMenu(@Query("mCustomer") name: String): Observable<Menu>
+
 }

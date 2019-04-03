@@ -22,6 +22,7 @@ import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 public class SelectActivity extends AppCompatActivity {
@@ -29,10 +30,13 @@ public class SelectActivity extends AppCompatActivity {
     private ImageView[] lastOrderImg = new ImageView[3];
     private TextView[] lastOrderText = new TextView[3];
     private ListView listView;
+    private ImageView favoriteImg;
+    private TextView favoriteText;
     List<OrderItem> oData = new ArrayList<>();
     List<LastOrder> lastOrders = new ArrayList<>();
 
     private Disposable disposable;
+    private Disposable disposable2;
 
     Button btnDelete;
     ListAdapter oAdapter;
@@ -45,6 +49,8 @@ public class SelectActivity extends AppCompatActivity {
         btnDelete = findViewById(R.id.btndelete);
         listView = (findViewById(R.id.listView));
 
+        favoriteImg = findViewById(R.id.favoriteImg);
+        favoriteText = findViewById(R.id.favoriteText);
         lastOrderImg[0] = findViewById(R.id.lastOrderImg1);
         lastOrderImg[1] = findViewById(R.id.lastOrderImg2);
         lastOrderImg[2] = findViewById(R.id.lastOrderImg3);
@@ -52,6 +58,23 @@ public class SelectActivity extends AppCompatActivity {
         lastOrderText[1] = findViewById(R.id.lastOrderText2);
         lastOrderText[2] = findViewById(R.id.lastOrderText3);
 
+        disposable2 = ApiService.getMENU_SERVICE().getFavoriteMenu("123qwe")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Consumer<Menu>() {
+                    @Override
+                    public void accept(Menu menu) throws Exception {
+                        String str = "";
+                        String resName = "";
+                        str += menu.getType();
+                        str += menu.getIndex();
+                        resName = "@drawable/" + str;
+                        int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
+                        favoriteImg.setImageResource(resID);
+                        favoriteText.setText(menu.getName());
+                        Log.d(" favorite menu : " , menu.getName());
+                    }
+                });
         disposable = ApiService.getMENU_SERVICE().getRecentMenu("123qwe")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -60,7 +83,7 @@ public class SelectActivity extends AppCompatActivity {
                     public void accept(ArrayList<Menu> menus) {
                         String str = "";
                         String resName;
-                        for (Menu menu: menus) {
+                        for (Menu menu : menus) {
                             str = "";
                             str += menu.getType();
                             str += menu.getIndex();
