@@ -37,8 +37,7 @@ public class SelectActivity extends AppCompatActivity {
     List<LastOrder> lastOrders = new ArrayList<>();
     OrderItem item = null;      // 즐겨찾는 메뉴 객체
 
-    private Disposable disposable;
-    private Disposable disposable2;
+    private Disposable disposable_favorite, disposable_allmenu, disposable_recent;
 
     Button btnDelete;
     ListAdapter oAdapter;
@@ -63,7 +62,7 @@ public class SelectActivity extends AppCompatActivity {
         lastOrderText[1] = findViewById(R.id.lastOrderText2);
         lastOrderText[2] = findViewById(R.id.lastOrderText3);
 
-        disposable2 = ApiService.getMENU_SERVICE().getFavoriteMenu("123qwe")
+        disposable_favorite = ApiService.getMENU_SERVICE().getFavoriteMenu("123qwe")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Menu>() {
@@ -81,7 +80,7 @@ public class SelectActivity extends AppCompatActivity {
                         Log.d(" favorite menu : " , menu.getName());
                     }
                 });
-        disposable = ApiService.getMENU_SERVICE().getRecentMenu("123qwe")
+        disposable_recent = ApiService.getMENU_SERVICE().getRecentMenu("123qwe")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new io.reactivex.functions.Consumer<ArrayList<Menu>>() {
@@ -106,7 +105,48 @@ public class SelectActivity extends AppCompatActivity {
                     }
                 });
 
-        favoriteImg.setOnClickListener(new MyListener());
+        disposable_allmenu = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴 
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new io.reactivex.functions.Consumer<ArrayList<Menu>>() {
+                    @Override
+                    public void accept(ArrayList<Menu> menus) {
+                        String str = "";
+                        String resName;
+                        int resID;
+                        for (Menu menu : menus) {
+                            str = "";
+                            if(menu.getType() == "BOTH"){
+                                str += "ice";
+                                str += menu.getIndex();
+                                resName = "@drawable/" + str;
+                                resID = getResources().getIdentifier(resName, "drawable", getPackageName());
+                                // 사진 등록
+                                str = "";
+                                str += "hot";
+                                str += menu.getIndex();
+                                resName = "@drawable/" + str;
+                                resID = getResources().getIdentifier(resName, "drawable", getPackageName());
+                                // 사진 등록
+                            }
+                            else{
+                                str += "ice";
+                                str += menu.getIndex();
+                                resName = "@drawable/" + str;
+                                resID = getResources().getIdentifier(resName, "drawable", getPackageName());
+                                //사진 등록
+                            }
+                        }
+                    }
+                }, new io.reactivex.functions.Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) {
+                        throwable.getMessage();
+                    }
+                });
+
+
+        //lastOrderImg[0].setOnClickListener(new MyListener());
 
         for(int i=0;i<index;i++){
             lastOrderImg[i].setOnClickListener(new MyListener());

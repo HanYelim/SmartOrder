@@ -7,7 +7,7 @@ import io.reactivex.Observable
 
 interface MenuService {
     @GET("menu_list.php")
-    fun getMenuList(@Query("driver_id") driverId: Int): Observable<ArrayList<Menu>>
+    fun getMenuList(): Observable<ArrayList<Menu>>
 
     @GET("get_menu_info.php")
     fun getMenuInfo(@Query("name") name: String): Observable<ArrayList<Menu>>
