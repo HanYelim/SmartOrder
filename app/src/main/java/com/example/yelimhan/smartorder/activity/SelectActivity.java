@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yelimhan.smartorder.ListAdapter;
@@ -25,6 +26,7 @@ import io.reactivex.schedulers.Schedulers;
 public class SelectActivity extends AppCompatActivity {
 
     private ImageView[] lastOrderImg = new ImageView[3];
+    private TextView[] lastOrderText = new TextView[3];
     private ListView listView;
     List<OrderItem> oData = new ArrayList<>();
 
@@ -44,6 +46,9 @@ public class SelectActivity extends AppCompatActivity {
         lastOrderImg[0] = findViewById(R.id.lastOrderImg1);
         lastOrderImg[1] = findViewById(R.id.lastOrderImg2);
         lastOrderImg[2] = findViewById(R.id.lastOrderImg3);
+        lastOrderText[0] = findViewById(R.id.lastOrderText1);
+        lastOrderText[1] = findViewById(R.id.lastOrderText2);
+        lastOrderText[2] = findViewById(R.id.lastOrderText3);
 
         disposable = ApiService.getMENU_SERVICE().getRecentMenu("123qwe")
                 .subscribeOn(Schedulers.io())
@@ -59,6 +64,7 @@ public class SelectActivity extends AppCompatActivity {
                             str += menu.getIndex();
                             resName = "@drawable/" + str;
                             int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
+                            lastOrderText[index].setText(menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
                             lastOrderImg[index++].setImageResource(resID);
                         }
                     }
