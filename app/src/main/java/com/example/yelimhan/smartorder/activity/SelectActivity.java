@@ -191,8 +191,10 @@ public class SelectActivity extends AppCompatActivity {
                             if(same == 10000)
                                 break;
                         }
-                        if(same == 10000)
+                        if(same == 10000){
+                            oData.get(j).mPrice = String.valueOf(Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(lastOrders.get(i).mPrice));
                             oData.get(j).mCount++;
+                        }
                         else
                             oData.add(lastOrders.get(i));
                     }
@@ -202,21 +204,27 @@ public class SelectActivity extends AppCompatActivity {
             }
 
             if(v.getId() == favoriteImg.getId()){
+                OrderItem temp = new OrderItem(item.mName, item.mCount, item.mTemp, item.mSize, item.mPrice);
                 if (oData.size() == 0)
-                    oData.add(item);
+                    oData.add(temp);
                 else{
                     int same = 0;
                     int j;
                     for(j = 0; j < oData.size(); j++){
-                        same = IsSame(item, oData.get(j));
+                        same = IsSame(temp, oData.get(j));
                         if(same == 10000)
                             break;
                     }
-                    if(same == 10000)
+                    if(same == 10000){
+                        int a = Integer.parseInt(temp.mPrice);
+                        oData.get(j).mPrice = String.valueOf(Integer.parseInt(oData.get(j).mPrice) + a);
                         oData.get(j).mCount++;
+                    }
                     else
-                        oData.add(item);
+                        oData.add(temp);
                 }
+
+                temp = null;
                 oAdapter.notifyDataSetChanged();
                 listView.setAdapter(oAdapter);
             }
@@ -226,9 +234,9 @@ public class SelectActivity extends AppCompatActivity {
     }
 
     int IsSame(OrderItem new_item, OrderItem old_item){
-        if(new_item.mName == old_item.mName)
-            if(new_item.mSize == old_item.mSize)
-                if(new_item.mTemp == old_item.mTemp)
+        if(new_item.mName.equals(old_item.mName))
+            if(new_item.mSize.equals(old_item.mSize))
+                if(new_item.mTemp.equals(old_item.mTemp))
                     return 10000;
 
 
