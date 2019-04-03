@@ -30,12 +30,11 @@
                 <ImageView
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:id="@+id/lastOrderImg1"
-                    android:src="@drawable/ice_americano"/>
+                    android:id="@+id/lastOrderImg1"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="아이스 아메리카노"/>
+                    android:id="@+id/lastOrderText1"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -45,12 +44,11 @@
                 <ImageView
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:id="@+id/lastOrderImg2"
-                    android:src="@drawable/hot_americano"/>
+                    android:id="@+id/lastOrderImg2"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="따뜻한 아메리카노"/>
+                    android:id="@+id/lastOrderText2"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -60,42 +58,11 @@
                 <ImageView
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:id="@+id/lastOrderImg3"
-                    android:src="@drawable/ice_cafelatte"/>
+                    android:id="@+id/lastOrderImg3"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="아이스 카페라떼"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp">
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:id="@+id/lastOrderImg4"
-                    android:src="@drawable/hot_cappuccino"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="따뜻한 카푸치노"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginRight="10dp">
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:id="@+id/lastOrderImg5"
-                    android:src="@drawable/hot_cafelatte"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="따뜻한 카페라떼"/>
+                    android:id="@+id/lastOrderText3"/>
             </LinearLayout>
         </LinearLayout>
 
