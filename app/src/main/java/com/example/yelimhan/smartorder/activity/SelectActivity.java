@@ -1,12 +1,15 @@
-package com.example.yelimhan.smartorder;
+package com.example.yelimhan.smartorder.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.yelimhan.smartorder.ListAdapter;
+import com.example.yelimhan.smartorder.OrderItem;
+import com.example.yelimhan.smartorder.R;
 
 import java.util.ArrayList;
 import java.util.List;

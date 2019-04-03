@@ -1,7 +1,9 @@
-package com.example.yelimhan.smartorder;
+package com.example.yelimhan.smartorder.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.yelimhan.smartorder.R;
 
 public class MainActivity extends AppCompatActivity {
 
