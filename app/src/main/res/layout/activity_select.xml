@@ -12,6 +12,7 @@
         android:orientation="vertical"
         android:weightSum="9">
         <TextView
+            android:layout_margin="20dp"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:text="안녕하세염"
@@ -136,6 +137,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp">
             <Button
+                android:layout_marginBottom="10dp"
+                android:layout_gravity="bottom"
                 android:text="전체"
                 android:background="#77bbccee"
                 android:layout_width="match_parent"

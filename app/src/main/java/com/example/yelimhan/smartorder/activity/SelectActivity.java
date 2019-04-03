@@ -34,6 +34,7 @@ public class SelectActivity extends AppCompatActivity {
     private TextView favoriteText;
     List<OrderItem> oData = new ArrayList<>();
     List<LastOrder> lastOrders = new ArrayList<>();
+    OrderItem item = null;      // 즐겨찾는 메뉴 객체
 
     private Disposable disposable;
     private Disposable disposable2;
@@ -41,6 +42,7 @@ public class SelectActivity extends AppCompatActivity {
     Button btnDelete;
     ListAdapter oAdapter;
     int index = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class SelectActivity extends AppCompatActivity {
                         String resName = "";
                         str += menu.getType();
                         str += menu.getIndex();
+                        item = new OrderItem(menu.getName(), 1, menu.getType(), menu.getSize(), menu.getPrice());
                         resName = "@drawable/" + str;
                         int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
                         favoriteImg.setImageResource(resID);
@@ -100,17 +103,18 @@ public class SelectActivity extends AppCompatActivity {
                     }
                 });
 
-        //lastOrderImg[0].setOnClickListener(new MyListener());
+        favoriteImg.setOnClickListener(new MyListener());
 
         for(int i=0;i<index;i++){
             lastOrderImg[i].setOnClickListener(new MyListener());
+
         }
 
-        final ListAdapter oAdapter = new ListAdapter(SelectActivity.this, oData, listView);
+        oAdapter = new ListAdapter(SelectActivity.this, oData, listView);
         listView.setAdapter(oAdapter);
 
-        oData.add(new OrderItem("아메리카노", 1, "ICE", "Small", "2000"));
-        oData.add(new OrderItem("카페라떼", 1, "ICE", "Large", "3000"));
+        //oData.add(new OrderItem("아메리카노", 1, "ICE", "Small", "2000"));
+        //oData.add(new OrderItem("카페라떼", 1, "ICE", "Large", "3000"));
 
         // 삭제 버튼
         btnDelete.setOnClickListener(new View.OnClickListener() {
@@ -127,17 +131,27 @@ public class SelectActivity extends AppCompatActivity {
 
     }
 
-    class MyListener implements View.OnClickListener {
+    class MyListener implements ImageView.OnClickListener {
 
         @Override
         public void onClick(View v) {
 
-            Toast.makeText(SelectActivity.this, String.valueOf(v.getId()), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(SelectActivity.this, "토스트", Toast.LENGTH_SHORT).show();
+            Log.d("getid", String.valueOf(v.getId()));
+
             for(int i=0;i<index;i++){
                 if(v.getId() == lastOrderImg[i].getId()){
-                    oData.add(new OrderItem("아메리카노", 1, "ICE", "Small", "2000"));
+                    Log.d("lastordergetid", String.valueOf(lastOrderImg[i].getId()));
+                    //oData.add(new OrderItem("아메리카노", 1, "ICE", "Small", "2000"));
                 }
+
             }
+            if(v.getId() == favoriteImg.getId()){
+                Toast.makeText(SelectActivity.this,"즐찾클릭",Toast.LENGTH_SHORT).show();
+                oData.add(item);
+                oAdapter.notifyDataSetChanged();
+            }
+
 
         }
     }
