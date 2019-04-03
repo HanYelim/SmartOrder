@@ -34,7 +34,7 @@ public class SelectActivity extends AppCompatActivity {
     private ImageView favoriteImg;
     private TextView favoriteText;
     List<OrderItem> oData = new ArrayList<>();
-    List<LastOrder> lastOrders = new ArrayList<>();
+    List<OrderItem>  lastOrders = new ArrayList<>();
     OrderItem item = null;      // 즐겨찾는 메뉴 객체
 
     private Disposable disposable_favorite, disposable_allmenu, disposable_recent;
@@ -92,6 +92,7 @@ public class SelectActivity extends AppCompatActivity {
                             str = "";
                             str += menu.getType();
                             str += menu.getIndex();
+                            lastOrders.add(new OrderItem(menu.getName(), 1, menu.getType(), menu.getSize(), menu.getPrice()));
                             resName = "@drawable/" + str;
                             int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
                             lastOrderText[index].setText(menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
@@ -148,10 +149,11 @@ public class SelectActivity extends AppCompatActivity {
 
         //lastOrderImg[0].setOnClickListener(new MyListener());
 
-        for(int i=0;i<index;i++){
+        for(int i=0;i<3;i++){
             lastOrderImg[i].setOnClickListener(new MyListener());
 
         }
+        favoriteImg.setOnClickListener(new MyListener());
 
         oAdapter = new ListAdapter(SelectActivity.this, oData, listView);
         listView.setAdapter(oAdapter);
@@ -175,27 +177,61 @@ public class SelectActivity extends AppCompatActivity {
     }
 
     class MyListener implements ImageView.OnClickListener {
-
         @Override
         public void onClick(View v) {
-
-            //Toast.makeText(SelectActivity.this, "토스트", Toast.LENGTH_SHORT).show();
-            Log.d("getid", String.valueOf(v.getId()));
-
             for(int i=0;i<index;i++){
                 if(v.getId() == lastOrderImg[i].getId()){
-                    Log.d("lastordergetid", String.valueOf(lastOrderImg[i].getId()));
-                    //oData.add(new OrderItem("아메리카노", 1, "ICE", "Small", "2000"));
+                    if (oData.size() == 0)
+                        oData.add(lastOrders.get(i));
+                    else{
+                        int same = 0;
+                        int j;
+                        for(j = 0; j < oData.size(); j++){
+                            same = IsSame(lastOrders.get(i), oData.get(j));
+                            if(same == 10000)
+                                break;
+                        }
+                        if(same == 10000)
+                            oData.get(j).mCount++;
+                        else
+                            oData.add(lastOrders.get(i));
+                    }
+                    oAdapter.notifyDataSetChanged();
+                    listView.setAdapter(oAdapter);
                 }
-
             }
+
             if(v.getId() == favoriteImg.getId()){
-                Toast.makeText(SelectActivity.this,"즐찾클릭",Toast.LENGTH_SHORT).show();
-                oData.add(item);
+                if (oData.size() == 0)
+                    oData.add(item);
+                else{
+                    int same = 0;
+                    int j;
+                    for(j = 0; j < oData.size(); j++){
+                        same = IsSame(item, oData.get(j));
+                        if(same == 10000)
+                            break;
+                    }
+                    if(same == 10000)
+                        oData.get(j).mCount++;
+                    else
+                        oData.add(item);
+                }
                 oAdapter.notifyDataSetChanged();
+                listView.setAdapter(oAdapter);
             }
-
+            oAdapter.notifyDataSetChanged();
 
         }
+    }
+
+    int IsSame(OrderItem new_item, OrderItem old_item){
+        if(new_item.mName == old_item.mName)
+            if(new_item.mSize == old_item.mSize)
+                if(new_item.mTemp == old_item.mTemp)
+                    return 10000;
+
+
+         return 0;
     }
 }
