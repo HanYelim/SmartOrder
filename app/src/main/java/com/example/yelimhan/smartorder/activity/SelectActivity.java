@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.yelimhan.smartorder.ListAdapter;
 import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
+import com.example.yelimhan.smartorder.database.LastOrder;
 import com.example.yelimhan.smartorder.model.Menu;
 import com.example.yelimhan.smartorder.network.ApiService;
 
@@ -29,6 +30,7 @@ public class SelectActivity extends AppCompatActivity {
     private TextView[] lastOrderText = new TextView[3];
     private ListView listView;
     List<OrderItem> oData = new ArrayList<>();
+    List<LastOrder> lastOrders = new ArrayList<>();
 
     private Disposable disposable;
 
