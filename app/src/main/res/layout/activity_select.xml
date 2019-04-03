@@ -19,13 +19,15 @@
             android:layout_height="wrap_content"
             android:text="지난 주문"/>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="3">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
+                android:layout_weight="1"
                 android:layout_marginRight="10dp">
                 <ImageView
                     android:layout_width="120dp"
@@ -34,12 +36,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:textSize="20sp"
                     android:id="@+id/lastOrderText1"/>
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_marginRight="10dp">
                 <ImageView
                     android:layout_width="120dp"
@@ -48,12 +53,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:textSize="20sp"
                     android:id="@+id/lastOrderText2"/>
             </LinearLayout>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_marginRight="10dp">
                 <ImageView
                     android:layout_width="120dp"
@@ -62,6 +70,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingLeft="15dp"
+                    android:textSize="20sp"
                     android:id="@+id/lastOrderText3"/>
             </LinearLayout>
         </LinearLayout>
