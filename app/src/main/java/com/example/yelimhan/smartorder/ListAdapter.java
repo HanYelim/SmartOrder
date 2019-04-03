@@ -16,14 +16,18 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class ListAdapter extends ArrayAdapter<OrderItem> {
+public class ListAdapter extends ArrayAdapter<OrderItem>  implements View.OnClickListener {
 
     private Context context;
     private List mList;
     private ListView mListView;
 
     TextView tvn;
+    TextView tvc;
+    TextView tvt;
+    TextView tvs;
     TextView tvp;
+
 
     public ListAdapter(Context context,
                        List<OrderItem> list,
@@ -45,18 +49,30 @@ public class ListAdapter extends ArrayAdapter<OrderItem> {
         if(rowView == null){
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             rowView = layoutInflater.inflate(R.layout.listview_item, parentViewGroup, false);
-            tvn = (TextView)rowView.findViewById(R.id.textTitle);
-            tvp = (TextView)rowView.findViewById(R.id.textDate);
+            tvn = (TextView)rowView.findViewById(R.id.textname);
+            tvc = (TextView)rowView.findViewById(R.id.textcount);
+            tvt = (TextView)rowView.findViewById(R.id.texttemp);
+            tvs = (TextView)rowView.findViewById(R.id.textsize);
+            tvp = (TextView)rowView.findViewById(R.id.textprice);
 
         }
 
         OrderItem oi = (OrderItem) mList.get(position);
         tvn.setText(oi.mName);
+        tvc.setText(String.valueOf(oi.mCount));
+        tvt.setText(oi.mTemp);
+        tvs.setText(oi.mSize);
         tvp.setText(oi.mPrice);
 
-        Log.d("test in listadapter",oi.mName);
+
+
+
 
         return rowView;
     }
 
+    @Override
+    public void onClick(View v) {
+
+    }
 }
