@@ -1,6 +1,5 @@
 package com.example.yelimhan.smartorder.activity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 
 import com.example.yelimhan.smartorder.ListAdapter;
 import com.example.yelimhan.smartorder.OrderItem;
@@ -19,6 +19,8 @@ import com.example.yelimhan.smartorder.R;
 import com.example.yelimhan.smartorder.database.LastOrder;
 import com.example.yelimhan.smartorder.model.Menu;
 import com.example.yelimhan.smartorder.network.ApiService;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,8 +30,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-import static android.view.View.GONE;
-
 public class SelectActivity extends AppCompatActivity {
 
     private ImageView[] lastOrderImg = new ImageView[3];
@@ -37,6 +37,7 @@ public class SelectActivity extends AppCompatActivity {
     private ListView listView;
     private ImageView favoriteImg;
     private TextView favoriteText;
+    private TextView tvTotal;
     List<OrderItem> oData = new ArrayList<>();
     List<OrderItem>  lastOrders = new ArrayList<>();
     OrderItem item = null;      // 즐겨찾는 메뉴 객체
@@ -50,14 +51,12 @@ public class SelectActivity extends AppCompatActivity {
     LinearLayout layout1, layout2;
     Intent intent;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_select);
-        btnDelete = findViewById(R.id.btndelete);
         listView = (findViewById(R.id.listView));
 
         favoriteImg = findViewById(R.id.favoriteImg);
@@ -73,6 +72,8 @@ public class SelectActivity extends AppCompatActivity {
         favMenu = findViewById(R.id.favMenu);
         layout1 = findViewById(R.id.layout1);
         layout2 = findViewById(R.id.layout2);
+
+        tvTotal = findViewById(R.id.txttotal);
 
         disposable_favorite = ApiService.getMENU_SERVICE().getFavoriteMenu("123qwe")
                 .subscribeOn(Schedulers.io())
@@ -117,8 +118,28 @@ public class SelectActivity extends AppCompatActivity {
                         throwable.getMessage();
                     }
                 });
-
-        disposable_allmenu = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴 
+        lastMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout2.setVisibility(View.GONE);
+                layout1.setVisibility(View.VISIBLE);
+            }
+        });
+        allMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout1.setVisibility(View.GONE);
+                layout2.setVisibility(View.VISIBLE);
+            }
+        });
+        favMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout2.setVisibility(View.GONE);
+                layout1.setVisibility(View.VISIBLE);
+            }
+        });
+        disposable_allmenu = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new io.reactivex.functions.Consumer<ArrayList<Menu>>() {
@@ -170,43 +191,7 @@ public class SelectActivity extends AppCompatActivity {
         oAdapter = new ListAdapter(SelectActivity.this, oData, listView);
         listView.setAdapter(oAdapter);
 
-        //oData.add(new OrderItem("아메리카노", 1, "ICE", "Small", "2000"));
-        //oData.add(new OrderItem("카페라떼", 1, "ICE", "Large", "3000"));
 
-        // 삭제 버튼
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int pos = listView.getCheckedItemPosition();
-                if(pos != ListView.INVALID_POSITION){
-                    oData.remove(pos);
-                    listView.clearChoices();
-                    oAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-
-        lastMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layout2.setVisibility(GONE);
-                layout1.setVisibility(View.VISIBLE);
-            }
-        });
-        allMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layout1.setVisibility(GONE);
-                layout2.setVisibility(View.VISIBLE);
-            }
-        });
-        favMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                layout2.setVisibility(GONE);
-                layout1.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
     class MyListener implements ImageView.OnClickListener {
@@ -233,6 +218,7 @@ public class SelectActivity extends AppCompatActivity {
                     }
                     oAdapter.notifyDataSetChanged();
                     listView.setAdapter(oAdapter);
+                    updateTotalPrice();
                 }
             }
 
@@ -262,6 +248,7 @@ public class SelectActivity extends AppCompatActivity {
                 listView.setAdapter(oAdapter);
             }
             oAdapter.notifyDataSetChanged();
+            updateTotalPrice();
 
         }
     }
@@ -273,6 +260,15 @@ public class SelectActivity extends AppCompatActivity {
                     return 10000;
 
 
-         return 0;
+        return 0;
+    }
+    void updateTotalPrice(){
+        int price=0;
+        Toast.makeText(this, "토탈프라이스", Toast.LENGTH_SHORT).show();
+        for (OrderItem oi : oData){
+            price += Integer.parseInt(oi.mPrice);
+            tvTotal.setText("총 가격 : "+price);
+
+        }
     }
 }
