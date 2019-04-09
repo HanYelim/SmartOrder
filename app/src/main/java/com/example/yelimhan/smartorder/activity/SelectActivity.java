@@ -159,6 +159,10 @@ public class SelectActivity extends AppCompatActivity {
                                 // menu.getName() 하면 이름 넘어옴
                                 Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
+                                intent = new Intent(getApplicationContext(), ChooseTypeActivity.class);
+                                OrderItem o = new OrderItem(menu.getName());
+                                intent.putExtra("Object", o);
+                                startActivityForResult(intent, 1000);
                             }
                         });
                     }
