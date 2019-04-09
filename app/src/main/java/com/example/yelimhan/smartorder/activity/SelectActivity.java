@@ -49,7 +49,7 @@ public class SelectActivity extends AppCompatActivity {
     ListAdapter oAdapter;
     int index = 0;
     Button allMenu, favMenu, lastMenu;
-    LinearLayout layout1, layout2;
+    LinearLayout layout1;
     GridView gridView;
     Intent intent;
 
@@ -73,7 +73,6 @@ public class SelectActivity extends AppCompatActivity {
         allMenu = findViewById(R.id.allMenu);
         favMenu = findViewById(R.id.favMenu);
         layout1 = findViewById(R.id.layout1);
-        layout2 = findViewById(R.id.layout2);
 
         tvTotal = findViewById(R.id.txttotal);
 
@@ -92,7 +91,7 @@ public class SelectActivity extends AppCompatActivity {
                         int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
                         favoriteImg.setImageResource(resID);
                         favoriteText.setText(menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
-                        Log.d(" favorite menu : " , menu.getName());
+                        Log.d(" favorite menu : " , menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
                     }
                 });
         disposable_recent = ApiService.getMENU_SERVICE().getRecentMenu("123qwe")
@@ -123,7 +122,7 @@ public class SelectActivity extends AppCompatActivity {
         lastMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout2.setVisibility(View.GONE);
+                gridView.setVisibility(View.GONE);
                 layout1.setVisibility(View.VISIBLE);
             }
         });
@@ -131,13 +130,13 @@ public class SelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 layout1.setVisibility(View.GONE);
-                layout2.setVisibility(View.VISIBLE);
+                gridView.setVisibility(View.VISIBLE);
             }
         });
         favMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout2.setVisibility(View.GONE);
+                gridView.setVisibility(View.GONE);
                 layout1.setVisibility(View.VISIBLE);
             }
         });
