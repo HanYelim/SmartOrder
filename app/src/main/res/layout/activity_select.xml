@@ -30,16 +30,19 @@
                 android:text="즐겨찾는 메뉴"
                 android:background="#77bbccee"
                 android:layout_marginRight="25dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:id="@+id/favMenu"/>
             <Button
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:text="지난 주문"
                 android:background="#44bbccee"
-                android:layout_weight="3"/>
+                android:layout_weight="3"
+                android:id="@+id/lastMenu"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/layout1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal"
@@ -61,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:layout_gravity="center"
-                    android:text="아무말"
+                    android:gravity="center"
                     android:id="@+id/favoriteText"/>
             </LinearLayout>
             <LinearLayout
@@ -135,14 +138,27 @@
         <LinearLayout
             android:layout_weight="2"
             android:layout_width="match_parent"
-            android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:orientation="vertical">
             <Button
+                android:id="@+id/allMenu"
                 android:layout_marginBottom="10dp"
                 android:layout_gravity="bottom"
                 android:text="전체"
                 android:background="#77bbccee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <LinearLayout
+                android:id="@+id/layout2"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ice4"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

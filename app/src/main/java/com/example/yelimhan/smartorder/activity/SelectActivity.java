@@ -1,5 +1,6 @@
 package com.example.yelimhan.smartorder.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +28,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
+import static android.view.View.GONE;
+
 public class SelectActivity extends AppCompatActivity {
 
     private ImageView[] lastOrderImg = new ImageView[3];
@@ -42,6 +46,9 @@ public class SelectActivity extends AppCompatActivity {
     Button btnDelete;
     ListAdapter oAdapter;
     int index = 0;
+    Button allMenu, favMenu, lastMenu;
+    LinearLayout layout1, layout2;
+    Intent intent;
 
 
     @Override
@@ -61,6 +68,11 @@ public class SelectActivity extends AppCompatActivity {
         lastOrderText[0] = findViewById(R.id.lastOrderText1);
         lastOrderText[1] = findViewById(R.id.lastOrderText2);
         lastOrderText[2] = findViewById(R.id.lastOrderText3);
+        lastMenu = findViewById(R.id.lastMenu);
+        allMenu = findViewById(R.id.allMenu);
+        favMenu = findViewById(R.id.favMenu);
+        layout1 = findViewById(R.id.layout1);
+        layout2 = findViewById(R.id.layout2);
 
         disposable_favorite = ApiService.getMENU_SERVICE().getFavoriteMenu("123qwe")
                 .subscribeOn(Schedulers.io())
@@ -76,7 +88,7 @@ public class SelectActivity extends AppCompatActivity {
                         resName = "@drawable/" + str;
                         int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
                         favoriteImg.setImageResource(resID);
-                        favoriteText.setText(menu.getName());
+                        favoriteText.setText(menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
                         Log.d(" favorite menu : " , menu.getName());
                     }
                 });
@@ -174,6 +186,27 @@ public class SelectActivity extends AppCompatActivity {
             }
         });
 
+        lastMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout2.setVisibility(GONE);
+                layout1.setVisibility(View.VISIBLE);
+            }
+        });
+        allMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout1.setVisibility(GONE);
+                layout2.setVisibility(View.VISIBLE);
+            }
+        });
+        favMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout2.setVisibility(GONE);
+                layout1.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     class MyListener implements ImageView.OnClickListener {

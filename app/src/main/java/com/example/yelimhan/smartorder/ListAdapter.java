@@ -54,7 +54,6 @@ public class ListAdapter extends ArrayAdapter<OrderItem>  implements View.OnClic
             tvt = (TextView)rowView.findViewById(R.id.texttemp);
             tvs = (TextView)rowView.findViewById(R.id.textsize);
             tvp = (TextView)rowView.findViewById(R.id.textprice);
-
         }
 
         OrderItem oi = (OrderItem) mList.get(position);
@@ -63,10 +62,6 @@ public class ListAdapter extends ArrayAdapter<OrderItem>  implements View.OnClic
         tvt.setText(oi.mTemp);
         tvs.setText(oi.mSize);
         tvp.setText(oi.mPrice);
-
-
-
-
 
         return rowView;
     }
