@@ -1,4 +1,4 @@
-package com.example.yelimhan.smartorder;
+package com.example.yelimhan.smartorder.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -11,6 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.yelimhan.smartorder.OrderItem;
+import com.example.yelimhan.smartorder.R;
 
 import org.w3c.dom.Text;
 

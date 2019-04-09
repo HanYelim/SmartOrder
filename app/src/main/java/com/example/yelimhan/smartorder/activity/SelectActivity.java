@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -13,14 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
 
-import com.example.yelimhan.smartorder.ListAdapter;
+import com.example.yelimhan.smartorder.adapter.ListAdapter;
+import com.example.yelimhan.smartorder.adapter.MenuAdapter;
 import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
-import com.example.yelimhan.smartorder.database.LastOrder;
 import com.example.yelimhan.smartorder.model.Menu;
 import com.example.yelimhan.smartorder.network.ApiService;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,7 @@ public class SelectActivity extends AppCompatActivity {
     private ImageView favoriteImg;
     private TextView favoriteText;
     private TextView tvTotal;
+    List<Menu> all_menu_list = new ArrayList<>();
     List<OrderItem> oData = new ArrayList<>();
     List<OrderItem>  lastOrders = new ArrayList<>();
     OrderItem item = null;      // 즐겨찾는 메뉴 객체
@@ -49,6 +50,7 @@ public class SelectActivity extends AppCompatActivity {
     int index = 0;
     Button allMenu, favMenu, lastMenu;
     LinearLayout layout1, layout2;
+    GridView gridView;
     Intent intent;
 
     @Override
@@ -145,32 +147,21 @@ public class SelectActivity extends AppCompatActivity {
                 .subscribe(new io.reactivex.functions.Consumer<ArrayList<Menu>>() {
                     @Override
                     public void accept(ArrayList<Menu> menus) {
-                        String str = "";
-                        String resName;
-                        int resID;
-                        for (Menu menu : menus) {
-                            str = "";
-                            if(menu.getType() == "BOTH"){
-                                str += "ice";
-                                str += menu.getIndex();
-                                resName = "@drawable/" + str;
-                                resID = getResources().getIdentifier(resName, "drawable", getPackageName());
-                                // 사진 등록
-                                str = "";
-                                str += "hot";
-                                str += menu.getIndex();
-                                resName = "@drawable/" + str;
-                                resID = getResources().getIdentifier(resName, "drawable", getPackageName());
-                                // 사진 등록
+                        for(Menu menu : menus)
+                            all_menu_list.add(menu);
+                        MenuAdapter menuAdapter = new MenuAdapter(getApplicationContext(), R.layout.menu_item, menus);
+                        gridView = (GridView)findViewById(R.id.gridView1);
+                        gridView.setAdapter(menuAdapter);
+
+                        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                Menu menu = all_menu_list.get(i); // 이게 메뉴정보
+                                // menu.getName() 하면 이름 넘어옴
+                                Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
+                                //그리드뷰 눌렁승ㄹ대
                             }
-                            else{
-                                str += "ice";
-                                str += menu.getIndex();
-                                resName = "@drawable/" + str;
-                                resID = getResources().getIdentifier(resName, "drawable", getPackageName());
-                                //사진 등록
-                            }
-                        }
+                        });
                     }
                 }, new io.reactivex.functions.Consumer<Throwable>() {
                     @Override
@@ -178,7 +169,6 @@ public class SelectActivity extends AppCompatActivity {
                         throwable.getMessage();
                     }
                 });
-
 
         //lastOrderImg[0].setOnClickListener(new MyListener());
 
@@ -190,7 +180,6 @@ public class SelectActivity extends AppCompatActivity {
 
         oAdapter = new ListAdapter(SelectActivity.this, oData, listView);
         listView.setAdapter(oAdapter);
-
 
     }
 
