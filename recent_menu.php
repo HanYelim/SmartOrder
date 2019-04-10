@@ -6,7 +6,7 @@
     $order_cus = $_GET['mCustomer'];
     $order_cus = "'123qwe'";
 
-    $sql = 'SELECT DISTINCT m.index, m.mname, m.mprice, m.mopt, o.mtype, o.msize FROM `Order` AS o, `Menu` AS m WHERE o.mCustomer = ' .$order_cus. ' AND m.index = o.mMenu ORDER BY mIndex DESC LIMIT 3';
+    $sql = 'SELECT DISTINCT m.index, m.mname, o.mprice, m.mopt, o.mtype, o.msize FROM `Order` AS o, `Menu` AS m WHERE o.mCustomer = ' .$order_cus. ' AND m.index = o.mMenu ORDER BY mIndex DESC LIMIT 3';
     $result = mysql_query($sql);
 
     if(!$result){

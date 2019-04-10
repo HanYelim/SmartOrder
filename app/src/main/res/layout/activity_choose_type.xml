@@ -67,6 +67,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="주문 목록"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <ListView
             android:id="@+id/listView"
             android:layout_width="wrap_content"

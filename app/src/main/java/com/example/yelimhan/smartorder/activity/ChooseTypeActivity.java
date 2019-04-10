@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -26,6 +27,8 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_choose_type);
         final OrderItem o = (OrderItem) getIntent().getSerializableExtra("Object");
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
@@ -42,6 +45,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 Intent intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
                 o.mTemp = "ice";
                 intent.putExtra("Object", o);
+                intent.putExtra("menuList", oData);
                 startActivity(intent);
             }
         });
@@ -52,6 +56,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 Intent intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
                 o.mTemp = "hot";
                 intent.putExtra("Object", o);
+                intent.putExtra("menuList", oData);
                 startActivity(intent);
             }
         });
@@ -82,7 +87,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
         int price=0;
         for (OrderItem oi : oData){
             price += Integer.parseInt(oi.mPrice);
-            tvTotal.setText("총 가격 : "+price);
         }
+        tvTotal.setText("총 가격 : " + price);
     }
 }
