@@ -44,6 +44,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     List<OrderItem> oData = new ArrayList<>();
     List<OrderItem> lastOrders = new ArrayList<>();
     OrderItem item = null;      // 즐겨찾는 메뉴 객체
+    List<Integer> num_list;
 
     private Disposable disposable_favorite, disposable_allmenu, disposable_recent;
 
@@ -151,7 +152,21 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                     @Override
                     public void accept(final ArrayList<Menu> menus) {
                         for(int i = 0; i < 4; i++){
-                            rec_menu_list.add(menus.get(random.nextInt(menus.size())));
+                            if(rec_menu_list.size() == 0)
+                                rec_menu_list.add(menus.get(random.nextInt(menus.size())));
+                            else{
+                                int index, count;
+                                count = 0;
+                                index = random.nextInt(menus.size());
+                                for(int j = 0; j < rec_menu_list.size(); j++){
+                                    if(menus.get(index).getIndex() == rec_menu_list.get(j).getIndex())
+                                        count = -1;
+                                }
+                                if(count != -1)
+                                    rec_menu_list.add(menus.get(index));
+                            }
+                            if(rec_menu_list.size() != i + 1)
+                                i--;
                         }
                         MenuAdapter menuAdapter = new MenuAdapter(getApplicationContext(), R.layout.menu_item, menus);
                         MenuAdapter menuAdapter2 = new MenuAdapter(getApplicationContext(), R.layout.menu_item, rec_menu_list);
@@ -164,6 +179,32 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                 Menu menu = menus.get(i); // 이게 메뉴정보
+                                // menu.getName() 하면 이름 넘어옴
+                                Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
+                                //그리드뷰 눌렁승ㄹ대
+                                OrderItem o = new OrderItem(menu.getName());
+                                if(!menu.getType().equals("BOTH")){
+                                    o.mTemp = menu.getType();
+                                    if(menu.getSize() != "BOTH"){
+                                        o.mTemp = menu.getSize();
+                                        intent = new Intent(getApplicationContext(), OptionActivity.class);
+                                    }
+                                    else{
+                                        intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
+                                    }
+                                }
+                                else{
+                                    intent = new Intent(getApplicationContext(), ChooseTypeActivity.class);
+                                }
+                                intent.putExtra("Object", o);
+                                intent.putExtra("menuList", (Serializable) oData);
+                                startActivityForResult(intent, 1000);
+                            }
+                        });
+                        re_gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                Menu menu = rec_menu_list.get(i); // 이게 메뉴정보
                                 // menu.getName() 하면 이름 넘어옴
                                 Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
