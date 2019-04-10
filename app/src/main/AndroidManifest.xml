@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.SelectActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ChoosTypeActivity"></activity>
+        <activity android:name=".activity.ChooseTypeActivity" />
+        <activity android:name=".activity.ChooseSizeActivity" />
+        <activity android:name=".activity.OptionActivity"></activity>
     </application>
 
 </manifest>

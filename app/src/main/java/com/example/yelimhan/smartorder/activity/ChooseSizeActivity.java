@@ -10,35 +10,35 @@ import android.widget.TextView;
 import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
 
-public class ChooseTypeActivity extends AppCompatActivity {
+public class ChooseSizeActivity extends AppCompatActivity {
     TextView tv;
-    ImageButton ice, hot;
+    ImageButton large, small;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_type);
+        setContentView(R.layout.activity_choose_size);
         final OrderItem o = (OrderItem) getIntent().getSerializableExtra("Object");
         tv = findViewById(R.id.menu);
-        tv.setText(o.mName);
-        ice = findViewById(R.id.ice);
-        hot = findViewById(R.id.hot);
+        large = findViewById(R.id.large);
+        small = findViewById(R.id.small);
+        tv.setText(o.mName + " " + o.mTemp);
 
-        ice.setOnClickListener(new View.OnClickListener() {
+        large.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
-                o.mTemp = "ice";
+                Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
+                o.mSize = "large";
                 intent.putExtra("Object", o);
                 startActivity(intent);
             }
         });
 
-        hot.setOnClickListener(new View.OnClickListener() {
+        small.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
-                o.mTemp = "hot";
+                Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
+                o.mSize = "small";
                 intent.putExtra("Object", o);
                 startActivity(intent);
             }

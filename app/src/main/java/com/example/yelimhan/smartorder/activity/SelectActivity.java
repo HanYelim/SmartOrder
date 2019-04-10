@@ -160,8 +160,20 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 // menu.getName() 하면 이름 넘어옴
                                 Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
-                                intent = new Intent(getApplicationContext(), ChooseTypeActivity.class);
                                 OrderItem o = new OrderItem(menu.getName());
+                                if(!menu.getType().equals("BOTH")){
+                                    o.mTemp = menu.getType();
+                                    if(menu.getSize() != "BOTH"){
+                                        o.mTemp = menu.getSize();
+                                        intent = new Intent(getApplicationContext(), OptionActivity.class);
+                                    }
+                                    else{
+                                        intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
+                                    }
+                                }
+                                else{
+                                    intent = new Intent(getApplicationContext(), ChooseTypeActivity.class);
+                                }
                                 intent.putExtra("Object", o);
                                 startActivityForResult(intent, 1000);
                             }
