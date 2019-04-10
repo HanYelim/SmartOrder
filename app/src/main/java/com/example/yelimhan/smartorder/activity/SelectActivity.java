@@ -22,6 +22,7 @@ import com.example.yelimhan.smartorder.R;
 import com.example.yelimhan.smartorder.model.Menu;
 import com.example.yelimhan.smartorder.network.ApiService;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -181,6 +182,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                     intent = new Intent(getApplicationContext(), ChooseTypeActivity.class);
                                 }
                                 intent.putExtra("Object", o);
+                                intent.putExtra("menuList", (Serializable) oData);
                                 startActivityForResult(intent, 1000);
                             }
                         });
@@ -208,9 +210,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     // 리스트의 삭제 버튼 클릭
     @Override
     public void onListBtnClick(int position) {
-
         OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp, oData.get(position).mSize, oData.get(position).mPrice );
-
 
         // mCount 업데이트
         oData.get(position).mCount -= 1;
@@ -221,9 +221,9 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
             oData.get(position).mPrice = String.valueOf(Integer.parseInt(temp.mPrice)/(temp.mCount+1) * (temp.mCount));
         }
 
+        updateTotalPrice();
         oAdapter.notifyDataSetChanged();
         listView.setAdapter(oAdapter);
-
     }
     class MyListener implements ImageView.OnClickListener {
         @Override

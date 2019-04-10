@@ -74,8 +74,8 @@ public class ListAdapter extends ArrayAdapter<OrderItem>  implements View.OnClic
 
         OrderItem oi = (OrderItem) mList.get(position);
         tvn.setText(oi.mName);
-        tvc.setText(String.valueOf(oi.mCount));
-        tvp.setText(oi.mPrice);
+        tvc.setText(String.valueOf(oi.mCount) + "개");
+        tvp.setText(oi.mPrice + "원");
 
         String opt = "";
         if(!oi.mSize.equals("")){
