@@ -1,54 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="80dp">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="메뉴"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:layout_margin="3dp"
+            android:textColor="#33aabb"
+            />
+        <TextView
+            android:id="@+id/textcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:text="개수"
+            android:gravity="center_vertical"
+            android:layout_margin="3dp"
+            />
 
-    <TextView
-        android:id="@+id/textname"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="메뉴"
-        android:gravity="center_vertical"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        android:layout_margin="3dp"
-        android:textColor="#33aabb"
-        />
-    <TextView
-        android:id="@+id/textcount"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:textSize="17sp"
-        android:text="개수"
-        android:gravity="center_vertical"
-        android:layout_margin="3dp"
-        />
+        <TextView
+            android:text="가격"
+            android:textSize="17sp"
+            android:id="@+id/textprice"
+            android:layout_margin="3dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
+        <ImageButton
+            android:id="@+id/deletebtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/btn_list_delete" />
+    </LinearLayout>
     <TextView
-        android:textSize="17sp"
-        android:text="온도"
-        android:id="@+id/texttemp"
-        android:layout_margin="3dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:text="사이즈"
-        android:textSize="17sp"
-        android:id="@+id/textsize"
-        android:layout_margin="3dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:text="가격"
-        android:textSize="17sp"
-        android:id="@+id/textprice"
-        android:layout_margin="3dp"
-        android:layout_width="wrap_content"
+        android:textSize="13sp"
+        android:id="@+id/textoption"
+        android:text="txtoption"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ImageButton
-        android:id="@+id/deletebtn"
-        android:layout_width="89dp"
-        android:layout_height="68dp" />
 </LinearLayout>

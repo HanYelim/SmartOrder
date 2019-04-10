@@ -30,7 +30,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
-public class SelectActivity extends AppCompatActivity {
+public class SelectActivity extends AppCompatActivity implements ListAdapter.ListBtnClickListener {
 
     private ImageView[] lastOrderImg = new ImageView[3];
     private TextView[] lastOrderText = new TextView[3];
@@ -52,6 +52,7 @@ public class SelectActivity extends AppCompatActivity {
     LinearLayout layout1;
     GridView gridView;
     Intent intent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,18 +182,44 @@ public class SelectActivity extends AppCompatActivity {
         }
         favoriteImg.setOnClickListener(new MyListener());
 
-        oAdapter = new ListAdapter(SelectActivity.this, oData, listView);
+        oAdapter = new ListAdapter(SelectActivity.this, oData, listView, this);
         listView.setAdapter(oAdapter);
 
     }
 
+
+    // 리스트의 삭제 버튼 클릭
+    @Override
+    public void onListBtnClick(int position) {
+
+        OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp, oData.get(position).mSize, oData.get(position).mPrice );
+
+
+        // mCount 업데이트
+        oData.get(position).mCount -= 1;
+        temp.mCount -= 1;
+        if(temp.mCount == 0)
+            oData.remove(position);
+        else{
+            oData.get(position).mPrice = String.valueOf(Integer.parseInt(temp.mPrice)/(temp.mCount+1) * (temp.mCount));
+
+        }
+
+
+
+        oAdapter.notifyDataSetChanged();
+        listView.setAdapter(oAdapter);
+
+    }
     class MyListener implements ImageView.OnClickListener {
         @Override
         public void onClick(View v) {
             for(int i=0;i<index;i++){
-                if(v.getId() == lastOrderImg[i].getId()){
-                    if (oData.size() == 0)
-                        oData.add(lastOrders.get(i));
+                if(v.getId() == lastOrderImg[i].getId()){       // 지난 주문의 이미지 클릭
+                    if (oData.size() == 0){
+                        OrderItem newoi = new OrderItem(lastOrders.get(i).mName,lastOrders.get(i).mCount,lastOrders.get(i).mTemp,lastOrders.get(i).mSize,lastOrders.get(i).mPrice);
+                        oData.add(newoi);
+                    }
                     else{
                         int same = 0;
                         int j;
@@ -205,8 +232,10 @@ public class SelectActivity extends AppCompatActivity {
                             oData.get(j).mPrice = String.valueOf(Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(lastOrders.get(i).mPrice));
                             oData.get(j).mCount++;
                         }
-                        else
-                            oData.add(lastOrders.get(i));
+                        else{
+                            OrderItem newoi = new OrderItem(lastOrders.get(i).mName,lastOrders.get(i).mCount,lastOrders.get(i).mTemp,lastOrders.get(i).mSize,lastOrders.get(i).mPrice);
+                            oData.add(newoi);
+                        }
                     }
                     oAdapter.notifyDataSetChanged();
                     listView.setAdapter(oAdapter);
@@ -214,10 +243,11 @@ public class SelectActivity extends AppCompatActivity {
                 }
             }
 
-            if(v.getId() == favoriteImg.getId()){
+            if(v.getId() == favoriteImg.getId()){       // 즐겨찾는 메뉴의 이미지 클릭
                 OrderItem temp = new OrderItem(item.mName, item.mCount, item.mTemp, item.mSize, item.mPrice);
-                if (oData.size() == 0)
+                if (oData.size() == 0){
                     oData.add(temp);
+                }
                 else{
                     int same = 0;
                     int j;
@@ -231,8 +261,9 @@ public class SelectActivity extends AppCompatActivity {
                         oData.get(j).mPrice = String.valueOf(Integer.parseInt(oData.get(j).mPrice) + a);
                         oData.get(j).mCount++;
                     }
-                    else
+                    else{
                         oData.add(temp);
+                    }
                 }
 
                 temp = null;
@@ -256,11 +287,9 @@ public class SelectActivity extends AppCompatActivity {
     }
     void updateTotalPrice(){
         int price=0;
-        Toast.makeText(this, "토탈프라이스", Toast.LENGTH_SHORT).show();
         for (OrderItem oi : oData){
             price += Integer.parseInt(oi.mPrice);
             tvTotal.setText("총 가격 : "+price);
-
         }
     }
 }
