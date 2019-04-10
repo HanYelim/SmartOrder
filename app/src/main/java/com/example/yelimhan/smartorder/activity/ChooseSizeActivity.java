@@ -45,7 +45,9 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
                 Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
                 o.mSize = "large";
                 intent.putExtra("Object", o);
+                intent.putExtra("menuList", oData);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -55,7 +57,9 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
                 Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
                 o.mSize = "small";
                 intent.putExtra("Object", o);
+                intent.putExtra("menuList", oData);
                 startActivity(intent);
+                finish();
             }
         });
 

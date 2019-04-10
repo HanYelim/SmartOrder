@@ -185,7 +185,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 OrderItem o = new OrderItem(menu.getName());
                                 if(!menu.getType().equals("BOTH")){
                                     o.mTemp = menu.getType();
-                                    if(menu.getSize() != "BOTH"){
+                                    if(!menu.getSize().equals("BOTH")){
                                         o.mTemp = menu.getSize();
                                         intent = new Intent(getApplicationContext(), OptionActivity.class);
                                     }
@@ -211,7 +211,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 OrderItem o = new OrderItem(menu.getName());
                                 if(!menu.getType().equals("BOTH")){
                                     o.mTemp = menu.getType();
-                                    if(menu.getSize() != "BOTH"){
+                                    if(!menu.getSize().equals("BOTH")){
                                         o.mTemp = menu.getSize();
                                         intent = new Intent(getApplicationContext(), OptionActivity.class);
                                     }

@@ -47,6 +47,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
                 startActivity(intent);
+                finish();
             }
         });
 
@@ -58,6 +59,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
                 startActivity(intent);
+                finish();
             }
         });
 
