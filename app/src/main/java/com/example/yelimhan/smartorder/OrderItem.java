@@ -14,4 +14,7 @@ public class OrderItem {
         mSize = _s;
         mPrice = _p;
     }
+    public OrderItem(){
+
+    }
 }
