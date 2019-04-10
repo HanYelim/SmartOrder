@@ -5,4 +5,5 @@ data class Menu(
         val name: String,
         val price: String,
         val type: String,
+        val opt: String,
         val size: String)

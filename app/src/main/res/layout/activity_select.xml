@@ -15,9 +15,8 @@
         <TextView
             android:layout_margin="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:text="안녕하세염"
-            android:layout_weight="0.5"/>
+            android:layout_height="wrap_content"
+            android:text="안녕하세염"/>
         <LinearLayout
             android:tag="즐찾, 지난주문 버튼부분"
             android:layout_marginBottom="7dp"
@@ -46,7 +45,7 @@
             android:id="@+id/layout1"
             android:tag="즐찾, 지난부분 음료정보 부분"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:layout_weight="4">
             <LinearLayout
@@ -57,8 +56,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="25dp">
                 <ImageView
-                    android:layout_width="170dp"
-                    android:layout_height="170dp"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
                     android:src="@drawable/ice5"
                     android:id="@+id/favoriteImg"/>
                 <TextView
@@ -87,8 +86,8 @@
                         android:orientation="vertical"
                         android:layout_marginRight="10dp">
                         <ImageView
-                            android:layout_width="170dp"
-                            android:layout_height="170dp"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
                             android:id="@+id/lastOrderImg1"/>
                         <TextView
                             android:gravity="center"
@@ -105,8 +104,8 @@
                         android:orientation="vertical"
                         android:layout_marginRight="10dp">
                         <ImageView
-                            android:layout_width="170dp"
-                            android:layout_height="170dp"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
                             android:id="@+id/lastOrderImg2"/>
                         <TextView
                             android:gravity="center"
@@ -123,8 +122,8 @@
                         android:orientation="vertical"
                         android:layout_marginRight="10dp">
                         <ImageView
-                            android:layout_width="170dp"
-                            android:layout_height="170dp"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
                             android:id="@+id/lastOrderImg3"/>
                         <TextView
                             android:gravity="center"
@@ -140,9 +139,8 @@
         </LinearLayout>
         <LinearLayout
             android:tag="전체메뉴 버튼부분"
-            android:layout_weight="2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
             <Button
                 android:id="@+id/allMenu"
@@ -152,17 +150,16 @@
                 android:background="#77bbccee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
-            <LinearLayout
-                android:id="@+id/layout2"
-                android:visibility="gone"
+            <GridView
+                android:visibility="invisible"
+                android:id="@+id/gridView1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ice4"/>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:columnWidth="170dp"
+                android:horizontalSpacing="10dp"
+                android:verticalSpacing="10dp"
+                android:numColumns="auto_fit" >
+            </GridView>
         </LinearLayout>
     </LinearLayout>
 

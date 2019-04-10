@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -14,14 +15,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Intent;
 
-import com.example.yelimhan.smartorder.ListAdapter;
+import com.example.yelimhan.smartorder.adapter.ListAdapter;
+import com.example.yelimhan.smartorder.adapter.MenuAdapter;
 import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
-import com.example.yelimhan.smartorder.database.LastOrder;
 import com.example.yelimhan.smartorder.model.Menu;
 import com.example.yelimhan.smartorder.network.ApiService;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +38,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     private ImageView favoriteImg;
     private TextView favoriteText;
     private TextView tvTotal;
+    List<Menu> all_menu_list = new ArrayList<>();
     List<OrderItem> oData = new ArrayList<>();
     List<OrderItem>  lastOrders = new ArrayList<>();
     OrderItem item = null;      // 즐겨찾는 메뉴 객체
@@ -49,7 +49,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     ListAdapter oAdapter;
     int index = 0;
     Button allMenu, favMenu, lastMenu;
-    LinearLayout layout1, layout2;
+    LinearLayout layout1;
+    GridView gridView;
     Intent intent;
 
 
@@ -73,7 +74,6 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         allMenu = findViewById(R.id.allMenu);
         favMenu = findViewById(R.id.favMenu);
         layout1 = findViewById(R.id.layout1);
-        layout2 = findViewById(R.id.layout2);
 
         tvTotal = findViewById(R.id.txttotal);
 
@@ -92,7 +92,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                         int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
                         favoriteImg.setImageResource(resID);
                         favoriteText.setText(menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
-                        Log.d(" favorite menu : " , menu.getName());
+                        Log.d(" favorite menu : " , menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
                     }
                 });
         disposable_recent = ApiService.getMENU_SERVICE().getRecentMenu("123qwe")
@@ -123,7 +123,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         lastMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout2.setVisibility(View.GONE);
+                gridView.setVisibility(View.GONE);
                 layout1.setVisibility(View.VISIBLE);
             }
         });
@@ -131,13 +131,13 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
             @Override
             public void onClick(View v) {
                 layout1.setVisibility(View.GONE);
-                layout2.setVisibility(View.VISIBLE);
+                gridView.setVisibility(View.VISIBLE);
             }
         });
         favMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                layout2.setVisibility(View.GONE);
+                gridView.setVisibility(View.GONE);
                 layout1.setVisibility(View.VISIBLE);
             }
         });
@@ -147,32 +147,25 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                 .subscribe(new io.reactivex.functions.Consumer<ArrayList<Menu>>() {
                     @Override
                     public void accept(ArrayList<Menu> menus) {
-                        String str = "";
-                        String resName;
-                        int resID;
-                        for (Menu menu : menus) {
-                            str = "";
-                            if(menu.getType() == "BOTH"){
-                                str += "ice";
-                                str += menu.getIndex();
-                                resName = "@drawable/" + str;
-                                resID = getResources().getIdentifier(resName, "drawable", getPackageName());
-                                // 사진 등록
-                                str = "";
-                                str += "hot";
-                                str += menu.getIndex();
-                                resName = "@drawable/" + str;
-                                resID = getResources().getIdentifier(resName, "drawable", getPackageName());
-                                // 사진 등록
+                        for(Menu menu : menus)
+                            all_menu_list.add(menu);
+                        MenuAdapter menuAdapter = new MenuAdapter(getApplicationContext(), R.layout.menu_item, menus);
+                        gridView = (GridView)findViewById(R.id.gridView1);
+                        gridView.setAdapter(menuAdapter);
+
+                        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                Menu menu = all_menu_list.get(i); // 이게 메뉴정보
+                                // menu.getName() 하면 이름 넘어옴
+                                Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
+                                //그리드뷰 눌렁승ㄹ대
+                                intent = new Intent(getApplicationContext(), ChooseTypeActivity.class);
+                                OrderItem o = new OrderItem(menu.getName());
+                                intent.putExtra("Object", o);
+                                startActivityForResult(intent, 1000);
                             }
-                            else{
-                                str += "ice";
-                                str += menu.getIndex();
-                                resName = "@drawable/" + str;
-                                resID = getResources().getIdentifier(resName, "drawable", getPackageName());
-                                //사진 등록
-                            }
-                        }
+                        });
                     }
                 }, new io.reactivex.functions.Consumer<Throwable>() {
                     @Override
@@ -180,7 +173,6 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                         throwable.getMessage();
                     }
                 });
-
 
         //lastOrderImg[0].setOnClickListener(new MyListener());
 
@@ -192,8 +184,6 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
 
         oAdapter = new ListAdapter(SelectActivity.this, oData, listView, this);
         listView.setAdapter(oAdapter);
-
-
 
     }
 
