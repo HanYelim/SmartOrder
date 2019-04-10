@@ -48,8 +48,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     Button btnDelete;
     ListAdapter oAdapter;
     int index = 0;
-    Button allMenu, favMenu, lastMenu;
-    LinearLayout layout1;
+    Button allMenu, lastMenu;
+    LinearLayout layout1, layout_all;
     GridView gridView;
     Intent intent;
 
@@ -59,7 +59,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_select);
+        setContentView(R.layout.activity_select_new);
         listView = (findViewById(R.id.listView));
 
         favoriteImg = findViewById(R.id.favoriteImg);
@@ -72,8 +72,9 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         lastOrderText[2] = findViewById(R.id.lastOrderText3);
         lastMenu = findViewById(R.id.lastMenu);
         allMenu = findViewById(R.id.allMenu);
-        favMenu = findViewById(R.id.favMenu);
+        //favMenu = findViewById(R.id.favMenu);
         layout1 = findViewById(R.id.layout1);
+        layout_all = findViewById(R.id.allMenu_layout);
 
         tvTotal = findViewById(R.id.txttotal);
 
@@ -123,7 +124,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         lastMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gridView.setVisibility(View.GONE);
+                layout_all.setVisibility(View.GONE);
                 layout1.setVisibility(View.VISIBLE);
             }
         });
@@ -131,16 +132,16 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
             @Override
             public void onClick(View v) {
                 layout1.setVisibility(View.GONE);
-                gridView.setVisibility(View.VISIBLE);
+                layout_all.setVisibility(View.VISIBLE);
             }
         });
-        favMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gridView.setVisibility(View.GONE);
-                layout1.setVisibility(View.VISIBLE);
-            }
-        });
+//        favMenu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                gridView.setVisibility(View.GONE);
+//                layout1.setVisibility(View.VISIBLE);
+//            }
+//        });
         disposable_allmenu = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
