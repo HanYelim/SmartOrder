@@ -24,12 +24,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="6.5"
+                android:layout_weight="5.25"
                 android:background="@drawable/round"
                 android:layout_margin="13dp"
                 android:layout_marginBottom="5dp"
                 android:orientation="vertical"
-                android:weightSum="7">
+                android:weightSum="5">
 
                 <TextView
                     android:gravity="center_vertical"
@@ -41,7 +41,7 @@
                     android:paddingLeft="20dp"/>
 
                 <LinearLayout
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="4"
@@ -106,7 +106,6 @@
                             android:id="@+id/lastOrderText2"/>
                     </LinearLayout>
 
-
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
@@ -133,11 +132,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4"
+                android:layout_weight="5.25"
                 android:background="@drawable/round"
                 android:layout_marginLeft="13dp"
                 android:layout_marginRight="13dp"
-                android:weightSum="3"
+                android:weightSum="5"
                 android:orientation="vertical">
 
                 <TextView
@@ -149,6 +148,20 @@
                     android:text="오늘의 추천 메뉴"
                     android:textSize="17sp" />
 
+                <GridView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="4"
+                    android:layout_marginTop="15dp"
+                    android:id="@+id/re_menu_grid"
+                    android:columnWidth="140dp"
+                    android:horizontalSpacing="10dp"
+                    android:verticalSpacing="10dp"
+                    android:numColumns="auto_fit"
+                    android:layout_gravity="center">
+
+                </GridView>
+
             </LinearLayout>
 
             <Button
@@ -159,9 +172,7 @@
                 android:text="전체 메뉴 보기"
                 android:textSize="25sp"
                 android:id="@+id/allMenu"
-                android:background="@drawable/round">
-
-            </Button>
+                android:background="@drawable/round"/>
 
         </LinearLayout>
 
@@ -220,6 +231,13 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:text="주문 목록"
+            android:textSize="18sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
         <ListView
             android:id="@+id/listView"
             android:layout_width="wrap_content"
