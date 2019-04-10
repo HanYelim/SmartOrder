@@ -197,10 +197,9 @@
                     android:id="@+id/gridView1"
                     android:layout_gravity="center"
                     android:paddingTop="30dp"
-                    android:paddingLeft="35dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:columnWidth="170dp"
+                    android:columnWidth="140dp"
                     android:horizontalSpacing="10dp"
                     android:verticalSpacing="10dp"
                     android:numColumns="auto_fit" />
