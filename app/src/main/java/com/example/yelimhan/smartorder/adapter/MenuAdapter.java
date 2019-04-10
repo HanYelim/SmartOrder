@@ -55,7 +55,6 @@ public class MenuAdapter extends BaseAdapter {
         str += "ice";
         str += menus.get(i).getIndex();
         resName = "@drawable/" + str;
-        Log.d("resId : ", resName);
         resID = context.getResources().getIdentifier(resName, "drawable", context.getPackageName());
         ImageView imageView = (ImageView)view.findViewById(R.id.menu_item_img);
         TextView textView = (TextView)view.findViewById(R.id.menu_item_txt);

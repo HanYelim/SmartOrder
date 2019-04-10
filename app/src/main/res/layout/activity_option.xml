@@ -65,6 +65,7 @@
                 android:layout_marginRight="15dp"
                 android:layout_marginLeft="15dp"/>
             <RadioGroup
+                android:id="@+id/rdshot"
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">

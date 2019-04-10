@@ -2,8 +2,10 @@ package com.example.yelimhan.smartorder.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.yelimhan.smartorder.OrderItem;
@@ -12,6 +14,7 @@ import com.example.yelimhan.smartorder.R;
 public class OptionActivity extends AppCompatActivity {
     TextView tvCount;
     ImageButton countMinus, countPlus;
+    RadioGroup rdshot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +40,15 @@ public class OptionActivity extends AppCompatActivity {
             public void onClick(View v) {
                 o.mCount++;
                 tvCount.setText(String.valueOf(o.mCount));
+            }
+        });
+
+        rdshot = findViewById(R.id.rdshot);
+        rdshot.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.d("아이디", String.valueOf(checkedId));
+
             }
         });
     }

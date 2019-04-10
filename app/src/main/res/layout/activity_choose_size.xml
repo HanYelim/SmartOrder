@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ChooseSizeActivity"
+    android:background="#d6d5d4"
     android:orientation="horizontal">
 
     <LinearLayout
@@ -12,38 +13,47 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:clickable="false"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_margin="13dp"
+            android:text="큰 사이즈로 드릴까요, 작은 사이즈로 드릴까요?"
             android:textSize="25sp"
-            android:text="큰사이즈로 드릴까요 작은사이즈로 드릴까요?"
-            android:layout_weight="1"/>
+            android:background="@drawable/round" />
         <LinearLayout
-            android:layout_weight="3"
+            android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="0dp">
             <ImageButton
-                android:background="#00ffffff"
+                android:background="@drawable/round"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/small"
-                android:src="@drawable/size_small"/>
+                android:src="@drawable/size_small"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="6.5dp"/>
             <ImageButton
-                android:background="#00ffffff"
+                android:background="@drawable/round"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/large"
-                android:src="@drawable/size_large"/>
+                android:src="@drawable/size_large"
+                android:layout_marginLeft="6.5dp"
+                android:layout_marginRight="13dp"/>
         </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:clickable="false"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
+            android:layout_margin="13dp"
             android:textSize="25sp"
             android:id="@+id/menu"
-            android:layout_gravity="center"/>
+            android:background="@drawable/round" />
     </LinearLayout>
 
     <LinearLayout
@@ -54,6 +64,11 @@
         android:layout_marginTop="5dp"></LinearLayout>
 
     <LinearLayout
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="13dp"
+        android:layout_marginRight="13dp"
+        android:background="@drawable/round"
+        android:tag="오른쪽"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -62,7 +77,7 @@
         <ListView
             android:id="@+id/listView"
             android:layout_width="wrap_content"
-            android:layout_height="261dp"
+            android:layout_height="400dp"
             android:scrollbars="vertical"></ListView>
 
 

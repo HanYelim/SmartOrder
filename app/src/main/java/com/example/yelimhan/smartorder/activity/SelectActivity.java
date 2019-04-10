@@ -40,7 +40,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     private TextView tvTotal;
     List<Menu> all_menu_list = new ArrayList<>();
     List<OrderItem> oData = new ArrayList<>();
-    List<OrderItem>  lastOrders = new ArrayList<>();
+    List<OrderItem> lastOrders = new ArrayList<>();
     OrderItem item = null;      // 즐겨찾는 메뉴 객체
 
     private Disposable disposable_favorite, disposable_allmenu, disposable_recent;
@@ -52,7 +52,6 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     LinearLayout layout1, layout_all;
     GridView gridView;
     Intent intent;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -215,10 +214,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
             oData.remove(position);
         else{
             oData.get(position).mPrice = String.valueOf(Integer.parseInt(temp.mPrice)/(temp.mCount+1) * (temp.mCount));
-
         }
-
-
 
         oAdapter.notifyDataSetChanged();
         listView.setAdapter(oAdapter);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -11,7 +12,7 @@ import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
 
 public class ChooseSizeActivity extends AppCompatActivity {
-    TextView tv;
+    Button tv;
     ImageButton large, small;
 
     @Override
