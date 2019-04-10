@@ -95,6 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <RadioButton
+                        android:id="@+id/rgs1"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
                         android:layout_marginRight="10dp"
@@ -107,6 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
+                        android:id="@+id/rgs2"
                         android:button="@null"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
@@ -114,12 +116,12 @@
                         android:paddingLeft="18dp"
                         android:paddingRight="18dp"
                         android:textSize="30sp"
-                        android:textColor="#ffffff"
                         android:text="0"
                         android:background="@drawable/opt_radio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
+                        android:id="@+id/rgs3"
                         android:button="@null"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
@@ -132,6 +134,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
+                        android:id="@+id/rgs4"
                         android:button="@null"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
@@ -144,6 +147,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
+                        android:id="@+id/rgs5"
                         android:button="@null"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
@@ -183,8 +187,8 @@
                     android:orientation="horizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
-
                     <RadioButton
+                        android:id="@+id/rgss1"
                         android:button="@null"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
@@ -192,12 +196,12 @@
                         android:paddingLeft="18dp"
                         android:paddingRight="18dp"
                         android:textSize="30sp"
-                        android:textColor="#ffffff"
                         android:text="0"
                         android:background="@drawable/opt_radio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
+                        android:id="@+id/rgss2"
                         android:button="@null"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
@@ -210,6 +214,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
+                        android:id="@+id/rgss3"
                         android:button="@null"
                         android:paddingTop="2dp"
                         android:paddingBottom="2dp"
@@ -249,6 +254,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content">
                     <RadioButton
+                        android:id="@+id/rgi1"
                         android:paddingTop="6dp"
                         android:paddingBottom="6dp"
                         android:layout_marginRight="10dp"
@@ -261,6 +267,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <RadioButton
+                        android:id="@+id/rgi2"
                         android:paddingTop="6dp"
                         android:paddingBottom="6dp"
                         android:button="@null"
@@ -268,13 +275,12 @@
                         android:paddingLeft="18dp"
                         android:paddingRight="18dp"
                         android:textSize="25sp"
-                        android:textColor="#ffffff"
                         android:text="보통"
                         android:background="@drawable/opt_radio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
-
                     <RadioButton
+                        android:id="@+id/rgi3"
                         android:paddingTop="6dp"
                         android:paddingBottom="6dp"
                         android:button="@null"
