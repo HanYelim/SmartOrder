@@ -13,231 +13,282 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <TextView
+            android:layout_margin="15dp"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:textSize="25sp"
             android:text="옵션을 선택해 주세요"
             android:layout_weight="1"/>
         <LinearLayout
+            android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
+                android:textColor="#0c0c0c"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
                 android:text="수량"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginLeft="15dp"/>
-            <ImageButton
-                android:background="#00444444"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/btn_minus"
-                android:id="@+id/count_minus"/>
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:background="#afafaf"
-                android:textSize="25sp"
-                android:gravity="center"
-                android:id="@+id/count"/>
-            <ImageButton
-                android:background="#00444444"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/btn_plus"
-                android:scaleType="fitXY"
-                android:id="@+id/count_plus"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="샷"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"/>
-            <RadioGroup
-                android:id="@+id/rdshot"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:layout_weight="2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content">
-                <RadioButton
-                    android:layout_marginRight="10dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textSize="30sp"
-                    android:text="-1"
-                    android:button="@null"
+                <ImageButton
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="7dp"
+                    android:background="#00444444"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/btn_minus"
+                    android:id="@+id/count_minus"/>
+                <TextView
+                    android:padding="3dp"
+                    android:layout_margin="3dp"
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/opt_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <RadioButton
-                    android:button="@null"
-                    android:layout_marginRight="10dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textSize="30sp"
-                    android:textColor="#ffffff"
-                    android:text="0"
-                    android:background="@drawable/opt_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <RadioButton
-                    android:button="@null"
-                    android:layout_marginRight="10dp"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textSize="30sp"
-                    android:text="1"
-                    android:background="@drawable/opt_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <RadioButton
-                    android:button="@null"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textSize="30sp"
-                    android:text="2"
-                    android:background="@drawable/opt_radio"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-            </RadioGroup>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:text="샷"
-                android:layout_marginRight="15dp"
-                android:layout_marginLeft="15dp"/>
+                    android:textSize="25sp"
+                    android:gravity="center"
+                    android:id="@+id/count"/>
+                <ImageButton
+                    android:layout_marginLeft="7dp"
+                    android:background="#00444444"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/btn_plus"
+                    android:scaleType="fitXY"
+                    android:id="@+id/count_plus"/>
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:background="#afafaf"
-                android:textSize="25sp"
-                android:gravity="center"
-                android:id="@+id/shot"/>
-            <ImageButton
-                android:background="#00444444"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/btn_plus"
-                android:scaleType="fitXY"
-                android:id="@+id/shot_plus"/>
-            <ImageButton
-                android:background="#00444444"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/btn_minus"
-                android:id="@+id/shot_minus"/>
         </LinearLayout>
         <LinearLayout
+            android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
+                android:textColor="#0c0c0c"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:text="시럽"
-                android:layout_marginRight="15dp"
+                android:text="샷 추가"
+                android:layout_marginRight="20dp"
                 android:layout_marginLeft="15dp"/>
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:background="#afafaf"
-                android:textSize="25sp"
-                android:gravity="center"
-                android:id="@+id/syrup"/>
-            <ImageButton
-                android:background="#00444444"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@drawable/btn_plus"
-                android:scaleType="fitXY"
-                android:id="@+id/syrup_plus"/>
-            <ImageButton
-                android:background="#00444444"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/btn_minus"
-                android:id="@+id/syrup_minus"/>
+            <LinearLayout
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <RadioGroup
+                    android:id="@+id/rgshot"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:textSize="30sp"
+                        android:text="-1"
+                        android:button="@null"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:button="@null"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="30sp"
+                        android:textColor="#ffffff"
+                        android:text="0"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:button="@null"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="30sp"
+                        android:text="1"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:button="@null"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="30sp"
+                        android:text="2"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:button="@null"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="30sp"
+                        android:text="3"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
+            android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
+                android:gravity="right"
+                android:textColor="#0c0c0c"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:text="얼음"
-                android:layout_marginRight="15dp"
+                android:text="시럽 추가"
+                android:layout_marginRight="20dp"
                 android:layout_marginLeft="15dp"/>
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/ice_ice">
-                <RadioButton
+            <LinearLayout
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <RadioGroup
+                    android:id="@+id/rgsyrup"
+                    android:orientation="horizontal"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="조금"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="보통"/>
-                <RadioButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="많이"/>
-            </RadioGroup>
+                    android:layout_height="wrap_content">
+
+                    <RadioButton
+                        android:button="@null"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="30sp"
+                        android:textColor="#ffffff"
+                        android:text="0"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:button="@null"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="30sp"
+                        android:text="1"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:button="@null"
+                        android:paddingTop="2dp"
+                        android:paddingBottom="2dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="30sp"
+                        android:text="2"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
+            android:gravity="center"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="horizontal">
             <TextView
-                android:layout_width="wrap_content"
+                android:textColor="#0c0c0c"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:textSize="25sp"
-                android:text="얼음"
-                android:layout_marginRight="15dp"
+                android:text="얼음 양"
+                android:layout_marginRight="20dp"
                 android:layout_marginLeft="15dp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="없음"/>
-            <Switch
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="25sp"
-                android:checked="false"
-                android:id="@+id/hot_ice"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="추가"/>
+            <LinearLayout
+                android:layout_weight="2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
+                <RadioGroup
+                    android:id="@+id/rgice"
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <RadioButton
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="25sp"
+                        android:text="조금"
+                        android:button="@null"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                    <RadioButton
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:button="@null"
+                        android:layout_marginRight="10dp"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="25sp"
+                        android:textColor="#ffffff"
+                        android:text="보통"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                    <RadioButton
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:button="@null"
+                        android:paddingLeft="18dp"
+                        android:paddingRight="18dp"
+                        android:textSize="25sp"
+                        android:text="많이"
+                        android:background="@drawable/opt_radio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </RadioGroup>
+            </LinearLayout>
         </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="0dp"
