@@ -1,5 +1,6 @@
 package com.example.yelimhan.smartorder.activity;
 
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -88,14 +89,14 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                     public void accept(Menu menu) throws Exception {
                         String str = "";
                         String resName = "";
-                        str += menu.getType();
+                        str += menu.getType().toLowerCase();
                         str += menu.getIndex();
-                        item = new OrderItem(menu.getName(), 1, menu.getType(), menu.getSize(), menu.getPrice());
+                        item = new OrderItem(menu.getName(), 1, menu.getType(), menu.getSize(), menu.getPrice(), menu.getOpt());
                         resName = "@drawable/" + str;
                         int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
                         favoriteImg.setImageResource(resID);
                         favoriteText.setText(menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
-                        Log.d(" favorite menu : " , menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
+                        Log.d(" favorite menu : " , menu.getType().toLowerCase() + " " + menu.getName() + "\n" + menu.getSize());
                     }
                 });
         disposable_recent = ApiService.getMENU_SERVICE().getRecentMenu("123qwe")
@@ -108,9 +109,9 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                         String resName;
                         for (Menu menu : menus) {
                             str = "";
-                            str += menu.getType();
+                            str += menu.getType().toLowerCase();
                             str += menu.getIndex();
-                            lastOrders.add(new OrderItem(menu.getName(), 1, menu.getType(), menu.getSize(), menu.getPrice()));
+                            lastOrders.add(new OrderItem(menu.getName(), 1, menu.getType(), menu.getSize(), menu.getPrice(), menu.getOpt()));
                             resName = "@drawable/" + str;
                             int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
                             lastOrderText[index].setText(menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
@@ -186,7 +187,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 if(!menu.getType().equals("BOTH")){
                                     o.mTemp = menu.getType();
                                     if(!menu.getSize().equals("BOTH")){
-                                        o.mTemp = menu.getSize();
+                                        o.mSize = menu.getSize();
                                         intent = new Intent(getApplicationContext(), OptionActivity.class);
                                     }
                                     else{
@@ -198,6 +199,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 }
                                 intent.putExtra("Object", o);
                                 intent.putExtra("menuList", (Serializable) oData);
+                                intent.putExtra("option", menu.getOpt());
                                 startActivityForResult(intent, 1000);
                             }
                         });
@@ -212,7 +214,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 if(!menu.getType().equals("BOTH")){
                                     o.mTemp = menu.getType();
                                     if(!menu.getSize().equals("BOTH")){
-                                        o.mTemp = menu.getSize();
+                                        o.mSize = menu.getSize();
                                         intent = new Intent(getApplicationContext(), OptionActivity.class);
                                     }
                                     else{
@@ -224,6 +226,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 }
                                 intent.putExtra("Object", o);
                                 intent.putExtra("menuList", (Serializable) oData);
+                                intent.putExtra("option", menu.getOpt());
                                 startActivityForResult(intent, 1000);
                             }
                         });
@@ -247,10 +250,23 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         listView.setAdapter(oAdapter);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+            OrderItem o = (OrderItem) data.getSerializableExtra("object");
+            oData.add(o);
+
+            updateTotalPrice();
+            oAdapter.notifyDataSetChanged();
+            listView.setAdapter(oAdapter);
+
+    }
+
     // 리스트의 삭제 버튼 클릭
     @Override
     public void onListBtnClick(int position) {
-        OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp, oData.get(position).mSize, oData.get(position).mPrice );
+        OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp,
+                oData.get(position).mSize, oData.get(position).mPrice, oData.get(position).mOption );
 
         // mCount 업데이트
         oData.get(position).mCount -= 1;
@@ -271,7 +287,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
             for(int i=0;i<index;i++){
                 if(v.getId() == lastOrderImg[i].getId()){       // 지난 주문의 이미지 클릭
                     if (oData.size() == 0){
-                        OrderItem newoi = new OrderItem(lastOrders.get(i).mName,lastOrders.get(i).mCount,lastOrders.get(i).mTemp,lastOrders.get(i).mSize,lastOrders.get(i).mPrice);
+                        OrderItem newoi = new OrderItem(lastOrders.get(i).mName,lastOrders.get(i).mCount,lastOrders.get(i).mTemp,
+                                lastOrders.get(i).mSize,lastOrders.get(i).mPrice, lastOrders.get(i).mOption);
                         oData.add(newoi);
                     }
                     else{
@@ -287,7 +304,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                             oData.get(j).mCount++;
                         }
                         else{
-                            OrderItem newoi = new OrderItem(lastOrders.get(i).mName,lastOrders.get(i).mCount,lastOrders.get(i).mTemp,lastOrders.get(i).mSize,lastOrders.get(i).mPrice);
+                            OrderItem newoi = new OrderItem(lastOrders.get(i).mName,lastOrders.get(i).mCount,lastOrders.get(i).mTemp,
+                                    lastOrders.get(i).mSize,lastOrders.get(i).mPrice, lastOrders.get(i).mOption);
                             oData.add(newoi);
                         }
                     }
@@ -298,7 +316,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
             }
 
             if(v.getId() == favoriteImg.getId()){       // 즐겨찾는 메뉴의 이미지 클릭
-                OrderItem temp = new OrderItem(item.mName, item.mCount, item.mTemp, item.mSize, item.mPrice);
+                OrderItem temp = new OrderItem(item.mName, item.mCount, item.mTemp, item.mSize, item.mPrice, item.mOption);
                 if (oData.size() == 0){
                     oData.add(temp);
                 }

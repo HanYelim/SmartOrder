@@ -131,7 +131,9 @@
                             android:text="0"
                             android:background="@drawable/opt_radio"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:checked="true"/>
                         <RadioButton
                             android:id="@+id/rgs3"
                             android:button="@null"
@@ -211,7 +213,9 @@
                             android:text="0"
                             android:background="@drawable/opt_radio"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:checked="true"/>
                         <RadioButton
                             android:id="@+id/rgss2"
                             android:button="@null"
@@ -290,7 +294,9 @@
                             android:text="보통"
                             android:background="@drawable/opt_radio"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                            android:checked="true"/>
                         <RadioButton
                             android:id="@+id/rgi3"
                             android:paddingTop="6dp"
