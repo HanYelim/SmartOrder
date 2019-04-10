@@ -48,7 +48,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
 
     private Disposable disposable_favorite, disposable_allmenu, disposable_recent;
 
-    Button btnDelete;
+    Button btnSubmit;
     ListAdapter oAdapter;
     int index = 0;
     Button allMenu, lastMenu;
@@ -77,6 +77,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         //favMenu = findViewById(R.id.favMenu);
         layout1 = findViewById(R.id.layout1);
         layout_all = findViewById(R.id.allMenu_layout);
+        btnSubmit = findViewById(R.id.submit_btn);
 
         tvTotal = findViewById(R.id.txttotal);
 
@@ -137,13 +138,13 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                 layout_all.setVisibility(View.VISIBLE);
             }
         });
-//        favMenu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                gridView.setVisibility(View.GONE);
-//                layout1.setVisibility(View.VISIBLE);
-//            }
-//        });
+        btnSubmit.setOnClickListener(new View.OnClickListener() { // 전송 누르면 결제창으로 넘어간다냥
+            @Override
+            public void onClick(View view) {
+                
+            }
+        });
+
         final Random random = new Random();
         disposable_allmenu = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴
                 .subscribeOn(Schedulers.io())

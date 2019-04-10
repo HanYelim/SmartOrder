@@ -58,6 +58,7 @@
                             android:layout_width="150dp"
                             android:layout_height="125dp"
                             android:src="@drawable/ice5"
+                            android:layout_gravity="center"
                             android:id="@+id/favoriteImg"/>
 
                         <TextView
@@ -78,6 +79,7 @@
                         <ImageView
                             android:layout_width="150dp"
                             android:layout_height="125dp"
+                            android:layout_gravity="center"
                             android:id="@+id/lastOrderImg1"/>
                         <TextView
                             android:gravity="center"
@@ -96,6 +98,7 @@
                         <ImageView
                             android:layout_width="150dp"
                             android:layout_height="125dp"
+                            android:layout_gravity="center"
                             android:id="@+id/lastOrderImg2"/>
                         <TextView
                             android:gravity="center"
@@ -109,6 +112,7 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:layout_gravity="center"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <ImageView
@@ -261,6 +265,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/submit_btn"
             android:text="결제하기" />
 
 
