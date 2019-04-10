@@ -1,6 +1,7 @@
 package com.example.yelimhan.smartorder.activity;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -23,6 +24,9 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
     ListAdapter oAdapter;
     ArrayList<OrderItem> oData;
     TextView tvTotal;
+    String option;
+    Intent intent;
+    OrderItem o;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +34,10 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_choose_type);
-        final OrderItem o = (OrderItem) getIntent().getSerializableExtra("Object");
+        o = (OrderItem) getIntent().getSerializableExtra("Object");
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
+        intent = getIntent();
+        option = getIntent().getStringExtra("option");
         tv = findViewById(R.id.menu);
         tv.setText(o.mName);
         ice = findViewById(R.id.ice);
@@ -46,8 +52,8 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 o.mTemp = "ice";
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
-                startActivity(intent);
-                finish();
+                intent.putExtra("option", option);
+                startActivityForResult(intent, 1000);
             }
         });
 
@@ -57,19 +63,31 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 Intent intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
                 o.mTemp = "hot";
                 intent.putExtra("Object", o);
+                intent.putExtra("option", option);
                 intent.putExtra("menuList", oData);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, 1000);
             }
         });
 
         oAdapter = new ListAdapter(ChooseTypeActivity.this, oData, listView, this);
         listView.setAdapter(oAdapter);
+        updateTotalPrice();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == 1000){
+            intent.putExtra("object", o);
+            setResult(1000, intent);
+            finish();
+        }
     }
 
     @Override
     public void onListBtnClick(int position) {
-        OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp, oData.get(position).mSize, oData.get(position).mPrice );
+        OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp,
+                oData.get(position).mSize, oData.get(position).mPrice, oData.get(position).mOption );
 
         // mCount 업데이트
         oData.get(position).mCount -= 1;

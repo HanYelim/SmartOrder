@@ -1,5 +1,6 @@
 package com.example.yelimhan.smartorder.activity;
 
+import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -35,6 +36,9 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
     RadioButton[] btn_rgss;
     RadioButton[] btn_rgi;
     Button menu, cart;
+    String option;
+    String result_opt = "";
+    Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +48,8 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
         setContentView(R.layout.activity_option);
         final OrderItem o = (OrderItem) getIntent().getSerializableExtra("Object");
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
+        intent = getIntent();
+        option = getIntent().getStringExtra("option");
         tvCount = findViewById(R.id.count);
         countMinus = findViewById(R.id.count_minus);
         countPlus = findViewById(R.id.count_plus);
@@ -54,6 +60,45 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
         tvTotal = findViewById(R.id.txttotal);
         menu = findViewById(R.id.menu);
         cart = findViewById(R.id.cart);
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                result_opt = "";
+                int shot, syrup, ice;
+
+                // 개수
+                int count = Integer.parseInt(tvCount.getText().toString());
+
+                // 샷
+                if(option.equals("111"))
+                    shot = rgShot.indexOfChild(findViewById(rgShot.getCheckedRadioButtonId()));
+                else
+                    shot = -1;
+                result_opt += String.valueOf(shot) + " ";
+
+                // 시럽
+                if(option.equals("011"))
+                    syrup = rgSyrup.indexOfChild(findViewById(rgSyrup.getCheckedRadioButtonId()));
+                else
+                    syrup = -1;
+                result_opt += String.valueOf(syrup) + " ";
+
+                //얼음
+                if(option.equals("001"))
+                    ice = rgIce.indexOfChild(findViewById(rgIce.getCheckedRadioButtonId()));
+                else
+                    ice = -1;
+
+                result_opt += String.valueOf(ice);
+
+                Log.d("opt test : ", result_opt);
+                o.mOption = result_opt;
+                o.mCount = count;
+                intent.putExtra("object", o);
+                setResult(1000, intent);
+                finish();
+            }
+        });
 
         tvCount.setText("1");
         menu.setText("\"" + o.mName + " " + o.mTemp + " " + o.mSize + "\"의 옵션을 선택해 주세요.");
@@ -124,13 +169,37 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
             }
         });
 
+        if(option.equals("011")){
+            for (int i = 0; i < btn_rgs.length; i++) {
+                btn_rgs[i].setClickable(false);
+                btn_rgs[i].setBackground(getDrawable(R.drawable.gray_round));
+            }
+        }
+        else if(option.equals("001")){
+            for (int i = 0; i < btn_rgs.length; i++) {
+                btn_rgs[i].setClickable(false);
+                btn_rgs[i].setBackground(getDrawable(R.drawable.gray_round));
+            }
+            for(int i = 0; i < btn_rgss.length; i++){
+                btn_rgss[i].setClickable(false);
+                btn_rgss[i].setBackground(getDrawable(R.drawable.gray_round));
+            }
+        }
+        if(o.mTemp.equals("HOT")){
+            for(int i = 0; i < btn_rgi.length; i++){
+                btn_rgi[i].setClickable(false);
+                btn_rgi[i].setBackground(getDrawable(R.drawable.gray_round));
+            }
+        }
+
         oAdapter = new ListAdapter(OptionActivity.this, oData, listView, this);
         listView.setAdapter(oAdapter);
-
+        updateTotalPrice();
     }
 
     public void onListBtnClick(int position) {
-        OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp, oData.get(position).mSize, oData.get(position).mPrice );
+        OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp,
+                oData.get(position).mSize, oData.get(position).mPrice, oData.get(position).mOption );
 
         // mCount 업데이트
         oData.get(position).mCount -= 1;
@@ -147,7 +216,7 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
     }
 
     void updateTotalPrice(){
-        int price=0;
+        int price = 0;
         for (OrderItem oi : oData){
             price += Integer.parseInt(oi.mPrice);
         }

@@ -23,6 +23,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
     ListAdapter oAdapter;
     ArrayList<OrderItem> oData;
     TextView tvTotal;
+    String option;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
         setContentView(R.layout.activity_choose_size);
         final OrderItem o = (OrderItem) getIntent().getSerializableExtra("Object");
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
+        option = getIntent().getStringExtra("option");
         tv = findViewById(R.id.menu);
         large = findViewById(R.id.large);
         small = findViewById(R.id.small);
@@ -46,6 +48,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
                 o.mSize = "large";
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
+                intent.putExtra("option", option);
                 startActivity(intent);
                 finish();
             }
@@ -58,6 +61,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
                 o.mSize = "small";
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
+                intent.putExtra("option", option);
                 startActivity(intent);
                 finish();
             }
@@ -65,10 +69,12 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
 
         oAdapter = new ListAdapter(ChooseSizeActivity.this, oData, listView, this);
         listView.setAdapter(oAdapter);
+        updateTotalPrice();
     }
 
     public void onListBtnClick(int position) {
-        OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp, oData.get(position).mSize, oData.get(position).mPrice );
+        OrderItem temp = new OrderItem(oData.get(position).mName , oData.get(position).mCount , oData.get(position).mTemp,
+                oData.get(position).mSize, oData.get(position).mPrice, oData.get(position).mOption );
 
         // mCount 업데이트
         oData.get(position).mCount -= 1;
