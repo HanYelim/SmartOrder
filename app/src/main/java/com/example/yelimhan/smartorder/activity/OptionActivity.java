@@ -43,7 +43,7 @@ public class OptionActivity extends AppCompatActivity {
             }
         });
 
-        rdshot = findViewById(R.id.rdshot);
+        rdshot = findViewById(R.id.rgshot);
         rdshot.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {

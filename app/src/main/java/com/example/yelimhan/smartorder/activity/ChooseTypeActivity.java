@@ -42,6 +42,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 Intent intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
                 o.mTemp = "ice";
                 intent.putExtra("Object", o);
+                intent.putExtra("menuList", oData);
                 startActivity(intent);
             }
         });
@@ -52,6 +53,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 Intent intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
                 o.mTemp = "hot";
                 intent.putExtra("Object", o);
+                intent.putExtra("menuList", oData);
                 startActivity(intent);
             }
         });
@@ -82,7 +84,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
         int price=0;
         for (OrderItem oi : oData){
             price += Integer.parseInt(oi.mPrice);
-            tvTotal.setText("총 가격 : "+price);
         }
+        tvTotal.setText("총 가격 : " + price);
     }
 }

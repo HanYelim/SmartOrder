@@ -48,7 +48,8 @@
             android:layout_height="20dp"
             android:scaleType="fitCenter"
             android:src="@drawable/btn_list_delete"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
     <TextView
         android:textSize="16sp"

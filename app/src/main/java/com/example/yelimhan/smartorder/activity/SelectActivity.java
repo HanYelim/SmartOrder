@@ -204,7 +204,6 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
 
         oAdapter = new ListAdapter(SelectActivity.this, oData, listView, this);
         listView.setAdapter(oAdapter);
-
     }
 
     // 리스트의 삭제 버튼 클릭
@@ -300,10 +299,10 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         return 0;
     }
     void updateTotalPrice(){
-        int price=0;
+        int price = 0;
         for (OrderItem oi : oData){
             price += Integer.parseInt(oi.mPrice);
-            tvTotal.setText("총 가격 : "+price);
         }
+        tvTotal.setText("총 가격 : " + price);
     }
 }
