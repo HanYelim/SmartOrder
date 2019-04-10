@@ -24,6 +24,7 @@ import com.example.yelimhan.smartorder.network.ApiService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -38,7 +39,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     private ImageView favoriteImg;
     private TextView favoriteText;
     private TextView tvTotal;
-    List<Menu> all_menu_list = new ArrayList<>();
+    List<Menu> rec_menu_list = new ArrayList<>();
     List<OrderItem> oData = new ArrayList<>();
     List<OrderItem>  lastOrders = new ArrayList<>();
     OrderItem item = null;      // 즐겨찾는 메뉴 객체
@@ -50,7 +51,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     int index = 0;
     Button allMenu, lastMenu;
     LinearLayout layout1, layout_all;
-    GridView gridView;
+    GridView gridView, re_gridView;
     Intent intent;
 
 
@@ -142,22 +143,27 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
 //                layout1.setVisibility(View.VISIBLE);
 //            }
 //        });
+        final Random random = new Random();
         disposable_allmenu = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new io.reactivex.functions.Consumer<ArrayList<Menu>>() {
                     @Override
-                    public void accept(ArrayList<Menu> menus) {
-                        for(Menu menu : menus)
-                            all_menu_list.add(menu);
+                    public void accept(final ArrayList<Menu> menus) {
+                        for(int i = 0; i < 4; i++){
+                            rec_menu_list.add(menus.get(random.nextInt(menus.size())));
+                        }
                         MenuAdapter menuAdapter = new MenuAdapter(getApplicationContext(), R.layout.menu_item, menus);
+                        MenuAdapter menuAdapter2 = new MenuAdapter(getApplicationContext(), R.layout.menu_item, rec_menu_list);
                         gridView = (GridView)findViewById(R.id.gridView1);
+                        re_gridView = (GridView)findViewById(R.id.re_menu_grid);
                         gridView.setAdapter(menuAdapter);
+                        re_gridView.setAdapter(menuAdapter2);
 
                         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                Menu menu = all_menu_list.get(i); // 이게 메뉴정보
+                                Menu menu = menus.get(i); // 이게 메뉴정보
                                 // menu.getName() 하면 이름 넘어옴
                                 Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
@@ -199,7 +205,6 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         listView.setAdapter(oAdapter);
 
     }
-
 
     // 리스트의 삭제 버튼 클릭
     @Override
