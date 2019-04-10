@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e0dfde"
     tools:context=".activity.SelectActivity">
     <LinearLayout
         android:tag="왼쪽 전체"
@@ -42,6 +43,8 @@
                 android:id="@+id/lastMenu"/>
         </LinearLayout>
         <LinearLayout
+            android:layout_margin="3dp"
+            android:background="@drawable/round"
             android:id="@+id/layout1"
             android:tag="즐찾, 지난부분 음료정보 부분"
             android:layout_width="match_parent"
@@ -151,6 +154,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <GridView
+                android:background="@drawable/round"
                 android:visibility="invisible"
                 android:id="@+id/gridView1"
                 android:layout_width="match_parent"
