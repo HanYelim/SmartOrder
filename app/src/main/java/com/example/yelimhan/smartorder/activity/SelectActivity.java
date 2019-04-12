@@ -264,12 +264,12 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                     break;
             }
             if(same == 10000){
-                oData.get(j).mPrice = String.valueOf(Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(o.mPrice)*o.mCount);
+                oData.get(j).mPrice = String.valueOf((Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(o.mPrice))*o.mCount);
                 oData.get(j).mCount += o.mCount;
             }
             else{
                 OrderItem newoi = new OrderItem(o.mName,o.mCount,o.mTemp,
-                        o.mSize,o.mPrice, o.mOption);
+                        o.mSize,String.valueOf(Integer.parseInt(o.mPrice)*o.mCount), o.mOption);
                 oData.add(newoi);
             }
 
