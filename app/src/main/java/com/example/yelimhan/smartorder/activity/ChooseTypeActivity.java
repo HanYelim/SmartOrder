@@ -51,8 +51,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
                 intent.putExtra("option", option);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, 1000);
             }
         });
 
@@ -64,14 +63,27 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 intent.putExtra("Object", o);
                 intent.putExtra("option", option);
                 intent.putExtra("menuList", oData);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, 1000);
+
             }
         });
 
         oAdapter = new ListAdapter(ChooseTypeActivity.this, oData, listView, this);
         listView.setAdapter(oAdapter);
         updateTotalPrice();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == 1000){
+            Intent intent1;
+            intent1 = new Intent(getApplicationContext(), SelectActivity.class);
+            o = (OrderItem) data.getSerializableExtra("object");
+            intent1.putExtra("object", o);
+            setResult(1000, intent1);
+            finish();
+        }
     }
 
     @Override

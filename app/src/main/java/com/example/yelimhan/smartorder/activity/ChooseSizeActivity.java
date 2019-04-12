@@ -1,6 +1,7 @@
 package com.example.yelimhan.smartorder.activity;
 
 import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +25,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
     ArrayList<OrderItem> oData;
     TextView tvTotal;
     String option;
+    OrderItem o;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_choose_size);
-        final OrderItem o = (OrderItem) getIntent().getSerializableExtra("Object");
+        o = (OrderItem) getIntent().getSerializableExtra("Object");
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
         option = getIntent().getStringExtra("option");
         tv = findViewById(R.id.menu);
@@ -49,8 +51,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
                 intent.putExtra("option", option);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, 1000);
             }
         });
 
@@ -62,8 +63,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
                 intent.putExtra("option", option);
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, 1000);
             }
         });
 
@@ -88,6 +88,22 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
         updateTotalPrice();
         oAdapter.notifyDataSetChanged();
         listView.setAdapter(oAdapter);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == 1000){
+            Intent intent1, intent2;
+            intent1 = new Intent(getApplicationContext(), ChooseTypeActivity.class);
+            intent2 = new Intent(getApplicationContext(), SelectActivity.class);
+            o = (OrderItem) data.getSerializableExtra("object");
+            intent1.putExtra("object", o);
+            intent2.putExtra("object", o);
+            setResult(1000, intent1);
+            setResult(1000, intent2);
+            finish();
+        }
     }
 
     void updateTotalPrice(){
