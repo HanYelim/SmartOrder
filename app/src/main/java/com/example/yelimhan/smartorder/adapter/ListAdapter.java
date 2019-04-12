@@ -78,14 +78,32 @@ public class ListAdapter extends ArrayAdapter<OrderItem>  implements View.OnClic
         tvp.setText(oi.mPrice + "원");
 
         String opt = "";
-        if(!oi.mSize.equals("")){
+        if(!oi.mSize.equals(" ")){
             opt += "  └ " + oi.mSize +"\n";
         }
-        if(!oi.mTemp.equals("")){
-            opt += "  └ " + oi.mTemp;
-        }
-        tvo.setText(opt);
+        Log.d("oi size", oi.mSize);
+        Log.d("oi temp", oi.mTemp);
 
+        if(!oi.mTemp.equals(" ")){
+            if(oi.mOption.equals("-1 -1 -1"))   // 옵션 아무것도 안되는 경우
+                opt += "  └ " + oi.mTemp;
+            else
+                opt += "  └ " + oi.mTemp + "\n";
+
+        }
+        String[] arr = oi.mOption.split(" ");
+        if(!arr[0].equals("-1") || arr[0].equals("1"))
+            opt+="  └ "+ "샷 추가 "+String.valueOf(Integer.parseInt(arr[0])-1) + "\n";
+        if(!arr[1].equals("-1") || arr[1].equals("0"))
+            opt+="  └ "+ "시럽 추가 "+String.valueOf(Integer.parseInt(arr[1])) + "\n";
+        if(arr[2].equals("0"))
+            opt+="  └ "+ "얼음 조금";
+        else if(arr[2].equals("1"))
+            opt+="  └ "+ "얼음 보통";
+        else if(arr[2].equals("2"))
+            opt+="  └ "+ "얼음 많이";
+
+        tvo.setText(opt);
 
         return rowView;
     }

@@ -184,6 +184,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
                                 OrderItem o = new OrderItem(menu.getName());
+                                o.mPrice = menu.getPrice();
                                 if(!menu.getType().equals("BOTH")){
                                     o.mTemp = menu.getType();
                                     if(!menu.getSize().equals("BOTH")){
@@ -211,6 +212,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
                                 OrderItem o = new OrderItem(menu.getName());
+                                o.mPrice = menu.getPrice();
                                 if(!menu.getType().equals("BOTH")){
                                     o.mTemp = menu.getType();
                                     if(!menu.getSize().equals("BOTH")){
@@ -253,13 +255,16 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1000) {
             OrderItem o = (OrderItem) data.getSerializableExtra("object");
             oData.add(o);
 
             updateTotalPrice();
             oAdapter.notifyDataSetChanged();
             listView.setAdapter(oAdapter);
-
+            Log.d("option", o.mOption);
+            Log.d("size", o.mSize);
+        }
     }
 
     // 리스트의 삭제 버튼 클릭

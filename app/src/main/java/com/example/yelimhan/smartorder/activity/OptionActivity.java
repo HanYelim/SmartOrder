@@ -48,7 +48,7 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
         setContentView(R.layout.activity_option);
         final OrderItem o = (OrderItem) getIntent().getSerializableExtra("Object");
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
-        intent = getIntent();
+        intent = new Intent(getApplicationContext(), SelectActivity.class);
         option = getIntent().getStringExtra("option");
         tvCount = findViewById(R.id.count);
         countMinus = findViewById(R.id.count_minus);

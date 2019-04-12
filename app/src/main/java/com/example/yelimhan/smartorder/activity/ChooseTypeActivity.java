@@ -25,7 +25,6 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
     ArrayList<OrderItem> oData;
     TextView tvTotal;
     String option;
-    Intent intent;
     OrderItem o;
 
     @Override
@@ -36,7 +35,6 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
         setContentView(R.layout.activity_choose_type);
         o = (OrderItem) getIntent().getSerializableExtra("Object");
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
-        intent = getIntent();
         option = getIntent().getStringExtra("option");
         tv = findViewById(R.id.menu);
         tv.setText(o.mName);
@@ -53,7 +51,8 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
                 intent.putExtra("option", option);
-                startActivityForResult(intent, 1000);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -65,23 +64,14 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
                 intent.putExtra("Object", o);
                 intent.putExtra("option", option);
                 intent.putExtra("menuList", oData);
-                startActivityForResult(intent, 1000);
+                startActivity(intent);
+                finish();
             }
         });
 
         oAdapter = new ListAdapter(ChooseTypeActivity.this, oData, listView, this);
         listView.setAdapter(oAdapter);
         updateTotalPrice();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 1000){
-            intent.putExtra("object", o);
-            setResult(1000, intent);
-            finish();
-        }
     }
 
     @Override
