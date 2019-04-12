@@ -41,36 +41,44 @@
                     android:paddingLeft="20dp"/>
 
                 <LinearLayout
-                    android:layout_marginTop="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="4"
                     android:orientation="horizontal"
                     android:weightSum="4">
-
-                    <LinearLayout
+                    <FrameLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <ImageView
-                            android:layout_width="150dp"
-                            android:layout_height="125dp"
-                            android:src="@drawable/ice5"
-                            android:id="@+id/favoriteImg"
-                            android:layout_gravity="center"/>
-
-                        <TextView
+                        android:layout_height="match_parent">
+                        <LinearLayout
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            android:layout_gravity="center"
-                            android:text="아무말"
-                            android:gravity="center"
-                            android:id="@+id/favoriteText"/>
-                    </LinearLayout>
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
+                            <ImageView
+                                android:layout_marginTop="20dp"
+                                android:layout_width="150dp"
+                                android:layout_height="125dp"
+                                android:src="@drawable/ice5"
+                                android:id="@+id/favoriteImg"
+                                android:layout_gravity="center"/>
+
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                android:layout_gravity="center"
+                                android:text="아무말"
+                                android:gravity="center"
+                                android:id="@+id/favoriteText"/>
+                        </LinearLayout>
+                        <ImageView
+                            android:layout_gravity="right|top"
+                            android:src="@drawable/crown"
+                            android:layout_width="75dp"
+                            android:layout_height="60dp" />
+                    </FrameLayout>
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_weight="1"

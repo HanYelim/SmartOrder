@@ -94,6 +94,7 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
                 result_opt += String.valueOf(ice);
 
                 Log.d("opt test : ", result_opt);
+                o.mCount = count;
                 o.mOption = result_opt;
                 o.mCount = count;
                 intent.putExtra("object", o);
