@@ -77,14 +77,14 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
                 result_opt += String.valueOf(shot) + " ";
 
                 // 시럽
-                if(option.equals("011"))
+                if(option.equals("011") || option.equals("111"))
                     syrup = rgSyrup.indexOfChild(findViewById(rgSyrup.getCheckedRadioButtonId()));
                 else
                     syrup = -1;
                 result_opt += String.valueOf(syrup) + " ";
 
                 //얼음
-                if(option.equals("001"))
+                if(option.equals("001") || option.equals("011") || option.equals("111"))
                     ice = rgIce.indexOfChild(findViewById(rgIce.getCheckedRadioButtonId()));
                 else
                     ice = -1;

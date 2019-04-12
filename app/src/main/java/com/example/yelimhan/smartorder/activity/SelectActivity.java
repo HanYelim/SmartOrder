@@ -257,13 +257,29 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == 1000) {
             OrderItem o = (OrderItem) data.getSerializableExtra("object");
-            oData.add(o);
+            int same = 0, j;
+            for(j = 0; j < oData.size(); j++){
+                same = IsSame(o, oData.get(j));
+                if(same == 10000)
+                    break;
+            }
+            if(same == 10000){
+                oData.get(j).mPrice = String.valueOf(Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(o.mPrice));
+                oData.get(j).mCount++;
+            }
+            else{
+                OrderItem newoi = new OrderItem(o.mName,o.mCount,o.mTemp,
+                        o.mSize,o.mPrice, o.mOption);
+                oData.add(newoi);
+            }
 
             updateTotalPrice();
             oAdapter.notifyDataSetChanged();
             listView.setAdapter(oAdapter);
             Log.d("option", o.mOption);
             Log.d("size", o.mSize);
+
+
         }
     }
 
@@ -357,7 +373,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         if(new_item.mName.equals(old_item.mName))
             if(new_item.mSize.equals(old_item.mSize))
                 if(new_item.mTemp.equals(old_item.mTemp))
-                    return 10000;
+                    if(new_item.mOption.equals(old_item.mOption))
+                        return 10000;
 
 
         return 0;
