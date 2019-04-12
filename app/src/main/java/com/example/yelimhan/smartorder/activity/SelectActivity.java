@@ -112,6 +112,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                             str += menu.getType().toLowerCase();
                             str += menu.getIndex();
                             lastOrders.add(new OrderItem(menu.getName(), 1, menu.getType(), menu.getSize(), menu.getPrice(), menu.getOpt()));
+                            Log.d("option", menu.getOpt());
                             resName = "@drawable/" + str;
                             int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
                             lastOrderText[index].setText(menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
@@ -276,10 +277,6 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
             updateTotalPrice();
             oAdapter.notifyDataSetChanged();
             listView.setAdapter(oAdapter);
-            Log.d("option", o.mOption);
-            Log.d("size", o.mSize);
-
-
         }
     }
 
