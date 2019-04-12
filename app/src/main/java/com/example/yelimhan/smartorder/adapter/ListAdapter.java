@@ -89,7 +89,8 @@ public class ListAdapter extends ArrayAdapter<OrderItem>  implements View.OnClic
 
         }
         String[] arr = oi.mOption.split(" ");
-        if(!arr[0].equals("-1") || arr[0].equals("1"))
+        Log.d("oi option: ", oi.mOption);
+        if(!arr[0].equals("-1") && !arr[0].equals("1"))
             opt+="\n  └ "+ "샷 추가 "+String.valueOf(Integer.parseInt(arr[0])-1);
         if(!arr[1].equals("-1") && !arr[1].equals("0"))
             opt+="\n  └ "+ "시럽 추가 "+String.valueOf(Integer.parseInt(arr[1]));
