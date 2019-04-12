@@ -38,7 +38,7 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
     Button menu, cart;
     String option;
     String result_opt = "";
-    Intent intent;
+    Intent intent, intent1, intent2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,9 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
         setContentView(R.layout.activity_option);
         final OrderItem o = (OrderItem) getIntent().getSerializableExtra("Object");
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
-        intent = getIntent();
+        intent = new Intent(getApplicationContext(), SelectActivity.class);
+        intent1 = new Intent(getApplicationContext(), ChooseTypeActivity.class);
+        intent2 = new Intent(getApplicationContext(), ChooseSizeActivity.class);
         option = getIntent().getStringExtra("option");
         tvCount = findViewById(R.id.count);
         countMinus = findViewById(R.id.count_minus);
@@ -77,14 +79,14 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
                 result_opt += String.valueOf(shot) + " ";
 
                 // 시럽
-                if(option.equals("011"))
+                if(option.equals("011") || option.equals("111"))
                     syrup = rgSyrup.indexOfChild(findViewById(rgSyrup.getCheckedRadioButtonId()));
                 else
                     syrup = -1;
                 result_opt += String.valueOf(syrup) + " ";
 
                 //얼음
-                if(option.equals("001"))
+                if(option.equals("001") || option.equals("011") || option.equals("111"))
                     ice = rgIce.indexOfChild(findViewById(rgIce.getCheckedRadioButtonId()));
                 else
                     ice = -1;
@@ -92,10 +94,15 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
                 result_opt += String.valueOf(ice);
 
                 Log.d("opt test : ", result_opt);
+                o.mCount = count;
                 o.mOption = result_opt;
                 o.mCount = count;
                 intent.putExtra("object", o);
+                intent1.putExtra("object", o);
+                intent2.putExtra("object", o);
                 setResult(1000, intent);
+                setResult(1000, intent1);
+                setResult(1000, intent2);
                 finish();
             }
         });

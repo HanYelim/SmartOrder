@@ -185,6 +185,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
                                 OrderItem o = new OrderItem(menu.getName());
+                                o.mPrice = menu.getPrice();
                                 if(!menu.getType().equals("BOTH")){
                                     o.mTemp = menu.getType();
                                     if(!menu.getSize().equals("BOTH")){
@@ -212,6 +213,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                                 Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
                                 OrderItem o = new OrderItem(menu.getName());
+                                o.mPrice = menu.getPrice();
                                 if(!menu.getType().equals("BOTH")){
                                     o.mTemp = menu.getType();
                                     if(!menu.getSize().equals("BOTH")){
@@ -254,13 +256,32 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == 1000) {
             OrderItem o = (OrderItem) data.getSerializableExtra("object");
-            oData.add(o);
+            int same = 0, j;
+            for(j = 0; j < oData.size(); j++){
+                same = IsSame(o, oData.get(j));
+                if(same == 10000)
+                    break;
+            }
+            if(same == 10000){
+                oData.get(j).mPrice = String.valueOf(Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(o.mPrice)*o.mCount);
+                oData.get(j).mCount += o.mCount;
+            }
+            else{
+                OrderItem newoi = new OrderItem(o.mName,o.mCount,o.mTemp,
+                        o.mSize,o.mPrice, o.mOption);
+                oData.add(newoi);
+            }
 
             updateTotalPrice();
             oAdapter.notifyDataSetChanged();
             listView.setAdapter(oAdapter);
+            Log.d("option", o.mOption);
+            Log.d("size", o.mSize);
 
+
+        }
     }
 
     // 리스트의 삭제 버튼 클릭
@@ -353,7 +374,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         if(new_item.mName.equals(old_item.mName))
             if(new_item.mSize.equals(old_item.mSize))
                 if(new_item.mTemp.equals(old_item.mTemp))
-                    return 10000;
+                    if(new_item.mOption.equals(old_item.mOption))
+                        return 10000;
 
 
         return 0;
