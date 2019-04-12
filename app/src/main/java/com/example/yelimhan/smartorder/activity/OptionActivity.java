@@ -38,7 +38,7 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
     Button menu, cart;
     String option;
     String result_opt = "";
-    Intent intent;
+    Intent intent, intent1, intent2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,8 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
         final OrderItem o = (OrderItem) getIntent().getSerializableExtra("Object");
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
         intent = new Intent(getApplicationContext(), SelectActivity.class);
+        intent1 = new Intent(getApplicationContext(), ChooseTypeActivity.class);
+        intent2 = new Intent(getApplicationContext(), ChooseSizeActivity.class);
         option = getIntent().getStringExtra("option");
         tvCount = findViewById(R.id.count);
         countMinus = findViewById(R.id.count_minus);
@@ -95,7 +97,11 @@ public class OptionActivity extends AppCompatActivity implements ListAdapter.Lis
                 o.mOption = result_opt;
                 o.mCount = count;
                 intent.putExtra("object", o);
+                intent1.putExtra("object", o);
+                intent2.putExtra("object", o);
                 setResult(1000, intent);
+                setResult(1000, intent1);
+                setResult(1000, intent2);
                 finish();
             }
         });
