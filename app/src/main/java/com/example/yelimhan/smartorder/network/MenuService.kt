@@ -1,9 +1,9 @@
 package com.example.yelimhan.smartorder.network
 
 import com.example.yelimhan.smartorder.model.Menu
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.example.yelimhan.smartorder.network.model.BaseResponse
 import io.reactivex.Observable
+import retrofit2.http.*
 
 interface MenuService {
     @GET("menu_list.php")
@@ -17,5 +17,16 @@ interface MenuService {
 
     @GET("favorite_menu.php")
     fun getFavoriteMenu(@Query("mCustomer") name: String): Observable<Menu>
+
+    @FormUrlEncoded
+    @POST("insert_order.php")
+    fun insertOrder(@Field("mCustomer") mCustomer: String,
+                             @Field("name") name: String,
+                             @Field("size") size: String,
+                             @Field("type") type: String,
+                             @Field("option") option: String,
+                             @Field("mindex") mindex: Int,
+                             @Field("count") count: Int,
+                             @Field("price") price: Int): Observable<BaseResponse>
 
 }

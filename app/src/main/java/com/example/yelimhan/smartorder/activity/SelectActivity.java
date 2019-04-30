@@ -1,9 +1,9 @@
 package com.example.yelimhan.smartorder.activity;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -13,13 +13,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.content.Intent;
 
-import com.example.yelimhan.smartorder.adapter.ListAdapter;
-import com.example.yelimhan.smartorder.adapter.MenuAdapter;
 import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
+import com.example.yelimhan.smartorder.adapter.ListAdapter;
+import com.example.yelimhan.smartorder.adapter.MenuAdapter;
 import com.example.yelimhan.smartorder.model.Menu;
 import com.example.yelimhan.smartorder.network.ApiService;
 
@@ -55,7 +53,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     Button allMenu, lastMenu;
     LinearLayout layout1, layout_all;
     GridView gridView, re_gridView;
-    Intent intent;
+    Intent intent, submit_intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +140,9 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         btnSubmit.setOnClickListener(new View.OnClickListener() { // 전송 누르면 결제창으로 넘어간다냥
             @Override
             public void onClick(View view) {
-                
+                submit_intent = new Intent(getApplicationContext(), SubmitActivity.class);
+                submit_intent.putExtra("menuList", (Serializable) oData);
+                startActivityForResult(submit_intent, 1000);
             }
         });
 
