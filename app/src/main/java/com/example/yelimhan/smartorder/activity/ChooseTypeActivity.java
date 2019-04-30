@@ -47,7 +47,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
-                o.mTemp = "ice";
+                o.mTemp = "ICE";
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
                 intent.putExtra("option", option);
@@ -59,7 +59,7 @@ public class ChooseTypeActivity extends AppCompatActivity implements ListAdapter
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ChooseSizeActivity.class);
-                o.mTemp = "hot";
+                o.mTemp = "HOT";
                 intent.putExtra("Object", o);
                 intent.putExtra("option", option);
                 intent.putExtra("menuList", oData);

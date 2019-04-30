@@ -47,7 +47,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
-                o.mSize = "large";
+                o.mSize = "LARGE";
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
                 intent.putExtra("option", option);
@@ -59,7 +59,7 @@ public class ChooseSizeActivity extends AppCompatActivity implements ListAdapter
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), OptionActivity.class);
-                o.mSize = "small";
+                o.mSize = "SMALL";
                 intent.putExtra("Object", o);
                 intent.putExtra("menuList", oData);
                 intent.putExtra("option", option);

@@ -97,7 +97,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                         int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
                         favoriteImg.setImageResource(resID);
                         favoriteText.setText(menu.getType() + " " + menu.getName() + "\n" + menu.getSize());
-                        Log.d(" favorite menu : " , menu.getType().toLowerCase() + " " + menu.getName() + "\n" + menu.getSize());
+                        //Log.d(" favorite menu : " , menu.getType().toLowerCase() + " " + menu.getName() + "\n" + menu.getSize());
                     }
                 });
         disposable_recent = ApiService.getMENU_SERVICE().getRecentMenu("123qwe")
@@ -182,7 +182,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                 Menu menu = menus.get(i); // 이게 메뉴정보
                                 // menu.getName() 하면 이름 넘어옴
-                                Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
+                                //Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
                                 OrderItem o = new OrderItem(menu.getName());
                                 o.mPrice = menu.getPrice();
@@ -210,7 +210,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                                 Menu menu = rec_menu_list.get(i); // 이게 메뉴정보
                                 // menu.getName() 하면 이름 넘어옴
-                                Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
+                                //Log.d("전체 메뉴 중 니가 누른거 : ", menu.getName());
                                 //그리드뷰 눌렁승ㄹ대
                                 OrderItem o = new OrderItem(menu.getName());
                                 o.mPrice = menu.getPrice();
@@ -265,22 +265,18 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                     break;
             }
             if(same == 10000){
-                oData.get(j).mPrice = String.valueOf(Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(o.mPrice)*o.mCount);
+                oData.get(j).mPrice = String.valueOf((Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(o.mPrice))*o.mCount);
                 oData.get(j).mCount += o.mCount;
             }
             else{
                 OrderItem newoi = new OrderItem(o.mName,o.mCount,o.mTemp,
-                        o.mSize,o.mPrice, o.mOption);
+                        o.mSize,String.valueOf(Integer.parseInt(o.mPrice)*o.mCount), o.mOption);
                 oData.add(newoi);
             }
 
             updateTotalPrice();
             oAdapter.notifyDataSetChanged();
             listView.setAdapter(oAdapter);
-            Log.d("option", o.mOption);
-            Log.d("size", o.mSize);
-
-
         }
     }
 
