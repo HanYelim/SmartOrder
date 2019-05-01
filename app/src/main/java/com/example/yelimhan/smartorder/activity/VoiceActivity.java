@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
@@ -39,7 +40,7 @@ public class VoiceActivity extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     SpeechRecognizer reRecognizer;
     List<Menu> all_menu = new ArrayList<>();
-    OrderItem o;
+    OrderItem o, oi;
     ArrayList<String> NNG, VA, XR, VV, NNP, NR, MDN;
     Boolean menuFlag, sizeFlag, countFlag, typeFlag;
 
@@ -185,9 +186,11 @@ public class VoiceActivity extends AppCompatActivity {
                     Log.d("메뉴네임 : ", o.mName);
                     tv.append(o.mName);
                 }
+                tv.append("\n\n" + String.valueOf(o.mCount));
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            ner();
             if(!o.mName.equals("")){ // 음료들어왔으면
                 //// m.size 둘다 받을수 있으면 both 아니면 large 자동입력되어있음
                 //// m.temp 둘다 받을수 있으면 both 아니면 ice나 hot 자동입력되어있음
@@ -238,5 +241,76 @@ public class VoiceActivity extends AppCompatActivity {
         else if(num.equals("9") || num.equals("아홉"))
             o.mCount = 9;
     }
+
+    void ner() {
+        ////// 여기부터 이름 찾아서 넣음
+        ////// 이름 넣으면 o르 이름으로 생성함
+        ////// 없는거면 "" 라고 넣어놔씀
+        boolean flag = false;
+        for(int a = 0; a < NNG.size(); a++){
+            if(flag == false){
+                for(int b = 0; b < all_menu.size(); b++){
+                    if (flag == false) {
+                        if (all_menu.get(b).getName().equals(NNG.get(a))) {
+                            o = new OrderItem(NNG.get(a));
+                            oi= new OrderItem(NNG.get(a));
+                            oi.mSize = all_menu.get(b).getSize();
+                            oi.mTemp = all_menu.get(b).getType();
+                            flag = true;
+                            break;
+                        } else if (all_menu.get(b).getName().contains(NNG.get(a))) { // 포함한다면
+                            for (int c = a + 1; c < NNG.size(); c++) {
+                                if (all_menu.get(b).getName().contains(NNG.get(c))) {
+                                    o = new OrderItem(all_menu.get(b).getName());
+                                    oi= new OrderItem(all_menu.get(b).getName());
+                                    oi.mSize = all_menu.get(b).getSize();
+                                    oi.mTemp = all_menu.get(b).getType();
+                                    flag = true;
+                                    break;
+                                }
+                            }
+                        }
+                        else{
+                            oi = new OrderItem("");
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < NNP.size(); i++) {
+            if (NNP.get(i).equals("아이스"))
+                o.mTemp = "ICE";
+            else if (NNP.get(i).equals("핫"))
+                o.mTemp = "HOT";
+            if(NNP.get(i).contains("라지"))
+                o.mSize = "LARGE";
+            else if(NNP.get(i).contains("스몰"))
+                o.mSize = "SMALL";
+        }
+        for (int i = 0; i < VA.size(); i++) {
+            if (VA.get(i).equals("차갑게")
+                    || VA.get(i).equals("차게")
+                    || VA.get(i).equals("차갑게")
+                    || VA.get(i).equals("차가운"))
+                o.mTemp = "ICE";
+            else if (VA.get(i).equals("뜨겁게")
+                    || VA.get(i).equals("뜨거운"))
+                o.mTemp = "HOT";
+            if(VA.get(i).contains("작"))
+                o.mSize = "SMALL";
+            else if(VA.get(i).contains("크")
+                    || VA.get(i).equals("큰"))
+                o.mSize = "LARGE";
+
+        }
+        for (int i = 0; i < VV.size(); i++) {
+            if (VV.get(i).equals("찬"))
+                o.mTemp = "ICE";
+        }
+        checkMenu();
+
+        //Toast.makeText(this, o.mName+" "+o.mTemp +" " +o.mSize + " " + o.mCount, Toast.LENGTH_SHORT).show();
+    }
 }
+
 
