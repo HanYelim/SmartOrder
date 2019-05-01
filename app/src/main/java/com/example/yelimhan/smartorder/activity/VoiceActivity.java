@@ -7,19 +7,35 @@ import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
+
+import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
+import com.example.yelimhan.smartorder.adapter.MenuAdapter;
+import com.example.yelimhan.smartorder.model.Menu;
+import com.example.yelimhan.smartorder.network.ApiService;
 
 import org.snu.ids.kkma.index.Keyword;
 import org.snu.ids.kkma.index.KeywordExtractor;
 import org.snu.ids.kkma.index.KeywordList;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class VoiceActivity extends AppCompatActivity {
     Intent i;
     TextView tv;
+    Disposable disposable;
     SpeechRecognizer mRecognizer;
+    List<Menu> all_menu = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +48,21 @@ public class VoiceActivity extends AppCompatActivity {
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mRecognizer.setRecognitionListener(listener);
         mRecognizer.startListening(i);
+
+
+        disposable = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴 받아오기 all_menu에 다있음
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new io.reactivex.functions.Consumer<ArrayList<Menu>>() {
+                    @Override
+                    public void accept(final ArrayList<Menu> menus) {
+                        for(int i = 0; i < menus.size(); i++){
+                            all_menu.add(menus.get(i));
+                            Log.d("all menu list : ", String.valueOf(all_menu.size()));
+                        }
+                    }
+                });
+        
     }
 
     private RecognitionListener listener = new RecognitionListener() {
