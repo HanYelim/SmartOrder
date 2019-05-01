@@ -39,7 +39,7 @@ public class VoiceActivity extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     List<Menu> all_menu = new ArrayList<>();
     OrderItem o;
-    ArrayList<String> NNG;
+    ArrayList<String> NNG, VA, XR, VV, NNP, NR, MDN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,13 @@ public class VoiceActivity extends AppCompatActivity {
         mRecognizer.startListening(i);
         MorphemeAnalyzer ma = new MorphemeAnalyzer();
         ma.createLogger(null);
+        NNG = new ArrayList<>();
+        VA = new ArrayList<>();
+        XR = new ArrayList<>();
+        VV = new ArrayList<>();
+        NNP = new ArrayList<>();
+        NR = new ArrayList<>();
+        MDN = new ArrayList<>();
 
         disposable = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴 받아오기 all_menu에 다있음
                 .subscribeOn(Schedulers.io())
@@ -117,11 +124,55 @@ public class VoiceActivity extends AppCompatActivity {
                     Sentence st = (Sentence) stl.get(i);
                     for(int j = 0; j < st.size(); j++){
                         //st.get(j).getExp() 따뜻하게
-                        tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
-                        if(st.get(j).getFirstMorp().getTag().equals("NNG")){
-
+                        //tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
+                        String tag = st.get(j).getFirstMorp().getTag();
+                        String word = st.get(j).getExp();
+                        if(tag.equals("NNG")){ //음료 종류
+                            NNG.add(word);
+                        }// VA, XR, VV, NNP, NR, MDN;
+                        else if(tag.equals("VA")) //
+                            VA.add(word);
+                        else if(tag.equals("XR"))
+                            XR.add(word);
+                        else if(tag.equals("VV"))
+                            VV.add(word);
+                        else if(tag.equals("NNP"))
+                            NNP.add(word);
+                        else if(tag.equals("NR"))
+                            NR.add(word);
+                        else if(tag.equals("MDN"))
+                            MDN.add(word);
+                    }
+                    ////// 여기부터 이름 찾아서 넣음
+                    ////// 이름 넣으면 o르 이름으로 생성함
+                    ////// 없는거면 "" 라고 넣어놔씀
+                    boolean flag = false;
+                    for(int a = 0; a < NNG.size(); a++){
+                        if(flag == false){
+                            for(int b = 0; b < all_menu.size(); b++){
+                                if (flag == false) {
+                                    if (all_menu.get(b).getName().equals(NNG.get(a))) {
+                                        o = new OrderItem(NNG.get(a));
+                                        flag = true;
+                                        break;
+                                    } else if (all_menu.get(b).getName().contains(NNG.get(a))) { // 포함한다면
+                                        for (int c = a + 1; c < NNG.size(); c++) {
+                                            if (all_menu.get(b).getName().contains(NNG.get(c))) {
+                                                o = new OrderItem(all_menu.get(b).getName());
+                                                flag = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        o = new OrderItem("");
+                                    }
+                                }
+                            }
                         }
                     }
+                    Log.d("메뉴네임 : ", o.mName);
+                    tv.append(o.mName);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -129,3 +180,4 @@ public class VoiceActivity extends AppCompatActivity {
         }
     };
 }
+
