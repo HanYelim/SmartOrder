@@ -7,10 +7,16 @@ import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
+import com.example.yelimhan.smartorder.adapter.MenuAdapter;
+import com.example.yelimhan.smartorder.model.Menu;
+import com.example.yelimhan.smartorder.network.ApiService;
 
 import org.snu.ids.kkma.index.Keyword;
 import org.snu.ids.kkma.index.KeywordExtractor;
@@ -18,13 +24,20 @@ import org.snu.ids.kkma.index.KeywordList;
 import org.snu.ids.kkma.ma.MorphemeAnalyzer;
 import org.snu.ids.kkma.ma.Sentence;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 public class VoiceActivity extends AppCompatActivity {
     Intent i;
     TextView tv;
+    Disposable disposable;
     SpeechRecognizer mRecognizer;
+    List<Menu> all_menu = new ArrayList<>();
     OrderItem o;
     ArrayList<String> NNG.
 
@@ -39,9 +52,6 @@ public class VoiceActivity extends AppCompatActivity {
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mRecognizer.setRecognitionListener(listener);
         mRecognizer.startListening(i);
-
-        MorphemeAnalyzer ma = new MorphemeAnalyzer();
-        ma.createLogger(null);
     }
 
     private RecognitionListener listener = new RecognitionListener() {
