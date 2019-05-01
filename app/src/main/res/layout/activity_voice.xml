@@ -11,5 +11,5 @@
         android:layout_height="wrap_content"
         android:id="@+id/tv"
         android:text="123"
-        android:textSize="40sp"/>
+        android:textSize="20sp"/>
 </LinearLayout>
