@@ -39,7 +39,7 @@ public class VoiceActivity extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     List<Menu> all_menu = new ArrayList<>();
     OrderItem o;
-    ArrayList<String> NNG;
+    ArrayList<String> NNG, VA, XR, VV, NNP, NR, MDN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,14 @@ public class VoiceActivity extends AppCompatActivity {
         mRecognizer.startListening(i);
         MorphemeAnalyzer ma = new MorphemeAnalyzer();
         ma.createLogger(null);
+        NNG = new ArrayList<>();
+        VA = new ArrayList<>();
+        XR = new ArrayList<>();
+        VV = new ArrayList<>();
+        NNP = new ArrayList<>();
+        NR = new ArrayList<>();
+        MDN = new ArrayList<>();
+        o = new OrderItem();
 
         disposable = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴 받아오기 all_menu에 다있음
                 .subscribeOn(Schedulers.io())
@@ -118,14 +126,59 @@ public class VoiceActivity extends AppCompatActivity {
                     for(int j = 0; j < st.size(); j++){
                         //st.get(j).getExp() 따뜻하게
                         tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
-                        if(st.get(j).getFirstMorp().getTag().equals("NNG")){
-
-                        }
+                        String tag = st.get(j).getFirstMorp().getTag();
+                        String word = st.get(j).getExp();
+                        if(tag.equals("NNG")){ //음료 종류
+                            NNG.add(word);
+                        }// VA, XR, VV, NNP, NR, MDN;
+                        else if(tag.equals("VA")) //차갑 크 작 차 뜨겁 따시
+                            VA.add(word);
+                        else if(tag.equals("XR")) //따뜻 시원
+                            XR.add(word);
+                        else if(tag.equals("VV")) // 차 + ㄴ
+                            VV.add(word);
+                        else if(tag.equals("NNP")) //라지 스몰 아이스 핫
+                            NNP.add(word);
+                        else if(tag.equals("NR")) //수
+                            NR.add(word);
+                        else if(tag.equals("MDN")) //수
+                            MDN.add(word);
                     }
                 }
+                checkMenu();
+                tv.append("\n\n" + String.valueOf(o.mCount));
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     };
+
+    void checkMenu(){
+        String num;
+        if(NR.size() != 0)
+            num = NR.get(0);
+        else if(MDN.size() != 0)
+            num = MDN.get(0);
+        else
+            num = "";
+
+        if(num.equals("하나") || num.equals("한"))
+            o.mCount = 1;
+        else if(num.equals("2") || num.equals("두") || num.equals("둘"))
+            o.mCount = 2;
+        else if(num.equals("세") || num.equals("석"))
+            o.mCount = 3;
+        else if(num.equals("네") || num.equals("4") || num.equals("넉"))
+            o.mCount = 4;
+        else if(num.equals("다섯") || num.equals("5"))
+            o.mCount = 5;
+        else if(num.equals("6") || num.equals("여섯"))
+            o.mCount = 6;
+        else if(num.equals("7") || num.equals("일곱"))
+            o.mCount = 7;
+        else if(num.equals("8") || num.equals("여덟"))
+            o.mCount = 8;
+        else if(num.equals("9") || num.equals("아홉"))
+            o.mCount = 9;
+    }
 }

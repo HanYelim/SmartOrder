@@ -22,4 +22,6 @@ public class OrderItem implements Serializable{
     public OrderItem(String _n){
         mName = _n;
     }
+
+    public OrderItem(){}
 }
