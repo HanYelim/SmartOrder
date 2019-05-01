@@ -154,11 +154,26 @@ public class VoiceActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             ner();
+            if(!o.mName.equals("")){ // 음료들어왔으면
+                if(o.mTemp.equals("BOTH")){
+                    // 온도 넣어야 하면
+                }
+                if(o.mSize.equals("BOTH")){
+                    // 사이즈도 넣어야 하면
+                }
+                if(o.mCount == 0){
+                    // 수량없으면
+                }
+                tv.append(o.mTemp + o.mSize);
+            }else{
+                // 다시 말하셈
+            }
         }
     };
 
     void checkMenu(){
         String num;
+        o.mCount = 0;
         if(NR.size() != 0)
             num = NR.get(0);
         else if(MDN.size() != 0)
