@@ -153,12 +153,16 @@ public class VoiceActivity extends AppCompatActivity {
                                 if (flag == false) {
                                     if (all_menu.get(b).getName().equals(NNG.get(a))) {
                                         o = new OrderItem(NNG.get(a));
+                                        o.mSize = all_menu.get(b).getSize();
+                                        o.mTemp = all_menu.get(b).getType();
                                         flag = true;
                                         break;
                                     } else if (all_menu.get(b).getName().contains(NNG.get(a))) { // 포함한다면
                                         for (int c = a + 1; c < NNG.size(); c++) {
                                             if (all_menu.get(b).getName().contains(NNG.get(c))) {
                                                 o = new OrderItem(all_menu.get(b).getName());
+                                                o.mSize = all_menu.get(b).getSize();
+                                                o.mTemp = all_menu.get(b).getType();
                                                 flag = true;
                                                 break;
                                             }
@@ -176,6 +180,19 @@ public class VoiceActivity extends AppCompatActivity {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            if(!o.mName.equals("")){ // 음료들어왔으면
+                //// m.size 둘다 받을수 있으면 both 아니면 large 자동입력되어있음
+                //// m.temp 둘다 받을수 있으면 both 아니면 ice나 hot 자동입력되어있음
+                if(o.mTemp.equals("BOTH")){
+                    // 온도 넣어야 하면
+                }
+                if(o.mSize.equals("BOTH")){
+                    // 사이즈도 넣어야 하면
+                }
+                tv.append(o.mTemp + o.mSize);
+            }else{
+                // 다시 말하셈
             }
         }
     };
