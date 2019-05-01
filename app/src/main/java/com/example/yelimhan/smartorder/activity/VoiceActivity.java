@@ -38,9 +38,11 @@ public class VoiceActivity extends AppCompatActivity {
     TextView tv;
     Disposable disposable;
     SpeechRecognizer mRecognizer;
+    SpeechRecognizer reRecognizer;
     List<Menu> all_menu = new ArrayList<>();
     OrderItem o, oi;
     ArrayList<String> NNG, VA, XR, VV, NNP, NR, MDN;
+    Boolean menuFlag, sizeFlag, countFlag, typeFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,9 @@ public class VoiceActivity extends AppCompatActivity {
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mRecognizer.setRecognitionListener(listener);
         mRecognizer.startListening(i);
+        reRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        reRecognizer.setRecognitionListener(relistener);
+
         MorphemeAnalyzer ma = new MorphemeAnalyzer();
         ma.createLogger(null);
         NNG = new ArrayList<>();
@@ -62,7 +67,7 @@ public class VoiceActivity extends AppCompatActivity {
         NNP = new ArrayList<>();
         NR = new ArrayList<>();
         MDN = new ArrayList<>();
-        o = new OrderItem();
+        o = new OrderItem("");
 
         disposable = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴 받아오기 all_menu에 다있음
                 .subscribeOn(Schedulers.io())
@@ -76,7 +81,6 @@ public class VoiceActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
     private RecognitionListener listener = new RecognitionListener() {
@@ -145,7 +149,40 @@ public class VoiceActivity extends AppCompatActivity {
                         else if(tag.equals("MDN"))
                             MDN.add(word);
                     }
-
+                    ////// 여기부터 이름 찾아서 넣음
+                    ////// 이름 넣으면 o르 이름으로 생성함
+                    ////// 없는거면 "" 라고 넣어놔씀
+                    boolean flag = false;
+                    for(int a = 0; a < NNG.size(); a++){
+                        if(flag == false){
+                            for(int b = 0; b < all_menu.size(); b++){
+                                if (flag == false) {
+                                    if (all_menu.get(b).getName().equals(NNG.get(a))) {
+                                        o = new OrderItem(NNG.get(a));
+                                        o.mSize = all_menu.get(b).getSize();
+                                        o.mTemp = all_menu.get(b).getType();
+                                        flag = true;
+                                        menuFlag = true;
+                                        break;
+                                    } else if (all_menu.get(b).getName().contains(NNG.get(a))) { // 포함한다면
+                                        for (int c = a + 1; c < NNG.size(); c++) {
+                                            if (all_menu.get(b).getName().contains(NNG.get(c))) {
+                                                o = new OrderItem(all_menu.get(b).getName());
+                                                o.mSize = all_menu.get(b).getSize();
+                                                o.mTemp = all_menu.get(b).getType();
+                                                flag = true;
+                                                menuFlag = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        o = new OrderItem("");
+                                    }
+                                }
+                            }
+                        }
+                    }
                     Log.d("메뉴네임 : ", o.mName);
                     tv.append(o.mName);
                 }
