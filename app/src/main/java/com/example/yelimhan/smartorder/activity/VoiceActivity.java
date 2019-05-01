@@ -125,30 +125,77 @@ public class VoiceActivity extends AppCompatActivity {
                     Sentence st = (Sentence) stl.get(i);
                     for(int j = 0; j < st.size(); j++){
                         //st.get(j).getExp() 따뜻하게
-                        tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
+                        //tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
                         String tag = st.get(j).getFirstMorp().getTag();
                         String word = st.get(j).getExp();
                         if(tag.equals("NNG")){ //음료 종류
                             NNG.add(word);
                         }// VA, XR, VV, NNP, NR, MDN;
-                        else if(tag.equals("VA")) //차갑 크 작 차 뜨겁 따시
+                        else if(tag.equals("VA")) //
                             VA.add(word);
-                        else if(tag.equals("XR")) //따뜻 시원
+                        else if(tag.equals("XR"))
                             XR.add(word);
-                        else if(tag.equals("VV")) // 차 + ㄴ
+                        else if(tag.equals("VV"))
                             VV.add(word);
-                        else if(tag.equals("NNP")) //라지 스몰 아이스 핫
+                        else if(tag.equals("NNP"))
                             NNP.add(word);
-                        else if(tag.equals("NR")) //수
+                        else if(tag.equals("NR"))
                             NR.add(word);
-                        else if(tag.equals("MDN")) //수
+                        else if(tag.equals("MDN"))
                             MDN.add(word);
                     }
+                    ////// 여기부터 이름 찾아서 넣음
+                    ////// 이름 넣으면 o르 이름으로 생성함
+                    ////// 없는거면 "" 라고 넣어놔씀
+                    boolean flag = false;
+                    for(int a = 0; a < NNG.size(); a++){
+                        if(flag == false){
+                            for(int b = 0; b < all_menu.size(); b++){
+                                if (flag == false) {
+                                    if (all_menu.get(b).getName().equals(NNG.get(a))) {
+                                        o = new OrderItem(NNG.get(a));
+                                        o.mSize = all_menu.get(b).getSize();
+                                        o.mTemp = all_menu.get(b).getType();
+                                        flag = true;
+                                        break;
+                                    } else if (all_menu.get(b).getName().contains(NNG.get(a))) { // 포함한다면
+                                        for (int c = a + 1; c < NNG.size(); c++) {
+                                            if (all_menu.get(b).getName().contains(NNG.get(c))) {
+                                                o = new OrderItem(all_menu.get(b).getName());
+                                                o.mSize = all_menu.get(b).getSize();
+                                                o.mTemp = all_menu.get(b).getType();
+                                                flag = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        o = new OrderItem("");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Log.d("메뉴네임 : ", o.mName);
+                    tv.append(o.mName);
                 }
                 checkMenu();
                 tv.append("\n\n" + String.valueOf(o.mCount));
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            if(!o.mName.equals("")){ // 음료들어왔으면
+                //// m.size 둘다 받을수 있으면 both 아니면 large 자동입력되어있음
+                //// m.temp 둘다 받을수 있으면 both 아니면 ice나 hot 자동입력되어있음
+                if(o.mTemp.equals("BOTH")){
+                    // 온도 넣어야 하면
+                }
+                if(o.mSize.equals("BOTH")){
+                    // 사이즈도 넣어야 하면
+                }
+                tv.append(o.mTemp + o.mSize);
+            }else{
+                // 다시 말하셈
             }
         }
     };
@@ -182,3 +229,4 @@ public class VoiceActivity extends AppCompatActivity {
             o.mCount = 9;
     }
 }
+
