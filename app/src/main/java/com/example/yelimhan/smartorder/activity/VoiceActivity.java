@@ -34,7 +34,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class VoiceActivity extends AppCompatActivity {
-    Intent i;
+    Intent i, next;
     TextView tv;
     Disposable disposable;
     SpeechRecognizer mRecognizer;
@@ -42,7 +42,6 @@ public class VoiceActivity extends AppCompatActivity {
     List<Menu> all_menu = new ArrayList<>();
     OrderItem o, oi;
     ArrayList<String> NNG, VA, XR, VV, NNP, NR, MDN;
-    Boolean menuFlag, sizeFlag, countFlag, typeFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +53,10 @@ public class VoiceActivity extends AppCompatActivity {
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mRecognizer.setRecognitionListener(listener);
-        mRecognizer.startListening(i);
         reRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         reRecognizer.setRecognitionListener(relistener);
+        mRecognizer.startListening(i);
+        next = new Intent(getApplicationContext(), OptionVoiceActivity.class);
 
         MorphemeAnalyzer ma = new MorphemeAnalyzer();
         ma.createLogger(null);
@@ -82,6 +82,101 @@ public class VoiceActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private RecognitionListener relistener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle params) {
+        }
+
+        @Override
+        public void onBeginningOfSpeech() {
+        }
+
+        @Override
+        public void onRmsChanged(float rmsdB) {
+        }
+
+        @Override
+        public void onBufferReceived(byte[] buffer) {
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+        }
+
+        @Override
+        public void onError(int error) {
+        }
+
+        @Override
+        public void onResults(Bundle results) {
+            String key = "";
+            key = SpeechRecognizer.RESULTS_RECOGNITION;
+            ArrayList<String> mResult = results.getStringArrayList(key);
+            String[] rs = new String[mResult.size()];
+            mResult.toArray(rs);
+
+            MorphemeAnalyzer ma = new MorphemeAnalyzer();
+            ma.createLogger(null);
+            try {
+                List ret = ma.analyze(rs[0]);
+                ret = ma.postProcess(ret);
+                ret = ma.leaveJustBest(ret);
+                List stl = ma.divideToSentences(ret);
+                for(int i = 0; i < stl.size(); i++){
+                    Sentence st = (Sentence) stl.get(i);
+                    for(int j = 0; j < st.size(); j++){
+                        //st.get(j).getExp() 따뜻하게
+                        //tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
+                        String tag = st.get(j).getFirstMorp().getTag();
+                        String word = st.get(j).getExp();
+                        if(tag.equals("NNG")){ //음료 종류
+                            NNG.add(word);
+                        }// VA, XR, VV, NNP, NR, MDN;
+                        else if(tag.equals("VA")) //
+                            VA.add(word);
+                        else if(tag.equals("XR"))
+                            XR.add(word);
+                        else if(tag.equals("VV"))
+                            VV.add(word);
+                        else if(tag.equals("NNP"))
+                            NNP.add(word);
+                        else if(tag.equals("NR"))
+                            NR.add(word);
+                        else if(tag.equals("MDN"))
+                            MDN.add(word);
+                    }
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            if(o.mCount == 0){
+                checkMenu();
+            }
+            if(o.mTemp.equals("BOTH") || o.mSize.equals("BOTH")){
+                ner();
+            }
+
+            if(o.mCount == 0 || o.mTemp.equals("BOTH") || o.mSize.equals("BOTH"))
+                reRecognizer.startListening(i);
+
+            if(o.mCount != 0 && !o.mTemp.equals("BOTH") && !o.mSize.equals("BOTH")){
+                next.putExtra("order", (Serializable) o);
+                startActivity(next);
+                finish();
+            }
+        }
+
+        @Override
+        public void onPartialResults(Bundle partialResults) {
+        }
+
+        @Override
+        public void onEvent(int eventType, Bundle params) {
+        }
+    };
 
     private RecognitionListener listener = new RecognitionListener() {
         @Override public void onRmsChanged(float rmsdB) {
@@ -161,8 +256,8 @@ public class VoiceActivity extends AppCompatActivity {
                                         o = new OrderItem(NNG.get(a));
                                         o.mSize = all_menu.get(b).getSize();
                                         o.mTemp = all_menu.get(b).getType();
+                                        o.mOption = all_menu.get(b).getOpt();
                                         flag = true;
-                                        menuFlag = true;
                                         break;
                                     } else if (all_menu.get(b).getName().contains(NNG.get(a))) { // 포함한다면
                                         for (int c = a + 1; c < NNG.size(); c++) {
@@ -170,8 +265,8 @@ public class VoiceActivity extends AppCompatActivity {
                                                 o = new OrderItem(all_menu.get(b).getName());
                                                 o.mSize = all_menu.get(b).getSize();
                                                 o.mTemp = all_menu.get(b).getType();
+                                                o.mOption = all_menu.get(b).getOpt();
                                                 flag = true;
-                                                menuFlag = true;
                                                 break;
                                             }
                                         }
@@ -186,24 +281,36 @@ public class VoiceActivity extends AppCompatActivity {
                     Log.d("메뉴네임 : ", o.mName);
                     tv.append(o.mName);
                 }
-                tv.append("\n\n" + String.valueOf(o.mCount));
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            checkMenu();
             ner();
+
             if(!o.mName.equals("")){ // 음료들어왔으면
                 if(o.mTemp.equals("BOTH")){
                     // 온도 넣어야 하면
+                    reRecognizer.startListening(i);
                 }
                 if(o.mSize.equals("BOTH")){
                     // 사이즈도 넣어야 하면
+                    reRecognizer.startListening(i);
                 }
                 if(o.mCount == 0){
                     // 수량없으면
+                    reRecognizer.startListening(i);
                 }
                 tv.append(o.mTemp + o.mSize);
             }else{
                 // 다시 말하셈
+                mRecognizer.startListening(i);
+            }
+
+            if(o.mCount != 0 && !o.mTemp.equals("BOTH") && !o.mSize.equals("BOTH")){
+                next.putExtra("order", (Serializable) o);
+                startActivity(next);
+                finish();
             }
         }
     };
@@ -236,77 +343,54 @@ public class VoiceActivity extends AppCompatActivity {
             o.mCount = 8;
         else if(num.equals("9") || num.equals("아홉"))
             o.mCount = 9;
+        tv.append("\n\n" + String.valueOf(o.mCount));
     }
 
     void ner() {
-        ////// 여기부터 이름 찾아서 넣음
-        ////// 이름 넣으면 o르 이름으로 생성함
-        ////// 없는거면 "" 라고 넣어놔씀
-        boolean flag = false;
-        for(int a = 0; a < NNG.size(); a++){
-            if(flag == false){
-                for(int b = 0; b < all_menu.size(); b++){
-                    if (flag == false) {
-                        if (all_menu.get(b).getName().equals(NNG.get(a))) {
-                            o = new OrderItem(NNG.get(a));
-                            oi= new OrderItem(NNG.get(a));
-                            oi.mSize = all_menu.get(b).getSize();
-                            oi.mTemp = all_menu.get(b).getType();
-                            flag = true;
-                            break;
-                        } else if (all_menu.get(b).getName().contains(NNG.get(a))) { // 포함한다면
-                            for (int c = a + 1; c < NNG.size(); c++) {
-                                if (all_menu.get(b).getName().contains(NNG.get(c))) {
-                                    o = new OrderItem(all_menu.get(b).getName());
-                                    oi= new OrderItem(all_menu.get(b).getName());
-                                    oi.mSize = all_menu.get(b).getSize();
-                                    oi.mTemp = all_menu.get(b).getType();
-                                    flag = true;
-                                    break;
-                                }
-                            }
-                        }
-                        else{
-                            oi = new OrderItem("");
-                        }
-                    }
-                }
+        if(o.mTemp.equals("BOTH")){
+            for (int i = 0; i < NNP.size(); i++) {
+                if (NNP.get(i).equals("아이스"))
+                    o.mTemp = "ICE";
+                else if (NNP.get(i).equals("핫"))
+                    o.mTemp = "HOT";
+            }
+            for (int i = 0; i < VA.size(); i++) {
+                if (VA.get(i).equals("차갑게")
+                        || VA.get(i).equals("차게")
+                        || VA.get(i).equals("차갑게")
+                        || VA.get(i).equals("차가운"))
+                    o.mTemp = "ICE";
+                else if (VA.get(i).equals("뜨겁게")
+                        || VA.get(i).equals("뜨거운"))
+                    o.mTemp = "HOT";
             }
         }
-        for (int i = 0; i < NNP.size(); i++) {
-            if (NNP.get(i).equals("아이스"))
-                o.mTemp = "ICE";
-            else if (NNP.get(i).equals("핫"))
-                o.mTemp = "HOT";
-            if(NNP.get(i).contains("라지"))
-                o.mSize = "LARGE";
-            else if(NNP.get(i).contains("스몰"))
-                o.mSize = "SMALL";
+        if(o.mSize.equals("BOTH")) {
+            for (int i = 0; i < NNP.size(); i++) {
+                if (NNP.get(i).contains("라지"))
+                    o.mSize = "LARGE";
+                else if (NNP.get(i).contains("스몰"))
+                    o.mSize = "SMALL";
+            }
         }
-        for (int i = 0; i < VA.size(); i++) {
-            if (VA.get(i).equals("차갑게")
-                    || VA.get(i).equals("차게")
-                    || VA.get(i).equals("차갑게")
-                    || VA.get(i).equals("차가운"))
-                o.mTemp = "ICE";
-            else if (VA.get(i).equals("뜨겁게")
-                    || VA.get(i).equals("뜨거운"))
-                o.mTemp = "HOT";
-            if(VA.get(i).contains("작"))
-                o.mSize = "SMALL";
-            else if(VA.get(i).contains("크")
-                    || VA.get(i).equals("큰"))
-                o.mSize = "LARGE";
+        if(o.mSize.equals("BOTH")) {
+            for (int i = 0; i < VA.size(); i++) {
+                if (VA.get(i).contains("작"))
+                    o.mSize = "SMALL";
+                else if (VA.get(i).contains("크")
+                        || VA.get(i).equals("큰"))
+                    o.mSize = "LARGE";
+            }
+        }
+        if(o.mTemp.equals("BOTH")){
+            for (int i = 0; i < VV.size(); i++) {
+                if (VV.get(i).equals("찬"))
+                    o.mTemp = "ICE";
+            }
+        }
 
-        }
-        for (int i = 0; i < VV.size(); i++) {
-            if (VV.get(i).equals("찬"))
-                o.mTemp = "ICE";
-        }
-        checkMenu();
-
-        //Toast.makeText(this, o.mName+" "+o.mTemp +" " +o.mSize + " " + o.mCount, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, o.mName+" "+o.mTemp +" " +o.mSize + " " + o.mCount, Toast.LENGTH_SHORT).show();
+        tv.append(o.mTemp + " " + o.mSize);
     }
 }
-
 

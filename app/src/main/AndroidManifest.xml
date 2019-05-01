@@ -13,8 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.VoiceActivity"></activity>
-        <activity android:name=".activity.SpeechActivity"></activity>
+        <activity android:name=".activity.VoiceActivity" />
+        <activity android:name=".activity.SpeechActivity" />
         <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,11 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SelectActivity"></activity>
+        <activity android:name=".activity.SelectActivity" />
         <activity android:name=".activity.ChooseTypeActivity" />
         <activity android:name=".activity.ChooseSizeActivity" />
         <activity android:name=".activity.OptionActivity" />
         <activity android:name=".activity.SubmitActivity" />
+        <activity android:name=".activity.OptionVoiceActivity"></activity>
     </application>
 
 </manifest>
