@@ -54,6 +54,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     LinearLayout layout1, layout_all;
     GridView gridView, re_gridView;
     Intent intent, submit_intent;
+    OrderItem voiceO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -276,6 +277,11 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
             updateTotalPrice();
             oAdapter.notifyDataSetChanged();
             listView.setAdapter(oAdapter);
+        }
+
+        if(resultCode == 1234){
+            voiceO = (OrderItem) getIntent().getSerializableExtra("order");
+            oData.add(voiceO);
         }
     }
 

@@ -48,10 +48,11 @@ public class SubmitActivity extends AppCompatActivity {
         for(int i = 0; i < oData.size(); i++){
             name = oData.get(i).mName;
             size = oData.get(i).mSize;
-            price = Integer.parseInt(oData.get(i).mPrice);
+            count = oData.get(i).mCount;
+            price = Integer.parseInt(oData.get(i).mPrice) / count;
+            count = 1;
             type = oData.get(i).mTemp;
             option = oData.get(i).mOption;
-            count = oData.get(i).mCount;
             str  = mCustomer + name + type + option + String.valueOf(mindex) + String.valueOf(count) + String.valueOf(price);
             Log.d("str : ", str);
 
