@@ -37,9 +37,11 @@ public class VoiceActivity extends AppCompatActivity {
     TextView tv;
     Disposable disposable;
     SpeechRecognizer mRecognizer;
+    SpeechRecognizer reRecognizer;
     List<Menu> all_menu = new ArrayList<>();
     OrderItem o;
     ArrayList<String> NNG, VA, XR, VV, NNP, NR, MDN;
+    Boolean menuFlag, sizeFlag, countFlag, typeFlag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,9 @@ public class VoiceActivity extends AppCompatActivity {
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mRecognizer.setRecognitionListener(listener);
         mRecognizer.startListening(i);
+        reRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        reRecognizer.setRecognitionListener(relistener);
+
         MorphemeAnalyzer ma = new MorphemeAnalyzer();
         ma.createLogger(null);
         NNG = new ArrayList<>();
@@ -61,7 +66,7 @@ public class VoiceActivity extends AppCompatActivity {
         NNP = new ArrayList<>();
         NR = new ArrayList<>();
         MDN = new ArrayList<>();
-        o = new OrderItem();
+        o = new OrderItem("");
 
         disposable = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴 받아오기 all_menu에 다있음
                 .subscribeOn(Schedulers.io())
@@ -75,7 +80,6 @@ public class VoiceActivity extends AppCompatActivity {
                         }
                     }
                 });
-
     }
 
     private RecognitionListener listener = new RecognitionListener() {
@@ -157,6 +161,7 @@ public class VoiceActivity extends AppCompatActivity {
                                         o.mSize = all_menu.get(b).getSize();
                                         o.mTemp = all_menu.get(b).getType();
                                         flag = true;
+                                        menuFlag = true;
                                         break;
                                     } else if (all_menu.get(b).getName().contains(NNG.get(a))) { // 포함한다면
                                         for (int c = a + 1; c < NNG.size(); c++) {
@@ -165,6 +170,7 @@ public class VoiceActivity extends AppCompatActivity {
                                                 o.mSize = all_menu.get(b).getSize();
                                                 o.mTemp = all_menu.get(b).getType();
                                                 flag = true;
+                                                menuFlag = true;
                                                 break;
                                             }
                                         }
@@ -179,8 +185,6 @@ public class VoiceActivity extends AppCompatActivity {
                     Log.d("메뉴네임 : ", o.mName);
                     tv.append(o.mName);
                 }
-                checkMenu();
-                tv.append("\n\n" + String.valueOf(o.mCount));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -193,10 +197,16 @@ public class VoiceActivity extends AppCompatActivity {
                 if(o.mSize.equals("BOTH")){
                     // 사이즈도 넣어야 하면
                 }
+                checkMenu();
+                tv.append("\n\n" + String.valueOf(o.mCount));
                 tv.append(o.mTemp + o.mSize);
+                countFlag = true;
+
             }else{
-                // 다시 말하셈
+                mRecognizer.startListening(i);
             }
+
+
         }
     };
 
