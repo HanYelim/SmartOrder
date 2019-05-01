@@ -39,7 +39,7 @@ public class VoiceActivity extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     List<Menu> all_menu = new ArrayList<>();
     OrderItem o;
-    ArrayList<String> NNG.
+    ArrayList<String> NNG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +52,22 @@ public class VoiceActivity extends AppCompatActivity {
         mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         mRecognizer.setRecognitionListener(listener);
         mRecognizer.startListening(i);
+        MorphemeAnalyzer ma = new MorphemeAnalyzer();
+        ma.createLogger(null);
+
+        disposable = ApiService.getMENU_SERVICE().getMenuList() // 전체메뉴 받아오기 all_menu에 다있음
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new io.reactivex.functions.Consumer<ArrayList<Menu>>() {
+                    @Override
+                    public void accept(final ArrayList<Menu> menus) {
+                        for(int i = 0; i < menus.size(); i++){
+                            all_menu.add(menus.get(i));
+                            Log.d("all menu list : ", String.valueOf(all_menu.size()));
+                        }
+                    }
+                });
+
     }
 
     private RecognitionListener listener = new RecognitionListener() {
@@ -89,14 +105,6 @@ public class VoiceActivity extends AppCompatActivity {
             ArrayList<String> mResult = results.getStringArrayList(key);
             String[] rs = new String[mResult.size()];
             mResult.toArray(rs);
-//
-//            KeywordExtractor ke = new KeywordExtractor();
-//            KeywordList kl = ke.extractKeyword(rs[0], false);
-//            for (int i = 0; i < kl.size(); i++) {
-//                Keyword kwrd = kl.get(i);
-//                System.out.println(kwrd.getString() + "\t" + kwrd.getCnt());
-//
-//            }
 
             MorphemeAnalyzer ma = new MorphemeAnalyzer();
             ma.createLogger(null);
