@@ -26,6 +26,7 @@
         <activity android:name=".activity.ChooseTypeActivity" />
         <activity android:name=".activity.ChooseSizeActivity" />
         <activity android:name=".activity.OptionActivity" />
+        <activity android:name=".activity.SubmitActivity" />
     </application>
 
 </manifest>
