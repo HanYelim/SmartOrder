@@ -9,13 +9,13 @@ interface MenuService {
     @GET("menu_list.php")
     fun getMenuList(): Observable<ArrayList<Menu>>
 
-    @GET("get_menu_info.php")
-    fun getMenuInfo(@Query("name") name: String): Observable<Menu>
+@GET("get_menu_info.php")
+fun getMenuInfo(@Query("name") name: String): Observable<Menu>
 
-    @GET("recent_menu.php")
-    fun getRecentMenu(@Query("mCustomer") name: String): Observable<ArrayList<Menu>>
+@GET("recent_menu.php")
+fun getRecentMenu(@Query("mCustomer") name: String): Observable<ArrayList<Menu>>
 
-    @GET("favorite_menu.php")
-    fun getFavoriteMenu(@Query("mCustomer") name: String): Observable<Menu>
+@GET("favorite_menu.php")
+fun getFavoriteMenu(@Query("mCustomer") name: String): Observable<Menu>
 
 }

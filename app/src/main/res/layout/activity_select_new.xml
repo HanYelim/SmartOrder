@@ -206,16 +206,16 @@
             android:visibility="gone"
             android:id="@+id/allMenu_layout"
             android:orientation="vertical"
-            android:weightSum="10.2">
+            android:weightSum="10">
 
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 android:textSize="23sp"
                 android:background="@drawable/round"
-                android:text="이전 메뉴"
+                android:text="추천 메뉴 보기"
                 android:layout_margin="13dp"
                 android:id="@+id/lastMenu"/>
 

@@ -247,7 +247,6 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
 
         }
         favoriteImg.setOnClickListener(new MyListener());
-
         oAdapter = new ListAdapter(SelectActivity.this, oData, listView, this);
         listView.setAdapter(oAdapter);
     }
