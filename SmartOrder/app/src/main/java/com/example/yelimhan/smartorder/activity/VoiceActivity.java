@@ -1,6 +1,7 @@
 package com.example.yelimhan.smartorder.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -214,9 +215,12 @@ public class VoiceActivity extends AppCompatActivity {
             if(o.mCount != 0 && !o.mTemp.equals("BOTH") && !o.mSize.equals("BOTH")){
                 o.mPrice = String.valueOf(o.mCount * price);
                 next.putExtra("order", (Serializable) o);
+                SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putBoolean("Voice", true);
+                editor.commit();
                 myMenu.setText("됐다능..");
                 startActivityForResult(next, 1234);
-                //startActivity(next);
                 finish();
             }
         }
@@ -433,6 +437,10 @@ public class VoiceActivity extends AppCompatActivity {
                 o.mPrice = String.valueOf(o.mCount * price);
                 next.putExtra("order", (Serializable) o);
                 startActivityForResult(next, 1234);
+                SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putBoolean("Voice", true);
+                editor.commit();
                 finish();
                 myMenu.setText("됐다능..");
 

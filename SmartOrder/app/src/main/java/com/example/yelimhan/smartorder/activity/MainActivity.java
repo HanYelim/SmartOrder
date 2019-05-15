@@ -1,6 +1,7 @@
 package com.example.yelimhan.smartorder.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         voice = findViewById(R.id.voice);
         click = findViewById(R.id.click);
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean("Voice", false);
+        editor.commit();
+
 
         click.setOnClickListener(new View.OnClickListener() {
             @Override

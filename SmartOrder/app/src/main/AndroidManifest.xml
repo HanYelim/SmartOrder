@@ -17,6 +17,11 @@
         <activity android:name=".activity.VoiceActivity" />
         <activity android:name=".activity.SpeechActivity" />
         <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".activity.SelectActivity" />
         <activity android:name=".activity.ChooseTypeActivity" />
@@ -31,11 +36,6 @@
 
         </activity>
         <activity android:name=".persongroupmanagment.PersonGroupListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

@@ -1,6 +1,7 @@
 package com.example.yelimhan.smartorder.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -78,6 +79,14 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         layout1 = findViewById(R.id.layout1);
         layout_all = findViewById(R.id.allMenu_layout);
         btnSubmit = findViewById(R.id.submit_btn);
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        boolean flag = pref.getBoolean("Voice", false);
+        OrderItem Data;
+
+        if(flag){
+            Data = (OrderItem) getIntent().getSerializableExtra("order");
+            oData.add(Data);
+        }
 
         tvTotal = findViewById(R.id.txttotal);
 
@@ -279,9 +288,11 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
             listView.setAdapter(oAdapter);
         }
 
-        if(resultCode == 1234){
-            voiceO = (OrderItem) getIntent().getSerializableExtra("order");
+        if(requestCode == 1234){
+            voiceO = (OrderItem) data.getSerializableExtra("order");
             oData.add(voiceO);
+            oAdapter.notifyDataSetChanged();
+            listView.setAdapter(oAdapter);
         }
     }
 
