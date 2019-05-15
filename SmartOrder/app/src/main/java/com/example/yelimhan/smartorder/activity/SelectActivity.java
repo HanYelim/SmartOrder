@@ -86,7 +86,6 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         if(flag){
             Data = (OrderItem) getIntent().getSerializableExtra("order");
             oData.add(Data);
-            updateTotalPrice();
         }
 
         tvTotal = findViewById(R.id.txttotal);
@@ -187,6 +186,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                         re_gridView = (GridView)findViewById(R.id.re_menu_grid);
                         gridView.setAdapter(menuAdapter);
                         re_gridView.setAdapter(menuAdapter2);
+
+                        updateTotalPrice();
 
                         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override

@@ -204,7 +204,7 @@ public class VoiceActivity extends AppCompatActivity {
             if(o.mTemp.equals("BOTH") || o.mTemp.equals("ICE"))
                 str += "ice";
             else
-                str += o.mTemp;
+                str += "hot";
             for(int a = 0; a < all_menu.size(); a++)
                 if(all_menu.get(a).getName().equals(o.mName))
                     str += all_menu.get(a).getIndex();
