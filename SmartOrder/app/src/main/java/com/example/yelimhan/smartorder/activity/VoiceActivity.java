@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,22 +41,25 @@ import io.reactivex.schedulers.Schedulers;
 
 public class VoiceActivity extends AppCompatActivity {
     Intent i, next;
-    TextView tv, myMenu;
+    TextView tv;
     Disposable disposable;
     SpeechRecognizer mRecognizer;
     SpeechRecognizer reRecognizer;
+    LinearLayout text_linear;
     List<Menu> all_menu = new ArrayList<>();
     int price;
     OrderItem o, oi;
     Button button;
     ArrayList<String> NNG, VA, XR, VV, NNP, NR, MDN;
+    ImageView menu_image;
+    GridView grid_all_menu;
+    TextView text_count, text_temp, text_size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_voice);
         tv = findViewById(R.id.tv);
-        myMenu = findViewById(R.id.myMenu);
         button = findViewById(R.id.button);
         i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
@@ -62,8 +68,12 @@ public class VoiceActivity extends AppCompatActivity {
         mRecognizer.setRecognitionListener(listener);
         reRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
         reRecognizer.setRecognitionListener(relistener);
-        mRecognizer.startListening(i);
         next = new Intent(getApplicationContext(), SelectActivity.class);
+        menu_image = findViewById(R.id.image_menu);
+        text_linear = findViewById(R.id.text_linear);
+        text_size = findViewById(R.id.text_size);
+        text_temp = findViewById(R.id.text_temp);
+        text_count = findViewById(R.id.text_count);
 
         MorphemeAnalyzer ma = new MorphemeAnalyzer();
         ma.createLogger(null);
@@ -86,7 +96,14 @@ public class VoiceActivity extends AppCompatActivity {
                             all_menu.add(menus.get(i));
                             Log.d("all menu list : ", String.valueOf(all_menu.size()));
                         }
+
+                        MenuAdapter menuAdapter = new MenuAdapter(getApplicationContext(), R.layout.menu_item, all_menu);
+                        grid_all_menu = (GridView)findViewById(R.id.grid_all_menu);
+                        grid_all_menu.setAdapter(menuAdapter);
+
+                        mRecognizer.startListening(i);
                     }
+
                 });
 
         button.setOnClickListener(new View.OnClickListener() {
@@ -182,6 +199,18 @@ public class VoiceActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            String str = "";
+            String resName = "";
+            if(o.mTemp.equals("BOTH") || o.mTemp.equals("ICE"))
+                str += "ice";
+            else
+                str += o.mTemp;
+            for(int a = 0; a < all_menu.size(); a++)
+                if(all_menu.get(a).getName().equals(o.mName))
+                    str += all_menu.get(a).getIndex();
+            resName = "@drawable/" + str;
+            int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
+            menu_image.setImageResource(resID);
             if(o.mCount == 0){
                 checkMenu();
             }
@@ -193,13 +222,13 @@ public class VoiceActivity extends AppCompatActivity {
             }
 
             if(o.mCount == 0){
-                myMenu.setText(o.mName + " 의 수량을 말해주세요.");
+                tv.setText(o.mName + " 의 \n수량을 말해주세요.");
             }
             if(o.mSize.equals("BOTH")){
-                myMenu.setText(o.mName + " 의 사이즈를 말해주세요.");
+                tv.setText(o.mName + " 의 \n사이즈를 말해주세요.");
             }
             if(o.mTemp.equals("BOTH")){
-                myMenu.setText(o.mName + " 가 따뜻한건지 차가운건지 말해주세요.");
+                tv.setText(o.mName + " 가 \n따뜻한건지 차가운건지 \n말해주세요.");
             }
 
             if(o.mCount == 0 || o.mTemp.equals("BOTH") || o.mSize.equals("BOTH")){
@@ -219,7 +248,6 @@ public class VoiceActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putBoolean("Voice", true);
                 editor.commit();
-                myMenu.setText("됐다능..");
                 startActivityForResult(next, 1234);
                 finish();
             }
@@ -393,9 +421,21 @@ public class VoiceActivity extends AppCompatActivity {
             if(!o.mName.equals("")){ // 음료들어왔으면
                 checkMenu();
                 ner();
+                String str = "";
+                String resName = "";
+                if(o.mTemp.equals("BOTH") || o.mTemp.equals("ICE"))
+                    str += "ice";
+                else
+                    str += "hot";
+                for(int a = 0; a < all_menu.size(); a++)
+                    if(all_menu.get(a).getName().equals(o.mName))
+                        str += all_menu.get(a).getIndex();
+                resName = "@drawable/" + str;
+                int resID = getResources().getIdentifier(resName, "drawable", getPackageName());
+                menu_image.setImageResource(resID);
                 if(o.mTemp.equals("BOTH")){
                     // 온도 넣어야 하면
-                    myMenu.setText(o.mName + " 가 따뜻한건지 차가운건지 말해주세요");
+                    tv.setText(o.mName + " 가 \n따뜻한건지 차가운건지 \n말해주세요");
                     VA.clear();
                     XR.clear();
                     VV.clear();
@@ -406,7 +446,7 @@ public class VoiceActivity extends AppCompatActivity {
                 }
                 if(o.mSize.equals("BOTH")){
                     // 사이즈도 넣어야 하면
-                    myMenu.setText(o.mName + " 의 사이즈를 말해주세요");
+                    tv.setText(o.mName + " 의 \n사이즈를 말해주세요");
                     VA.clear();
                     XR.clear();
                     VV.clear();
@@ -417,7 +457,7 @@ public class VoiceActivity extends AppCompatActivity {
                 }
                 if(o.mCount == 0){
                     // 수량없으면
-                    myMenu.setText(o.mName + " 의 수량을 말해주세요");
+                    tv.setText(o.mName + " 의 \n수량을 말해주세요");
                     VA.clear();
                     XR.clear();
                     VV.clear();
@@ -426,10 +466,8 @@ public class VoiceActivity extends AppCompatActivity {
                     MDN.clear();
                     reRecognizer.startListening(i);
                 }
-                tv.append(o.mTemp + o.mSize);
             }else{
                 // 다시 말하셈
-
                 mRecognizer.startListening(i);
             }
 
@@ -442,7 +480,6 @@ public class VoiceActivity extends AppCompatActivity {
                 editor.putBoolean("Voice", true);
                 editor.commit();
                 finish();
-                myMenu.setText("됐다능..");
 
             }
         }
@@ -476,7 +513,8 @@ public class VoiceActivity extends AppCompatActivity {
             o.mCount = 8;
         else if(num.equals("9") || num.equals("아홉"))
             o.mCount = 9;
-        tv.append("\n\n" + String.valueOf(o.mCount));
+        text_count.setText("수량 : " + o.mCount);
+        text_linear.setVisibility(View.VISIBLE);
     }
 
     void ner() {
@@ -523,11 +561,11 @@ public class VoiceActivity extends AppCompatActivity {
                     o.mSize = "LARGE";
             }
         }
-
-
+        text_size.setText("사이즈 : " + o.mSize);
+        text_temp.setText("온도 : " + o.mTemp);
+        text_linear.setVisibility(View.VISIBLE);
 
         Toast.makeText(this, o.mName+" "+o.mTemp +" " +o.mSize + " " + o.mCount, Toast.LENGTH_SHORT).show();
-        tv.append(o.mTemp + " " + o.mSize);
     }
 }
 

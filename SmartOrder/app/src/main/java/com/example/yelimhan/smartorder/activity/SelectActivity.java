@@ -86,6 +86,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         if(flag){
             Data = (OrderItem) getIntent().getSerializableExtra("order");
             oData.add(Data);
+            updateTotalPrice();
         }
 
         tvTotal = findViewById(R.id.txttotal);
