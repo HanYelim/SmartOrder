@@ -19,30 +19,55 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.VoiceActivity" />
-        <activity android:name=".activity.SpeechActivity" />
-        <activity android:name=".activity.MainActivity">
-        </activity>
-        <activity android:name=".activity.SelectActivity" />
-        <activity android:name=".activity.ChooseTypeActivity" />
-        <activity android:name=".activity.ChooseSizeActivity" />
-        <activity android:name=".activity.OptionActivity" />
-        <activity android:name=".activity.SubmitActivity" />
-        <activity android:name=".activity.OptionVoiceActivity" />
-        <activity android:name=".activity.CameraActivity"
+        <activity android:name=".activity.VoiceActivity"
             android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.SpeechActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.SelectActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.ChooseTypeActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.ChooseSizeActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.OptionActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.SubmitActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.OptionVoiceActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".activity.CameraActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".persongroupmanagment.PersonActivity" />
-        <activity android:name=".persongroupmanagment.SelectImageActivity" />
-        <activity android:name=".persongroupmanagment.AddFaceToPersonActivity" />
+        <activity android:name=".persongroupmanagment.PersonActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".persongroupmanagment.SelectImageActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".persongroupmanagment.AddFaceToPersonActivity"
+            android:screenOrientation="landscape">
+        </activity>
         <activity android:name=".persongroupmanagment.PersonGroupActivity" >
         </activity>
-        <activity android:name=".persongroupmanagment.PersonGroupListActivity">
+        <activity android:name=".persongroupmanagment.PersonGroupListActivity"
+            android:screenOrientation="landscape">
 
         </activity>
     </application>
