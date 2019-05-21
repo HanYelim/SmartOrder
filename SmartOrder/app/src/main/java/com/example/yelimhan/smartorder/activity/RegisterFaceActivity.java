@@ -3,10 +3,14 @@ package com.example.yelimhan.smartorder.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.hardware.Camera;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +30,7 @@ import com.microsoft.projectoxford.face.contract.Person;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.InputStream;
 import java.util.UUID;
 
@@ -42,7 +47,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
     public static Bitmap mBitmap;
     Face[] result = null;
-
+    ByteArrayInputStream inputStream = null;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -73,6 +78,10 @@ public class RegisterFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File file  = new File(Environment.getExternalStorageDirectory(),"1234.jpg");
+
+                Uri uri = FileProvider.getUriForFile(getApplicationContext(), "com.bignerdranch.android.test.fileprovider", file);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
                 startActivityForResult(intent, RESULT_CAPTURE_IMAGE);
             }
         });
@@ -83,49 +92,13 @@ public class RegisterFaceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 mBitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+                inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
                 new detectTask().execute(inputStream);
 
-                // 사람 추가
-                new AddPersonToGroupTask(personGroupId, editPersonName.getText().toString()).execute(inputStream);
-                new TrainingTask(personGroupId).execute(personGroupId);
+
             }
         });
-    }
-
-    // get person
-    class PersonDetectionTask extends AsyncTask<UUID, String , Person> {
-        private String personGroupId;
-        public PersonDetectionTask(String personGroupId) {
-            this.personGroupId = personGroupId;
-        }
-
-        @Override
-        protected Person doInBackground(UUID... uuids) {
-            try{
-                return faceServiceClient.getPerson(personGroupId,uuids[0]);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {
-        }
-
-        @Override
-        protected void onPostExecute(Person person) {
-            //ImageView img = findViewById(R.id.image_detect_view);
-            //img.setImageBitmap(drawFaceRectangleOnBitmap(mBitmap, facesDetected,person.name));
-            Toast.makeText(getApplicationContext(),person.name, Toast.LENGTH_SHORT).show();
-            //new AddFaceTask().execute(person.personId);
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-        }
     }
 
     class AddPersonToGroupTask extends AsyncTask<InputStream, String, Face> {
@@ -145,6 +118,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
                 Log.d("person id : ", person.personId.toString());
                 faceServiceClient.addPersonFace(personGroupId,person.personId,inputStreams[0],"persontest",result[0].faceRectangle); ///
+                Toast.makeText(getApplicationContext(),"등록 완료",Toast.LENGTH_SHORT).show();
 
                 return null;
             } catch (Exception ex) {
@@ -187,7 +161,16 @@ public class RegisterFaceActivity extends AppCompatActivity {
         protected void onPostExecute(Face[] faces) {
             mDialog.dismiss();
             //facesDetected = faces;
-            Toast.makeText(getApplicationContext(),"detect finished", Toast.LENGTH_SHORT).show();
+
+            if(result.length == 0)
+                Toast.makeText(getApplicationContext(),"detect failed" , Toast.LENGTH_SHORT).show();
+            else{
+                Toast.makeText(getApplicationContext(),"detect finished - " +String.valueOf(result.length), Toast.LENGTH_SHORT).show();
+                // 사람 추가
+                new AddPersonToGroupTask(personGroupId, editPersonName.getText().toString()).execute(inputStream);
+                new TrainingTask(personGroupId).execute(personGroupId);
+            }
+
         }
 
         @Override

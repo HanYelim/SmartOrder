@@ -63,13 +63,11 @@ public class IdentifyActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         url =  getIntent().getIntegerArrayListExtra("url");
 
-        iv1 = (ImageView) findViewById(R.id.iv1);
+        //iv1 = (ImageView) findViewById(R.id.iv1);
 
         btn_identify = findViewById(R.id.btn_identify);
        // iv1.setImageBitmap(orgImage);
 
-
-        // ss -> inputstream
 
         //inputStream1 = new ByteArrayInputStream(ss.getBytes());
         File sdCard = Environment.getExternalStorageDirectory();
