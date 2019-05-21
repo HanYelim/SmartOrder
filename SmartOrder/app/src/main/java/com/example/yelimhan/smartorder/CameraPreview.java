@@ -128,15 +128,16 @@ public class CameraPreview extends ViewGroup implements SurfaceHolder.Callback {
                 List<Size> allSizes = parameters.getSupportedPictureSizes();
                 Camera.Size size = allSizes.get(0); // get top size
                 for (int i = 0; i < allSizes.size(); i++) {
-                    if (allSizes.get(i).width > size.width)
-                        size = allSizes.get(allSizes.size()-1);
+                        if(allSizes.get(i).width == 640){
+                            size = allSizes.get(i);
+                            break;
+                        }
                 }
                 parameters.setPictureSize(size.width, size.height);
 
+                Log.d("width : ", String.valueOf(size.width));
+                Log.d("height : ", String.valueOf(size.height));
 
-                m_resWidth = 480;
-                m_resHeight = 640;
-                parameters.setPictureSize(m_resWidth, m_resHeight);
                 mCamera.setParameters(parameters);
             }
         } catch (IOException exception) {
