@@ -121,6 +121,8 @@ public class CameraPreview extends ViewGroup implements SurfaceHolder.Callback {
                 Log.d("width : ", String.valueOf(m_resWidth));
                 Log.d("height : ", String.valueOf(m_resHeight));
 
+                //m_resWidth = 480;
+                //m_resHeight = 640;
                 m_resWidth = 480;
                 m_resHeight = 640;
                 parameters.setPictureSize(m_resWidth, m_resHeight);

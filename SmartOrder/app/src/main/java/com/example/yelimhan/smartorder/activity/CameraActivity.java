@@ -192,4 +192,10 @@ public class CameraActivity extends Activity {
 
     }
 
+    public void registerClick(View view){
+
+        Intent i = new Intent(getApplicationContext(), RegisterFaceActivity.class);
+        startActivity(i);
+        finish();
+    }
 }

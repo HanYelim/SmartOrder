@@ -38,6 +38,7 @@
             android:text="메뉴 주문하기" />
 
         <Button
+            android:onClick="registerClick"
             android:id="@+id/button_reg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
