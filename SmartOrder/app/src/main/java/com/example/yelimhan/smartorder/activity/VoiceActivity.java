@@ -310,7 +310,7 @@ public class VoiceActivity extends AppCompatActivity {
                     Sentence st = (Sentence) stl.get(i);
                     for(int j = 0; j < st.size(); j++){
                         //st.get(j).getExp() 따뜻하게
-                        //tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
+                        tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
                         String tag = st.get(j).getFirstMorp().getTag();
                         String word = st.get(j).getExp();
                         if(tag.equals("NNG")){ //음료 종류
@@ -324,7 +324,7 @@ public class VoiceActivity extends AppCompatActivity {
                             VV.add(word);
                         else if(tag.equals("NNP"))
                             NNP.add(word);
-                        else if(tag.equals("NR"))
+                        else if(tag.equals("NR") || tag.equals("NR+12"))
                             NR.add(word);
                         else if(tag.equals("MDN"))
                             MDN.add(word);
@@ -435,7 +435,7 @@ public class VoiceActivity extends AppCompatActivity {
                 menu_image.setImageResource(resID);
                 if(o.mTemp.equals("BOTH")){
                     // 온도 넣어야 하면
-                    tv.setText(o.mName + " 가 \n따뜻한건지 차가운건지 \n말해주세요");
+                    //tv.setText(o.mName + " 가 \n따뜻한건지 차가운건지 \n말해주세요");
                     VA.clear();
                     XR.clear();
                     VV.clear();
@@ -446,7 +446,7 @@ public class VoiceActivity extends AppCompatActivity {
                 }
                 if(o.mSize.equals("BOTH")){
                     // 사이즈도 넣어야 하면
-                    tv.setText(o.mName + " 의 \n사이즈를 말해주세요");
+                    //tv.setText(o.mName + " 의 \n사이즈를 말해주세요");
                     VA.clear();
                     XR.clear();
                     VV.clear();
@@ -457,7 +457,7 @@ public class VoiceActivity extends AppCompatActivity {
                 }
                 if(o.mCount == 0){
                     // 수량없으면
-                    tv.setText(o.mName + " 의 \n수량을 말해주세요");
+                    //tv.setText(o.mName + " 의 \n수량을 말해주세요");
                     VA.clear();
                     XR.clear();
                     VV.clear();
@@ -495,7 +495,7 @@ public class VoiceActivity extends AppCompatActivity {
         else
             num = "";
 
-        if(num.equals("하나") || num.equals("한"))
+        if(num.equals("하나") || num.equals("한") || num.equals("하나요"))
             o.mCount = 1;
         else if(num.equals("2") || num.equals("두") || num.equals("둘"))
             o.mCount = 2;

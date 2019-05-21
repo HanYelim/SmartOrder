@@ -35,7 +35,13 @@
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".activity.SelectActivity"
             android:screenOrientation="landscape"></activity>
@@ -62,11 +68,7 @@
             android:name=".activity.CameraActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".persongroupmanagment.PersonActivity"
             android:screenOrientation="landscape">
