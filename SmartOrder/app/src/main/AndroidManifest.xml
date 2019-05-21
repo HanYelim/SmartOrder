@@ -23,7 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activity.RegisterFaceActivity"></activity>
+        <activity android:name=".activity.RegisterFaceActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activity.VoiceActivity"
             android:screenOrientation="landscape"
@@ -54,7 +56,8 @@
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.IdentifyActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activity.CameraActivity"
             android:screenOrientation="landscape"
