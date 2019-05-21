@@ -189,21 +189,9 @@ public class CameraActivity extends Activity {
             {
                 //여기에 딜레이 후 시작할 작업들을 입력
                 camera.takePicture(shutterCallback, rawCallback, jpegCallback);
-            }
-        }, 500);// 0.5초 정도 딜레이를 준 후 시작
-
-
-        new Handler().postDelayed(new Runnable()
-        {
-            @Override
-            public void run()
-            {
-                //여기에 딜레이 후 시작할 작업들을 입력
-                camera.takePicture(shutterCallback, rawCallback, jpegCallback);
                 safeToTakePicture = true;
             }
-        }, 1000);// 0.5초 정도 딜레이를 준 후 시작
-
+        }, 500);// 0.5초 정도 딜레이를 준 후 시작
     }
 
     public void registerClick(View view){

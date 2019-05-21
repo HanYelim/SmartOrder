@@ -63,7 +63,8 @@
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.IdentifyActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activity.CameraActivity"
             android:screenOrientation="landscape"

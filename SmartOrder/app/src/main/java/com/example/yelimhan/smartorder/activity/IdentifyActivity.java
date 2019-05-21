@@ -1,6 +1,7 @@
 package com.example.yelimhan.smartorder.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -33,24 +34,17 @@ public class IdentifyActivity extends AppCompatActivity {
     ByteArrayInputStream inputStream1;
     ArrayList<Integer> url;
 
-    private ImageView iv1;
-    private ImageView iv2;
-    private ImageView iv3;
-
     private FaceServiceClient faceServiceClient = new FaceServiceRestClient("https://koreacentral.api.cognitive.microsoft.com/face/v1.0", "873449264b7740e3ba3ca53b3c9df99f");
     private final String personGroupId = "smartordergroup";
     Face[] result = null;
     //ByteArrayInputStream inputStream = null;
 
     Button btn_identify;
-
     Bitmap orgImage2;
-    Bitmap orgImage3;
 
-    int i =0;
+    int i = 0;
 
     ByteArrayInputStream inputStream2;
-    ByteArrayInputStream inputStream3;
 
 
     Boolean flag = false;
@@ -59,30 +53,17 @@ public class IdentifyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identify);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         url =  getIntent().getIntegerArrayListExtra("url");
 
-        //iv1 = (ImageView) findViewById(R.id.iv1);
-
         btn_identify = findViewById(R.id.btn_identify);
-       // iv1.setImageBitmap(orgImage);
 
-
-        //inputStream1 = new ByteArrayInputStream(ss.getBytes());
         File sdCard = Environment.getExternalStorageDirectory();
         File dir = new File (sdCard.getAbsolutePath() + "/camtest");
         String fileName = String.format("%d.jpg", url.get(0));
         String fileName2 = String.format("%d.jpg", url.get(1));
-        String fileName3 = String.format("%d.jpg", url.get(2));
-
 
         Bitmap orgImage = BitmapFactory.decodeFile(String.valueOf(dir) + "/" + fileName);
         orgImage2 = BitmapFactory.decodeFile(String.valueOf(dir) + "/" + fileName2);
-        orgImage3 = BitmapFactory.decodeFile(String.valueOf(dir) + "/" + fileName3);
-
-
-
 
         btn_identify.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,8 +78,6 @@ public class IdentifyActivity extends AppCompatActivity {
 
                 ByteArrayOutputStream outputStream3 = new ByteArrayOutputStream();
                 orgImage2.compress(Bitmap.CompressFormat.PNG,100,outputStream3);
-                inputStream3 = new ByteArrayInputStream(outputStream3.toByteArray());
-
 
                 new detectTask().execute(inputStream);
             }
@@ -107,7 +86,6 @@ public class IdentifyActivity extends AppCompatActivity {
     }
 
     class detectTask extends AsyncTask<InputStream, String, Face[]> {
-
 
         @Override
         protected Face[] doInBackground(InputStream... inputStreams) {
@@ -139,17 +117,22 @@ public class IdentifyActivity extends AppCompatActivity {
         protected void onPostExecute(Face[] faces) {
             // mDialog.dismiss();
             if (result.length == 0){
-                Toast.makeText(getApplicationContext(), "detect failed  " + String.valueOf(i), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "detect failed  " + String.valueOf(i), Toast.LENGTH_SHORT).show();
 
                 if(flag == false){
                     new detectTask().execute(inputStream2);
                     flag = true;
                 }
+                else{
+                    Toast.makeText(getApplicationContext(), "얼굴이 인식되지 않았습니다. 처음으로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
             }
 
             else{
-
-                Toast.makeText(getApplicationContext(),"detect finished  "+ String.valueOf(i), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"detect finished  "+ String.valueOf(i), Toast.LENGTH_SHORT).show();
 
                 final UUID[] faceIds = new UUID[result.length];
                 for (int i=0;i<result.length;i++){
@@ -234,7 +217,11 @@ public class IdentifyActivity extends AppCompatActivity {
         protected void onPostExecute(Person person) {
             //ImageView img = findViewById(R.id.image_detect_view);
             //img.setImageBitmap(drawFaceRectangleOnBitmap(mBitmap, facesDetected,person.name));
-            Toast.makeText(getApplicationContext(),person.name, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),person.name + " 님", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("personId", person.personId);
+            startActivity(intent);
+            finish();
             //new AddFaceTask().execute(person.personId);
         }
 
