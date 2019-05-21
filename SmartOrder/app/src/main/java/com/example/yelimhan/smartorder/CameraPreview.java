@@ -116,13 +116,24 @@ public class CameraPreview extends ViewGroup implements SurfaceHolder.Callback {
                 m_resWidth = mCamera.getParameters().getPictureSize().width;
                 m_resHeight = mCamera.getParameters().getPictureSize().height;
                 Camera.Parameters parameters = mCamera.getParameters();
-//아래 숫자를 변경하여 자신이 원하는 해상도로 변경한다
+        //아래 숫자를 변경하여 자신이 원하는 해상도로 변경한다
 
                 Log.d("width : ", String.valueOf(m_resWidth));
                 Log.d("height : ", String.valueOf(m_resHeight));
 
                 //m_resWidth = 480;
                 //m_resHeight = 640;
+
+
+                List<Size> allSizes = parameters.getSupportedPictureSizes();
+                Camera.Size size = allSizes.get(0); // get top size
+                for (int i = 0; i < allSizes.size(); i++) {
+                    if (allSizes.get(i).width > size.width)
+                        size = allSizes.get(allSizes.size()-1);
+                }
+                parameters.setPictureSize(size.width, size.height);
+
+
                 m_resWidth = 480;
                 m_resHeight = 640;
                 parameters.setPictureSize(m_resWidth, m_resHeight);

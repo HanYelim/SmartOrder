@@ -53,6 +53,9 @@
             android:name=".activity.OptionVoiceActivity"
             android:screenOrientation="landscape"></activity>
         <activity
+            android:name=".activity.IdentifyActivity"
+            android:screenOrientation="landscape"></activity>
+        <activity
             android:name=".activity.CameraActivity"
             android:screenOrientation="landscape"
             android:theme="@style/AppTheme">
@@ -77,6 +80,7 @@
             android:screenOrientation="landscape">
 
         </activity>
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
     </application>
 
 </manifest>

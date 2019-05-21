@@ -3,6 +3,8 @@ package com.example.yelimhan.smartorder.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.ShutterCallback;
@@ -11,6 +13,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.SurfaceView;
@@ -24,10 +27,13 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.example.yelimhan.smartorder.R;
@@ -54,7 +60,7 @@ public class CameraActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         button_main_capture = findViewById(R.id.capture);
         button_reg = findViewById(R.id.button_reg);
-        url = new ArrayList<Integer>();
+        url = new ArrayList<>();
 
         setContentView(R.layout.activity_camera);
 
@@ -159,6 +165,7 @@ public class CameraActivity extends Activity {
             if(safeToTakePicture && flag){
                 Intent intent = new Intent(getApplicationContext(), IdentifyActivity.class);
                 intent.putExtra("url", url);
+
                 startActivity(intent);
                 finish();
             }
@@ -204,5 +211,17 @@ public class CameraActivity extends Activity {
         Intent i = new Intent(getApplicationContext(), RegisterFaceActivity.class);
         startActivity(i);
         finish();
+    }
+
+    public static String InputStreamtoString(ByteArrayInputStream is) {
+        int size = is.available();
+        char[] theChars = new char[size];
+        byte[] bytes    = new byte[size];
+
+        is.read(bytes, 0, size);
+        for (int i = 0; i < size;)
+            theChars[i] = (char)(bytes[i++]&0xff);
+
+        return new String(theChars);
     }
 }
