@@ -62,23 +62,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".persongroupmanagment.PersonActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name=".persongroupmanagment.SelectImageActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity
-            android:name=".persongroupmanagment.AddFaceToPersonActivity"
-            android:screenOrientation="landscape"></activity>
-        <activity android:name=".persongroupmanagment.PersonGroupActivity"></activity>
-        <activity
-            android:name=".persongroupmanagment.PersonGroupListActivity"
-            android:screenOrientation="landscape"></activity>
+        <activity android:name=".persongroupmanagment.PersonActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".persongroupmanagment.SelectImageActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".persongroupmanagment.AddFaceToPersonActivity"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity android:name=".persongroupmanagment.PersonGroupActivity" >
+        </activity>
+        <activity android:name=".persongroupmanagment.PersonGroupListActivity"
+            android:screenOrientation="landscape">
 
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
+        </activity>
     </application>
 
 </manifest>
