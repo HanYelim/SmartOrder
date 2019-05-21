@@ -28,6 +28,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import com.example.yelimhan.smartorder.R;
 import com.example.yelimhan.smartorder.CameraPreview;
 
@@ -41,6 +43,7 @@ public class CameraActivity extends Activity {
     Button button_main_capture, button_reg;
     private boolean safeToTakePicture = false;
     boolean flag = false;
+    ArrayList<Integer> url;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,7 @@ public class CameraActivity extends Activity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         button_main_capture = findViewById(R.id.capture);
         button_reg = findViewById(R.id.button_reg);
+        url = new ArrayList<Integer>();
 
         setContentView(R.layout.activity_camera);
 
@@ -132,7 +136,9 @@ public class CameraActivity extends Activity {
                 File dir = new File (sdCard.getAbsolutePath() + "/camtest");
                 dir.mkdirs();
 
-                String fileName = String.format("%d.jpg", System.currentTimeMillis());
+                int name = (int) System.currentTimeMillis();
+                String fileName = String.format("%d.jpg", name);
+                url.add(name);
                 File outFile = new File(dir, fileName);
 
                 outStream = new FileOutputStream(outFile);
@@ -151,7 +157,8 @@ public class CameraActivity extends Activity {
             }
 
             if(safeToTakePicture && flag){
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), IdentifyActivity.class);
+                intent.putExtra("url", url);
                 startActivity(intent);
                 finish();
             }
