@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.yelimhan.smartorder.R;
@@ -32,7 +33,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
     private Button cameraButton;
     private Button addPersonBtn;
-    private ImageView photoView;
+    private TextView textView;
     private EditText editPersonName;
 
     private FaceServiceClient faceServiceClient = new FaceServiceRestClient("https://koreacentral.api.cognitive.microsoft.com/face/v1.0", "873449264b7740e3ba3ca53b3c9df99f");
@@ -49,7 +50,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
         if (requestCode ==RESULT_CAPTURE_IMAGE && resultCode==RESULT_OK && null!=data)
         {
             mBitmap = (Bitmap) data.getExtras().get("data");
-            photoView.setImageBitmap(mBitmap);
+            textView.setText("등록된 사진이 있습니다.");
         }
     }
 
@@ -62,9 +63,10 @@ public class RegisterFaceActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(policy);
 
         //Initlasing the Views
-        photoView = (ImageView) findViewById(R.id.image_detect_view);
         cameraButton = (Button) findViewById(R.id.camera_open_btn);
         addPersonBtn = (Button) findViewById(R.id.add_person);
+        editPersonName = (EditText) findViewById(R.id.editpersonname);
+        textView = (TextView)findViewById(R.id.check_photo);
 
 
         cameraButton.setOnClickListener(new View.OnClickListener() {

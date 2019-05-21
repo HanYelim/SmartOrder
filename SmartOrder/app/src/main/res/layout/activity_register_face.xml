@@ -11,8 +11,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="0.8"
-        android:gravity="center
-"
+        android:gravity="center"
         android:layout_height="match_parent">
         <ImageView
             android:layout_width="wrap_content"
@@ -80,7 +79,6 @@
             android:text="등록된 사진이 없습니다."
             android:layout_marginBottom="10dp"></TextView>
 
-
         <EditText
             android:id="@+id/editpersonname"
             android:hint="person name"
@@ -100,6 +98,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.7"/>
+
+
+
     </LinearLayout>
 
 
