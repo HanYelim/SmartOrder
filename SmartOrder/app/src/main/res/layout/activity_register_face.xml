@@ -4,30 +4,103 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
+    android:weightSum="2"
     tools:context=".activity.RegisterFaceActivity">
 
-    <Button
-        android:id="@+id/camera_open_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Camera"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="0.8"
+        android:gravity="center
+"
+        android:layout_height="match_parent">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/smartorder"/>
 
-    <EditText
-        android:id="@+id/editpersonname"
-        android:hint="person name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    </LinearLayout>
 
-    <ImageView
-        android:id="@+id/image_detect_view"
-        android:layout_width="match_parent"
-        android:layout_height="300dp" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1.2"
+        android:layout_height="match_parent"
+        android:background="@drawable/round"
+        android:layout_marginRight="35dp"
+        android:weightSum="6"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="2.4"
+            android:orientation="horizontal">
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:weightSum="3"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="사진을 촬영해 주세요."
+                    android:textSize="27sp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:weightSum="3"
+                android:gravity="bottom"
+                android:orientation="vertical"
+                android:layout_height="match_parent">
+                <Button
+                    android:id="@+id/camera_open_btn"
+                    android:background="#dda287"
+                    android:textColor="#ffffff"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="Camera"/>
+            </LinearLayout>
+
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.6"
+            android:gravity="center"
+            android:id="@+id/check_photo"
+            android:text="등록된 사진이 없습니다."
+            android:layout_marginBottom="10dp"></TextView>
 
 
-    <Button
-        android:id="@+id/add_person"
-        android:text="add person"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/editpersonname"
+            android:hint="person name"
+            android:gravity="left"
+            android:paddingLeft="50dp"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_marginTop="10dp"
+            android:id="@+id/add_person"
+            android:background="#dda287"
+            android:textColor="#ffff"
+            android:text="add person"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7"/>
+    </LinearLayout>
+
+
 </LinearLayout>
