@@ -13,5 +13,5 @@ interface CustomerService {
     @FormUrlEncoded
     @POST("insert_customer.php")
     fun insertCustomer(@Field("nickname") nickname: String,
-                    @Field("faceID") faceID: String): Observable<BaseResponse>
+                       @Field("faceID") faceID: String): Observable<BaseResponse>
 }
