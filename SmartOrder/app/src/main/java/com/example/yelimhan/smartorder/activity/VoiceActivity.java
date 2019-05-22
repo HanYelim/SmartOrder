@@ -606,8 +606,16 @@ public class VoiceActivity extends AppCompatActivity {
                     o.mSize = "LARGE";
             }
         }
-        text_size.setText("사이즈 : " + o.mSize);
-        text_temp.setText("온도 : " + o.mTemp);
+        if(o.mSize.equals("BOTH")){
+            text_size.setText("사이즈 : ");
+        }else{
+            text_size.setText("사이즈 : " + o.mSize);
+        }
+        if(o.mTemp.equals("BOTH")){
+            text_temp.setText("온도 : ");
+        }else{
+            text_temp.setText("온도 : " + o.mTemp);
+        }
         text_linear.setVisibility(View.VISIBLE);
 
         Toast.makeText(this, o.mName+" "+o.mTemp +" " +o.mSize + " " + o.mCount, Toast.LENGTH_SHORT).show();

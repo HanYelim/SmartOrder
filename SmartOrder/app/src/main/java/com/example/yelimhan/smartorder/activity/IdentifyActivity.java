@@ -182,9 +182,18 @@ public class IdentifyActivity extends AppCompatActivity {
         protected void onPostExecute(IdentifyResult[] identifyResults) {
        //     mDialog.dismiss();
             if(mSucceed){
-                Log.d("train complete",String.valueOf(mSucceed));
-                Log.d("identify result", String.valueOf(identifyResults[0].faceId));
-                new PersonDetectionTask(personGroupId).execute(identifyResults[0].candidates.get(0).personId);  // get person
+                if(identifyResults.length !=0){
+                    Log.d("train complete",String.valueOf(mSucceed));
+                    Log.d("identify result", String.valueOf(identifyResults[0].faceId));
+                    new PersonDetectionTask(personGroupId).execute(identifyResults[0].candidates.get(0).personId);  // get person
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"얼굴이 등록되지 않았어요.\n 얼굴을 먼저 등록해주세요.",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(IdentifyActivity.this, CameraActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+
             }
         }
 
