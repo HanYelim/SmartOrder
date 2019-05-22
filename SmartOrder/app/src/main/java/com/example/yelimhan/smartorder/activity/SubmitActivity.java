@@ -1,5 +1,6 @@
 package com.example.yelimhan.smartorder.activity;
 
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,8 +36,10 @@ public class SubmitActivity extends AppCompatActivity {
         setContentView(R.layout.activity_submit);
         textView = (TextView)findViewById(R.id.submit_text);
         oData = (ArrayList<OrderItem>) getIntent().getSerializableExtra("menuList");
+        SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
+        String customer_nickname = pref.getString("Customer_nickname", "");
+        String customer_ID = pref.getString("Customer_ID", "");
         String option, type, size, mCustomer, name;
-        mCustomer = "123qwe";
         int count, price, mindex;
         mNow = System.currentTimeMillis();
         date = new Date(mNow);
@@ -53,10 +56,10 @@ public class SubmitActivity extends AppCompatActivity {
             count = 1;
             type = oData.get(i).mTemp;
             option = oData.get(i).mOption;
-            str  = mCustomer + name + type + option + String.valueOf(mindex) + String.valueOf(count) + String.valueOf(price);
+            str  = customer_ID + name + type + option + String.valueOf(mindex) + String.valueOf(count) + String.valueOf(price);
             Log.d("str : ", str);
 
-            insertOrderDisposable = ApiService.getMENU_SERVICE().insertOrder(mCustomer, name, size, type, option, mindex, count, price)
+            insertOrderDisposable = ApiService.getMENU_SERVICE().insertOrder(customer_ID, name, size, type, option, mindex, count, price)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<BaseResponse>() {

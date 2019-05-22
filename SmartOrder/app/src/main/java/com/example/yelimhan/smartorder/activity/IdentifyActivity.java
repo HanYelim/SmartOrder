@@ -2,6 +2,7 @@ package com.example.yelimhan.smartorder.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -16,7 +17,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
+import com.example.yelimhan.smartorder.model.Customer;
+import com.example.yelimhan.smartorder.model.Menu;
+import com.example.yelimhan.smartorder.network.ApiService;
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
 import com.microsoft.projectoxford.face.contract.Face;
@@ -30,9 +35,16 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+
 public class IdentifyActivity extends AppCompatActivity {
     ByteArrayInputStream inputStream1;
     ArrayList<Integer> url;
+    Disposable searchCustomerDisposable;
+    SharedPreferences pref;
 
     private FaceServiceClient faceServiceClient = new FaceServiceRestClient("https://koreacentral.api.cognitive.microsoft.com/face/v1.0", "873449264b7740e3ba3ca53b3c9df99f");
     private final String personGroupId = "smartordergroup";
@@ -93,6 +105,7 @@ public class IdentifyActivity extends AppCompatActivity {
                 i++;
                 publishProgress("Detecting...");
                 result = faceServiceClient.detect(inputStreams[0], true, false, null);
+
                 if(result == null){
                     return null;
                 }
@@ -217,6 +230,23 @@ public class IdentifyActivity extends AppCompatActivity {
         protected void onPostExecute(Person person) {
             //ImageView img = findViewById(R.id.image_detect_view);
             //img.setImageBitmap(drawFaceRectangleOnBitmap(mBitmap, facesDetected,person.name));
+
+            searchCustomerDisposable = ApiService.getCUSTOMER_SERVICE().getCustomerInfo(person.personId.toString())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Consumer<Customer>() {
+                        @Override
+                        public void accept(Customer customer) throws Exception {
+                            person.name = customer.getNickname();
+
+                        }
+                    });
+
+            pref = getSharedPreferences("pref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putString("Customer_nickname", person.name);
+            editor.putString("Customer_ID", person.personId.toString());
+            editor.commit();
             Toast.makeText(getApplicationContext(),person.name + " 님", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra("personId", person.personId);
