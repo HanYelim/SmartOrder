@@ -2,6 +2,7 @@ package com.example.yelimhan.smartorder.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -9,9 +10,11 @@ import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -45,7 +48,7 @@ public class VoiceActivity extends AppCompatActivity {
     Disposable disposable;
     SpeechRecognizer mRecognizer;
     SpeechRecognizer reRecognizer;
-    LinearLayout text_linear;
+    LinearLayout text_linear, imgLayout;
     List<Menu> all_menu = new ArrayList<>();
     int price;
     OrderItem o, oi;
@@ -74,6 +77,7 @@ public class VoiceActivity extends AppCompatActivity {
         text_size = findViewById(R.id.text_size);
         text_temp = findViewById(R.id.text_temp);
         text_count = findViewById(R.id.text_count);
+        imgLayout = findViewById(R.id.imgLayout);
 
         MorphemeAnalyzer ma = new MorphemeAnalyzer();
         ma.createLogger(null);
@@ -118,6 +122,15 @@ public class VoiceActivity extends AppCompatActivity {
                 NNG.clear();
                 o = null;
                 o = new OrderItem("");
+                imgLayout.setGravity(Gravity.CENTER);
+                menu_image.setImageResource(R.drawable.no_menu);
+//                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)menu_image.getLayoutParams();
+//                lp.gravity = Gravity.CENTER;
+//                menu_image.setLayoutParams(lp);
+
+                text_count.setText("");
+                text_temp.setText("");
+                text_size.setText("");
 
                 mRecognizer.destroy();
                 reRecognizer.destroy();
@@ -310,7 +323,7 @@ public class VoiceActivity extends AppCompatActivity {
                     Sentence st = (Sentence) stl.get(i);
                     for(int j = 0; j < st.size(); j++){
                         //st.get(j).getExp() 따뜻하게
-                        tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
+                        //tv.append(st.get(j).toString() + " " + st.get(j).getFirstMorp().getTag() + "\n");
                         String tag = st.get(j).getFirstMorp().getTag();
                         String word = st.get(j).getExp();
                         if(tag.equals("NNG")){ //음료 종류
@@ -402,6 +415,38 @@ public class VoiceActivity extends AppCompatActivity {
                                                 break;
                                             }
                                         }
+                                    }else if(NNG.get(a).equals("레모네이드")){
+                                        o = new OrderItem("레몬에이드");
+                                        o.mSize = all_menu.get(6).getSize();
+                                        o.mTemp = all_menu.get(6).getType();
+                                        o.mOption = all_menu.get(6).getOpt();
+                                        price = Integer.parseInt(all_menu.get(6).getPrice());
+                                        String opt = "";
+                                        if(o.mOption.charAt(0) == '1'){
+                                            opt += "1 ";
+                                        }
+                                        else{
+                                            opt += "-1 ";
+                                        }
+
+                                        if(o.mOption.charAt(1) == '1'){
+                                            opt += "0 ";
+                                        }
+                                        else{
+                                            opt += "-1 ";
+                                        }
+
+                                        if(o.mOption.charAt(2) == '1'){
+                                            opt += "1";
+                                        }
+                                        else{
+                                            opt += "-1";
+                                        }
+                                        o.mOption = opt;
+
+                                        flag = true;
+                                        break;
+
                                     }
                                     else{
                                         o = new OrderItem("");
@@ -435,7 +480,7 @@ public class VoiceActivity extends AppCompatActivity {
                 menu_image.setImageResource(resID);
                 if(o.mTemp.equals("BOTH")){
                     // 온도 넣어야 하면
-                    //tv.setText(o.mName + " 가 \n따뜻한건지 차가운건지 \n말해주세요");
+                    tv.setText(o.mName + " 가 \n따뜻한건지 차가운건지 \n말해주세요");
                     VA.clear();
                     XR.clear();
                     VV.clear();
@@ -446,7 +491,7 @@ public class VoiceActivity extends AppCompatActivity {
                 }
                 if(o.mSize.equals("BOTH")){
                     // 사이즈도 넣어야 하면
-                    //tv.setText(o.mName + " 의 \n사이즈를 말해주세요");
+                    tv.setText(o.mName + " 의 \n사이즈를 말해주세요");
                     VA.clear();
                     XR.clear();
                     VV.clear();
@@ -457,7 +502,7 @@ public class VoiceActivity extends AppCompatActivity {
                 }
                 if(o.mCount == 0){
                     // 수량없으면
-                    //tv.setText(o.mName + " 의 \n수량을 말해주세요");
+                    tv.setText(o.mName + " 의 \n수량을 말해주세요");
                     VA.clear();
                     XR.clear();
                     VV.clear();
@@ -568,4 +613,3 @@ public class VoiceActivity extends AppCompatActivity {
         Toast.makeText(this, o.mName+" "+o.mTemp +" " +o.mSize + " " + o.mCount, Toast.LENGTH_SHORT).show();
     }
 }
-
