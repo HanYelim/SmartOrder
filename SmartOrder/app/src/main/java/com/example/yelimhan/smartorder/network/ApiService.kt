@@ -26,5 +26,8 @@ class ApiService {
 
         @JvmStatic
         val MENU_SERVICE = retrofit.create(MenuService::class.java)
+
+        @JvmStatic
+        val CUSTOMER_SERVICE = retrofit.create(CustomerService::class.java)
     }
 }
