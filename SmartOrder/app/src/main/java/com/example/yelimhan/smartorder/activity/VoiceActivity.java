@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -61,6 +62,8 @@ public class VoiceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_voice);
         tv = findViewById(R.id.tv);
         button = findViewById(R.id.button);
@@ -122,8 +125,12 @@ public class VoiceActivity extends AppCompatActivity {
                 NNG.clear();
                 o = null;
                 o = new OrderItem("");
-                imgLayout.setGravity(Gravity.CENTER);
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imgLayout.getLayoutParams();
+                params.gravity = Gravity.CENTER;
+                imgLayout.setLayoutParams(params);
+                text_linear.setVisibility(View.GONE);
                 menu_image.setImageResource(R.drawable.no_menu);
+                tv.setText("원하시는 메뉴를 말해주세요");
 //                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)menu_image.getLayoutParams();
 //                lp.gravity = Gravity.CENTER;
 //                menu_image.setLayoutParams(lp);
