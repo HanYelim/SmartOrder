@@ -17,8 +17,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +53,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class RegisterFaceActivity extends AppCompatActivity {
 
-    private Button cameraButton;
+    private ImageButton cameraButton;
     private Button addPersonBtn;
     private TextView textView;
     private EditText editPersonName;
@@ -78,7 +81,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
             // mBitmap = (Bitmap) data.getExtras().get("data");
 
             ///mBitmap = getBitmapFromUri(imageUri);
-            textView.setText("등록된 사진이 있습니다.");
+            //textView.setText("등록된 사진이 있습니다.");
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
@@ -100,23 +103,23 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
             //mBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), imgOptions);
             mBitmap = BitmapFactory.decodeFile(String.valueOf(photoFile));
-            iv1.setImageBitmap(mBitmap);
+            //iv1.setImageBitmap(mBitmap);
         }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_face);
+        setContentView(R.layout.activity_register_face2);
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
         //Initlasing the Views
-        cameraButton = (Button) findViewById(R.id.camera_open_btn);
+        cameraButton = findViewById(R.id.camera_open_btn);
         addPersonBtn = (Button) findViewById(R.id.add_person);
         editPersonName = (EditText) findViewById(R.id.editpersonname);
-        textView = (TextView)findViewById(R.id.check_photo);
+        //textView = (TextView)findViewById(R.id.check_photo);
         iv1 = findViewById(R.id.testiv);
 
         cameraButton.setOnClickListener(new View.OnClickListener() {

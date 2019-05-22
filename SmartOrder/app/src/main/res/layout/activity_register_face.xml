@@ -6,17 +6,41 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:weightSum="2"
+    android:gravity="center"
     tools:context=".activity.RegisterFaceActivity">
 
     <LinearLayout
+
+        android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_weight="0.8"
         android:gravity="center"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:src="@drawable/smartorder"/>
+            android:layout_height="164dp"
+            android:src="@drawable/logo" />
+
+
+            <TextView
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="사진을 촬영해 주세요."
+                android:textSize="25sp"/>
+
+            <Button
+                android:id="@+id/camera_open_btn"
+                android:background="#dda287"
+                android:textColor="#ffffff"
+                android:layout_width="150dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="Camera"/>
 
     </LinearLayout>
 
@@ -29,49 +53,13 @@
         android:weightSum="6"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/testiv"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2.4"
             android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:weightSum="3"
-                android:gravity="bottom"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="사진을 촬영해 주세요."
-                    android:textSize="27sp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:weightSum="3"
-                android:gravity="bottom"
-                android:orientation="vertical"
-                android:layout_height="match_parent">
-                <Button
-                    android:id="@+id/camera_open_btn"
-                    android:background="#dda287"
-                    android:textColor="#ffffff"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:gravity="center"
-                    android:layout_weight="1"
-                    android:text="Camera"/>
-            </LinearLayout>
 
         </LinearLayout>
         <TextView
@@ -82,16 +70,22 @@
             android:id="@+id/check_photo"
             android:text="등록된 사진이 없습니다."
             android:layout_marginBottom="10dp"></TextView>
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/testiv"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
         <EditText
+            android:textSize="30sp"
             android:id="@+id/editpersonname"
-            android:hint="person name"
+            android:hint="닉네임을 입력해주세요"
             android:gravity="left"
             android:paddingLeft="50dp"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="0"/>
 
 
         <Button
