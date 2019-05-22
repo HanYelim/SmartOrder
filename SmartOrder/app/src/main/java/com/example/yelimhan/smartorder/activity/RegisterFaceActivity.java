@@ -149,6 +149,10 @@ public class RegisterFaceActivity extends AppCompatActivity {
 //                new AddPersonToGroupTask(personGroupId, editPersonName.getText().toString()).execute(inputStream);
 //                new TrainingTask(personGroupId).execute(personGroupId);
 
+                Intent intent = new Intent(RegisterFaceActivity.this, CameraActivity.class);
+                startActivity(intent);
+                finish();
+
 
             }
         });

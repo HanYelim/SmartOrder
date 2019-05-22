@@ -1,10 +1,16 @@
 package com.example.yelimhan.smartorder.activity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.nfc.cardemulation.CardEmulation;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.yelimhan.smartorder.OrderItem;
 import com.example.yelimhan.smartorder.R;
@@ -73,6 +79,21 @@ public class SubmitActivity extends AppCompatActivity {
 
                         }
                     });
+            AlertDialog.Builder ab = new AlertDialog.Builder(SubmitActivity.this);
+            ab.setMessage(Html.fromHtml("주문이 완료되었습니다."));
+            ab.setPositiveButton("ok", yesButtonClickListener);
+            ab.show();
+
         }
     }
+    private DialogInterface.OnClickListener yesButtonClickListener = new DialogInterface.OnClickListener() {
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+
+            Intent intent = new Intent(SubmitActivity.this, CameraActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+    };
 }
