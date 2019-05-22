@@ -42,7 +42,9 @@
             android:screenOrientation="landscape"></activity>
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="landscape">
+
+        </activity>
         <activity
             android:name=".activity.SelectActivity"
             android:screenOrientation="landscape"></activity>
