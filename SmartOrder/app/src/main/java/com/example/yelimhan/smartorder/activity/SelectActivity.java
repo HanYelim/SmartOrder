@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -39,7 +40,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     private ListView listView;
     private ImageView favoriteImg;
     private TextView favoriteText;
-    private TextView tvTotal;
+    private TextView tvTotal, select_text;
     List<Menu> rec_menu_list = new ArrayList<>();
     List<OrderItem> oData = new ArrayList<>();
     List<OrderItem> lastOrders = new ArrayList<>();
@@ -79,8 +80,14 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         layout1 = findViewById(R.id.layout1);
         layout_all = findViewById(R.id.allMenu_layout);
         btnSubmit = findViewById(R.id.submit_btn);
+        select_text = findViewById(R.id.select_view_text);
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         boolean flag = pref.getBoolean("Voice", false);
+        String customer_nickname = pref.getString("Customer_nickname", "");
+        String customer_ID = pref.getString("Customer_ID", "");
+        Log.d("customer nick : ", customer_nickname);
+        Log.d("customer id : ", customer_ID);
+        select_text.setText(customer_nickname + " 님을 위한 추천 메뉴");
         OrderItem Data;
 
         if(flag){
@@ -90,7 +97,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
 
         tvTotal = findViewById(R.id.txttotal);
 
-        disposable_favorite = ApiService.getMENU_SERVICE().getFavoriteMenu("123qwe")
+
+        disposable_favorite = ApiService.getMENU_SERVICE().getFavoriteMenu(customer_ID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Consumer<Menu>() {
@@ -108,7 +116,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                         //Log.d(" favorite menu : " , menu.getType().toLowerCase() + " " + menu.getName() + "\n" + menu.getSize());
                     }
                 });
-        disposable_recent = ApiService.getMENU_SERVICE().getRecentMenu("123qwe")
+        disposable_recent = ApiService.getMENU_SERVICE().getRecentMenu(customer_ID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new io.reactivex.functions.Consumer<ArrayList<Menu>>() {

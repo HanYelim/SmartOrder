@@ -36,6 +36,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center_vertical"
                     android:layout_width="match_parent"
+                    android:id="@+id/select_view_text"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="한예림 님을 위한 추천 메뉴"
