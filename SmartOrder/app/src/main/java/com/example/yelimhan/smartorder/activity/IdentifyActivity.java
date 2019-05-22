@@ -19,7 +19,9 @@ import android.widget.Toast;
 import com.example.yelimhan.smartorder.R;
 import com.microsoft.projectoxford.face.FaceServiceClient;
 import com.microsoft.projectoxford.face.FaceServiceRestClient;
+import com.microsoft.projectoxford.face.contract.AddPersistedFaceResult;
 import com.microsoft.projectoxford.face.contract.Face;
+import com.microsoft.projectoxford.face.contract.FaceRectangle;
 import com.microsoft.projectoxford.face.contract.IdentifyResult;
 import com.microsoft.projectoxford.face.contract.Person;
 
@@ -46,7 +48,7 @@ public class IdentifyActivity extends AppCompatActivity {
 
     ByteArrayInputStream inputStream2;
 
-
+    Bitmap orgImage = null;
     Boolean flag = false;
 
     @Override
@@ -62,7 +64,7 @@ public class IdentifyActivity extends AppCompatActivity {
         String fileName = String.format("%d.jpg", url.get(0));
         String fileName2 = String.format("%d.jpg", url.get(1));
 
-        Bitmap orgImage = BitmapFactory.decodeFile(String.valueOf(dir) + "/" + fileName);
+         orgImage = BitmapFactory.decodeFile(String.valueOf(dir) + "/" + fileName);
         orgImage2 = BitmapFactory.decodeFile(String.valueOf(dir) + "/" + fileName2);
 
         btn_identify.setOnClickListener(new View.OnClickListener() {
@@ -222,12 +224,55 @@ public class IdentifyActivity extends AppCompatActivity {
             intent.putExtra("personId", person.personId);
             startActivity(intent);
             finish();
-            //new AddFaceTask().execute(person.personId);
+            new AddFaceTask().execute(person.personId);
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
         }
     }
+    class AddFaceTask extends AsyncTask<UUID, String, Boolean> {
 
+
+        @Override
+        protected Boolean doInBackground(UUID... params) {
+            // Get an instance of face service client to detect faces in image.
+            try{
+                UUID personId = params[0];
+
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                orgImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                InputStream imageInputStream = new ByteArrayInputStream(stream.toByteArray());
+
+                ///// 얼굴 고르기 체크
+                FaceRectangle faceRect = result[0].faceRectangle;
+                Log.d("new face", faceRect.toString());
+
+                // Start the request to add face.
+                AddPersistedFaceResult addFaceResult = faceServiceClient.addPersonFace(
+                        personGroupId,
+                        personId,
+                        imageInputStream,
+                        "User data",
+                        faceRect);
+                return true;
+            } catch (Exception e) {
+                publishProgress(e.getMessage());
+                Log.e("add face error", e.toString());
+                return false;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected void onProgressUpdate(String... progress) {
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+        }
+    }
 }

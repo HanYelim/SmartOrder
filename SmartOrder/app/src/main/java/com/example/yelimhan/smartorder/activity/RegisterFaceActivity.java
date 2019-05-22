@@ -52,7 +52,6 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
     private Button cameraButton;
     private Button addPersonBtn;
-    private Button detectPersonBtn;
     private TextView textView;
     private EditText editPersonName;
 
@@ -76,31 +75,31 @@ public class RegisterFaceActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_CAPTURE_IMAGE && resultCode == RESULT_OK)
         {
-             mBitmap = (Bitmap) data.getExtras().get("data");
+            // mBitmap = (Bitmap) data.getExtras().get("data");
 
             ///mBitmap = getBitmapFromUri(imageUri);
-//            textView.setText("등록된 사진이 있습니다.");
-//
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inJustDecodeBounds = true;
-//            try {
-//                InputStream in = new FileInputStream(photoFile);
-//                BitmapFactory.decodeStream(in, null, options);
-//                in.close();
-//                in = null;
-//            } catch ( Exception e ) {
-//                e.printStackTrace();
-//            }
-//
-//            final int width = options.outWidth;
-//            final int height = options.outHeight;
-//
-//            BitmapFactory.Options imgOptions = new BitmapFactory.Options();
-//            imgOptions.inSampleSize = 2;
-//
-//
-//            //mBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), imgOptions);
-//            mBitmap = BitmapFactory.decodeFile(String.valueOf(photoFile));
+            textView.setText("등록된 사진이 있습니다.");
+
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            try {
+                InputStream in = new FileInputStream(photoFile);
+                BitmapFactory.decodeStream(in, null, options);
+                in.close();
+                in = null;
+            } catch ( Exception e ) {
+                e.printStackTrace();
+            }
+
+            final int width = options.outWidth;
+            final int height = options.outHeight;
+
+            BitmapFactory.Options imgOptions = new BitmapFactory.Options();
+            imgOptions.inSampleSize = 2;
+
+
+            //mBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), imgOptions);
+            mBitmap = BitmapFactory.decodeFile(String.valueOf(photoFile));
             iv1.setImageBitmap(mBitmap);
         }
     }
@@ -116,7 +115,6 @@ public class RegisterFaceActivity extends AppCompatActivity {
         //Initlasing the Views
         cameraButton = (Button) findViewById(R.id.camera_open_btn);
         addPersonBtn = (Button) findViewById(R.id.add_person);
-        detectPersonBtn = findViewById(R.id.detect_person);
         editPersonName = (EditText) findViewById(R.id.editpersonname);
         textView = (TextView)findViewById(R.id.check_photo);
         iv1 = findViewById(R.id.testiv);
@@ -125,23 +123,15 @@ public class RegisterFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                //captureCamera();
+                captureCamera();
 
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(intent, RESULT_CAPTURE_IMAGE);
+                // 저화질 기본카메라
+//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                startActivityForResult(intent, RESULT_CAPTURE_IMAGE);
             }
         });
 
-        detectPersonBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                mBitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
-                new detectTask().execute(inputStream);
-            }
-        });
 
         addPersonBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,10 +140,11 @@ public class RegisterFaceActivity extends AppCompatActivity {
                 mBitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
                 ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
+                new detectTask().execute(inputStream);
 
                 // 사람 추가
-                new AddPersonToGroupTask(personGroupId, editPersonName.getText().toString()).execute(inputStream);
-                new TrainingTask(personGroupId).execute(personGroupId);
+//                new AddPersonToGroupTask(personGroupId, editPersonName.getText().toString()).execute(inputStream);
+//                new TrainingTask(personGroupId).execute(personGroupId);
 
 
             }
@@ -212,32 +203,12 @@ public class RegisterFaceActivity extends AppCompatActivity {
         return imageFile;
     }
 
-    /* Uri를 Bitmap으로 쓸 수 있게해준다. */
-    private Bitmap getBitmapFromUri(Uri uri) {
-        ParcelFileDescriptor parcelFileDescriptor = null;
-        try {
-            parcelFileDescriptor =
-                    RegisterFaceActivity.this.getContentResolver().openFileDescriptor(uri, "r");
-            FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-            Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-            parcelFileDescriptor.close();
-            return image;
-        } catch (Exception e) {
-            return null;
-        } finally {
-            try {
-                if (parcelFileDescriptor != null) {
-                    parcelFileDescriptor.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
     class AddPersonToGroupTask extends AsyncTask<InputStream, String, CreatePersonResult> {
 
         private String personGroupId;
         private String personName;
+        private ProgressDialog mDialog = new ProgressDialog(RegisterFaceActivity.this);
 
         public AddPersonToGroupTask(String personGroupId, String personName) {
             this.personGroupId = personGroupId;
@@ -246,12 +217,14 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
+            mDialog.show();
         }
 
         @Override
         protected void onPostExecute(CreatePersonResult person) {
-            Toast.makeText(getApplicationContext(),"등록 완료 : "+ personName + String.valueOf(person.personId),Toast.LENGTH_SHORT).show();
+            mDialog.dismiss();
+
+            Toast.makeText(getApplicationContext(),personName + "님 가입을 환영합니다!", Toast.LENGTH_SHORT).show();
 
 
             String s = String.valueOf(person.personId);
@@ -273,17 +246,24 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
+            mDialog.setMessage(values[0]);
+
         }
 
         @Override
         protected CreatePersonResult doInBackground(InputStream... inputStreams) {
             try {
+                publishProgress("등록중입니다...");
+
                 faceServiceClient.getPersonGroup(personGroupId);
                 CreatePersonResult person = faceServiceClient.createPerson(personGroupId,personName, "");
 
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+                InputStream imageInputStream = new ByteArrayInputStream(stream.toByteArray());
+
                 Log.d("person id : ", person.personId.toString()+"//"+ String.valueOf(result[0].faceRectangle.height));
-                faceServiceClient.addPersonFace(personGroupId,person.personId,inputStreams[0],"persontest",result[0].faceRectangle); ///
+                faceServiceClient.addPersonFace(personGroupId,person.personId,imageInputStream,"persontest",result[0].faceRectangle); ///
 
                 return person;
             } catch (Exception ex) {
@@ -300,7 +280,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
         @Override
         protected Face[] doInBackground(InputStream... inputStreams) {
             try {
-                publishProgress("Detecting...");
+                publishProgress("인식 중입니다...");
                 result = faceServiceClient.detect(inputStreams[0], true, false, null);
                 if(result == null){
                     return null;
@@ -328,20 +308,23 @@ public class RegisterFaceActivity extends AppCompatActivity {
             mDialog.dismiss();
             //facesDetected = faces;
 
-            if(result.length == 0)
-                Toast.makeText(getApplicationContext(),"detect failed" , Toast.LENGTH_SHORT).show();
-            else{
-                Toast.makeText(getApplicationContext(),"detect finished - " +String.valueOf(result.length), Toast.LENGTH_SHORT).show();
-                // 사람 추가
-
+            if(result.length == 0){
+                Toast.makeText(getApplicationContext(),"인식된 얼굴이 업습니다. 다시 촬영해주세요." , Toast.LENGTH_SHORT).show();
 
             }
+            else{
+                //Toast.makeText(getApplicationContext(),"detect finished - " +String.valueOf(result.length), Toast.LENGTH_SHORT).show();
+                // 사람 추가
+                new AddPersonToGroupTask(personGroupId, editPersonName.getText().toString()).execute(inputStream);
+                new TrainingTask(personGroupId).execute(personGroupId);
+
+
+                }
 
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
             mDialog.setMessage(values[0]);
         }
     }
