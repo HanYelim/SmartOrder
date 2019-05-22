@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.MainActivity"
     android:background="#d6d5d4"
+
     android:padding="15dp">
 
     <LinearLayout
@@ -23,6 +24,7 @@
             android:background="@drawable/round"
             android:src="@drawable/click" />
         <TextView
+            android:fontFamily="@font/gyeonggilight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="\n일반 주문하기"
@@ -43,6 +45,7 @@
             android:background="@drawable/round"
             android:src="@drawable/voice" />
         <TextView
+            android:fontFamily="@font/gyeonggilight"
             android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -2,6 +2,7 @@ package com.example.yelimhan.smartorder.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -63,7 +64,9 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         setContentView(R.layout.activity_select_new);
+
         listView = (findViewById(R.id.listView));
 
         favoriteImg = findViewById(R.id.favoriteImg);
@@ -284,7 +287,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
                     break;
             }
             if(same == 10000){
-                oData.get(j).mPrice = String.valueOf((Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(o.mPrice))*o.mCount);
+                oData.get(j).mPrice = String.valueOf((Integer.parseInt(oData.get(j).mPrice)+Integer.parseInt(o.mPrice)*o.mCount));
                 oData.get(j).mCount += o.mCount;
             }
             else{

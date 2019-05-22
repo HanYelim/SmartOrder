@@ -19,6 +19,7 @@
         android:layout_marginBottom="@dimen/view_margin">
 
         <TextView
+                    android:fontFamily="@font/gyeonggilight"
             android:id="@+id/person_group_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,6 +41,7 @@
     </RelativeLayout>
 
     <TextView
+                    android:fontFamily="@font/gyeonggilight"
         android:id="@+id/person_group_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,6 +64,7 @@
         android:gravity="center" />
 
     <TextView
+                    android:fontFamily="@font/gyeonggilight"
         android:id="@id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +79,7 @@
         android:layout_alignParentBottom="true"
         android:orientation="horizontal" >
 
-        <Button
+        <Button             android:fontFamily="@font/gyeonggilight"
             android:id="@+id/add_person"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -86,7 +89,7 @@
             android:onClick="addPerson"
             android:text="@string/add_person" />
 
-        <Button
+        <Button             android:fontFamily="@font/gyeonggilight"
             android:id="@id/done_and_save"
             android:layout_width="0dp"
             android:layout_height="match_parent"

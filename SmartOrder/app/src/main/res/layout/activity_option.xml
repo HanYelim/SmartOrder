@@ -13,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <Button
+        <Button             android:fontFamily="@font/gyeonggilight"
             android:id="@+id/menu"
             android:clickable="false"
             android:layout_width="match_parent"
@@ -38,6 +38,7 @@
                 android:layout_height="0dp"
                 android:orientation="horizontal">
                 <TextView
+                    android:fontFamily="@font/gyeonggilight"
                     android:textColor="#0c0c0c"
                     android:gravity="right"
                     android:layout_weight="1"
@@ -62,6 +63,7 @@
                         android:src="@drawable/btn_minus"
                         android:id="@+id/count_minus"/>
                     <TextView
+                    android:fontFamily="@font/gyeonggilight"
                         android:padding="3dp"
                         android:layout_margin="3dp"
                         android:layout_width="60dp"
@@ -88,6 +90,7 @@
                 android:layout_height="0dp"
                 android:orientation="horizontal">
                 <TextView
+                    android:fontFamily="@font/gyeonggilight"
                     android:textColor="#0c0c0c"
                     android:gravity="right"
                     android:layout_weight="1"
@@ -183,6 +186,7 @@
                 android:layout_height="0dp"
                 android:orientation="horizontal">
                 <TextView
+                    android:fontFamily="@font/gyeonggilight"
                     android:gravity="right"
                     android:textColor="#0c0c0c"
                     android:layout_weight="1"
@@ -251,6 +255,7 @@
                 android:layout_height="0dp"
                 android:orientation="horizontal">
                 <TextView
+                    android:fontFamily="@font/gyeonggilight"
                     android:textColor="#0c0c0c"
                     android:gravity="right"
                     android:layout_weight="1"
@@ -313,7 +318,7 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-        <Button
+        <Button             android:fontFamily="@font/gyeonggilight"
             android:id="@+id/cart"
             android:text="담 기"
             android:layout_width="match_parent"
@@ -336,6 +341,7 @@
         android:orientation="vertical">
 
         <TextView
+                    android:fontFamily="@font/gyeonggilight"
             android:layout_margin="10dp"
             android:gravity="center"
             android:text="주문 목록"
@@ -355,6 +361,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"></LinearLayout>
         <TextView
+                    android:fontFamily="@font/gyeonggilight"
             android:textSize="18sp"
             android:id="@+id/txttotal"
             android:layout_margin="8dp"
@@ -362,7 +369,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <Button
+        <Button             android:fontFamily="@font/gyeonggilight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="결제하기" />

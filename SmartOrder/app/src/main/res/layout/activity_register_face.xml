@@ -24,6 +24,7 @@
 
 
             <TextView
+                    android:fontFamily="@font/gyeonggilight"
                 android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -32,7 +33,7 @@
                 android:text="사진을 촬영해 주세요."
                 android:textSize="25sp"/>
 
-            <Button
+            <Button             android:fontFamily="@font/gyeonggilight"
                 android:id="@+id/camera_open_btn"
                 android:background="#dda287"
                 android:textColor="#ffffff"
@@ -63,6 +64,7 @@
 
         </LinearLayout>
         <TextView
+                    android:fontFamily="@font/gyeonggilight"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.6"
@@ -88,7 +90,7 @@
             android:layout_weight="0"/>
 
 
-        <Button
+        <Button             android:fontFamily="@font/gyeonggilight"
             android:layout_marginTop="10dp"
             android:id="@+id/add_person"
             android:background="#dda287"

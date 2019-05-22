@@ -18,6 +18,7 @@
             android:layout_height="140dp"
             android:src="@drawable/sologo" />
         <TextView
+                    android:fontFamily="@font/gyeonggilight"
             android:layout_marginBottom="10dp"
             android:layout_gravity="bottom"
             android:textSize="40sp"
@@ -40,6 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <TextView
+                    android:fontFamily="@font/gyeonggilight"
                 android:layout_marginBottom="20dp"
                 android:text="1. 먼저 사진을 촬영해주세요."
                 android:textSize="20sp"
@@ -59,11 +61,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <TextView
+                    android:fontFamily="@font/gyeonggilight"
                 android:text="2. 닉네임을 입력해주세요."
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <EditText
+                android:fontFamily="@font/gyeonggilight"
                 android:paddingRight="20dp"
                 android:textSize="25sp"
                 android:id="@+id/editpersonname"
@@ -84,6 +88,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent">
             <TextView
+                android:fontFamily="@font/gyeonggilight"
                 android:gravity="center"
                 android:lineSpacingExtra="7dp"
                 android:padding="10dp"
@@ -92,7 +97,7 @@
                 android:textSize="20sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            <Button
+            <Button             android:fontFamily="@font/gyeonggilight"
                 android:paddingRight="20dp"
                 android:paddingLeft="20dp"
                 android:layout_marginTop="10dp"

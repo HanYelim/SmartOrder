@@ -187,14 +187,54 @@ public class CameraPreview extends ViewGroup implements SurfaceHolder.Callback {
     }
 
     public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
-        if(mCamera != null) {
-            Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
-            requestLayout();
+//        if(mCamera != null) {
+//            Camera.Parameters parameters = mCamera.getParameters();
+//            parameters.setPreviewSize(mPreviewSize.width, mPreviewSize.height);
+//            requestLayout();
+//
+//            mCamera.setParameters(parameters);
+//            mCamera.startPreview();
+//        }
 
-            mCamera.setParameters(parameters);
-            mCamera.startPreview();
+        try {
+            if (mCamera != null) {
+                mCamera.setPreviewDisplay(holder);
+                int m_resWidth;
+                int m_resHeight;
+                m_resWidth = mCamera.getParameters().getPictureSize().width;
+                m_resHeight = mCamera.getParameters().getPictureSize().height;
+                Camera.Parameters parameters = mCamera.getParameters();
+                //아래 숫자를 변경하여 자신이 원하는 해상도로 변경한다
+
+                Log.d("width : ", String.valueOf(m_resWidth));
+                Log.d("height : ", String.valueOf(m_resHeight));
+
+                //m_resWidth = 480;
+                //m_resHeight = 640;
+
+
+                List<Size> allSizes = parameters.getSupportedPictureSizes();
+                Camera.Size size = allSizes.get(0); // get top size
+                for (int i = 0; i < allSizes.size(); i++) {
+                    if(allSizes.get(i).width == 640){
+                        size = allSizes.get(i);
+                        break;
+                    }
+                }
+                parameters.setPictureSize(size.width, size.height);
+
+                Log.d("width : ", String.valueOf(size.width));
+                Log.d("height : ", String.valueOf(size.height));
+
+                requestLayout();
+
+                mCamera.setParameters(parameters);
+                mCamera.startPreview();
+            }
+        } catch (IOException exception) {
+            Log.e(TAG, "IOException caused by setPreviewDisplay()", exception);
         }
     }
+
 
 }

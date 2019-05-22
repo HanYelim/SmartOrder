@@ -17,7 +17,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,31 +77,31 @@ public class RegisterFaceActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_CAPTURE_IMAGE && resultCode == RESULT_OK)
         {
-            // mBitmap = (Bitmap) data.getExtras().get("data");
+             mBitmap = (Bitmap) data.getExtras().get("data");
 
             ///mBitmap = getBitmapFromUri(imageUri);
             //textView.setText("등록된 사진이 있습니다.");
 
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inJustDecodeBounds = true;
-            try {
-                InputStream in = new FileInputStream(photoFile);
-                BitmapFactory.decodeStream(in, null, options);
-                in.close();
-                in = null;
-            } catch ( Exception e ) {
-                e.printStackTrace();
-            }
-
-            final int width = options.outWidth;
-            final int height = options.outHeight;
-
-            BitmapFactory.Options imgOptions = new BitmapFactory.Options();
-            imgOptions.inSampleSize = 2;
-
-
-            //mBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), imgOptions);
-            mBitmap = BitmapFactory.decodeFile(String.valueOf(photoFile));
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inJustDecodeBounds = true;
+//            try {
+//                InputStream in = new FileInputStream(photoFile);
+//                BitmapFactory.decodeStream(in, null, options);
+//                in.close();
+//                in = null;
+//            } catch ( Exception e ) {
+//                e.printStackTrace();
+//            }
+//
+//            final int width = options.outWidth;
+//            final int height = options.outHeight;
+//
+//            BitmapFactory.Options imgOptions = new BitmapFactory.Options();
+//            imgOptions.inSampleSize = 2;
+//
+//
+//            //mBitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath(), imgOptions);
+//            mBitmap = BitmapFactory.decodeFile(String.valueOf(photoFile));
             //iv1.setImageBitmap(mBitmap);
         }
     }
@@ -111,9 +110,12 @@ public class RegisterFaceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_face2);
+
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //Initlasing the Views
         cameraButton = findViewById(R.id.camera_open_btn);
@@ -126,11 +128,11 @@ public class RegisterFaceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                captureCamera();
+          //      captureCamera();
 
                 // 저화질 기본카메라
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                startActivityForResult(intent, RESULT_CAPTURE_IMAGE);
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, RESULT_CAPTURE_IMAGE);
             }
         });
 
@@ -149,9 +151,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
 //                new AddPersonToGroupTask(personGroupId, editPersonName.getText().toString()).execute(inputStream);
 //                new TrainingTask(personGroupId).execute(personGroupId);
 
-                Intent intent = new Intent(RegisterFaceActivity.this, CameraActivity.class);
-                startActivity(intent);
-                finish();
+
 
 
             }
@@ -224,12 +224,12 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            mDialog.show();
+           //mDialog.show();
         }
 
         @Override
         protected void onPostExecute(CreatePersonResult person) {
-            mDialog.dismiss();
+            //mDialog.dismiss();
 
             Toast.makeText(getApplicationContext(),personName + "님 가입을 환영합니다!", Toast.LENGTH_SHORT).show();
 
@@ -248,12 +248,14 @@ public class RegisterFaceActivity extends AppCompatActivity {
                         public void accept(Throwable throwable) {
                         }
                     });
-
+            Intent intent = new Intent(RegisterFaceActivity.this, CameraActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
-            mDialog.setMessage(values[0]);
+           //mDialog.setMessage(values[0]);
 
         }
 
@@ -306,17 +308,16 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            super.onPreExecute();
-            mDialog.show();
+          // mDialog.show();
         }
 
         @Override
         protected void onPostExecute(Face[] faces) {
-            mDialog.dismiss();
+           // mDialog.dismiss();
             //facesDetected = faces;
 
             if(result.length == 0){
-                Toast.makeText(getApplicationContext(),"인식된 얼굴이 업습니다. 다시 촬영해주세요." , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),"인식된 얼굴이 없습니다. 다시 촬영해주세요." , Toast.LENGTH_SHORT).show();
 
             }
             else{
@@ -332,7 +333,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(String... values) {
-            mDialog.setMessage(values[0]);
+           //mDialog.setMessage(values[0]);
         }
     }
 
@@ -348,6 +349,8 @@ public class RegisterFaceActivity extends AppCompatActivity {
         protected void onPostExecute(String string) {
             if (string != null) {
                 Log.d("training" ,  string + " training completed");
+
+
             }
         }
 

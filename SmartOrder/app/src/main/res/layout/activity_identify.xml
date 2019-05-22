@@ -21,7 +21,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="6dp">
 
-        <Button
+        <Button             android:fontFamily="@font/gyeonggilight"
             android:id="@+id/btn_identify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:paddingRight="10dp"
             android:text="얼굴 인식하기" />
 
-        <Button
+        <Button             android:fontFamily="@font/gyeonggilight"
             android:id="@+id/button_reg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

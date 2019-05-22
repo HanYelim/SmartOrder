@@ -54,6 +54,7 @@ public class IdentifyActivity extends AppCompatActivity {
     //ByteArrayInputStream inputStream = null;
 
     Button btn_identify;
+    Button btn_re;
     Bitmap orgImage2;
 
     int i = 0;
@@ -72,42 +73,51 @@ public class IdentifyActivity extends AppCompatActivity {
         url =  getIntent().getIntegerArrayListExtra("url");
 
         btn_identify = findViewById(R.id.btn_identify);
+        btn_re = findViewById(R.id.button_reg);
 
         File sdCard = Environment.getExternalStorageDirectory();
         File dir = new File (sdCard.getAbsolutePath() + "/camtest");
         String fileName = String.format("%d.jpg", url.get(0));
         String fileName2 = String.format("%d.jpg", url.get(1));
 
-         orgImage = BitmapFactory.decodeFile(String.valueOf(dir) + "/" + fileName);
+        orgImage = BitmapFactory.decodeFile(String.valueOf(dir) + "/" + fileName);
         orgImage2 = BitmapFactory.decodeFile(String.valueOf(dir) + "/" + fileName2);
 
         btn_identify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                i = 0;
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 orgImage.compress(Bitmap.CompressFormat.PNG,100,outputStream);
                 ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
                 ByteArrayOutputStream outputStream2 = new ByteArrayOutputStream();
                 orgImage2.compress(Bitmap.CompressFormat.PNG,100,outputStream2);
-                 inputStream2 = new ByteArrayInputStream(outputStream2.toByteArray());
+                inputStream2 = new ByteArrayInputStream(outputStream2.toByteArray());
 
-                ByteArrayOutputStream outputStream3 = new ByteArrayOutputStream();
-                orgImage2.compress(Bitmap.CompressFormat.PNG,100,outputStream3);
 
                 new detectTask().execute(inputStream);
             }
         });
 
+        btn_re.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent;
+                intent = new Intent(getApplicationContext(), CameraActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     class detectTask extends AsyncTask<InputStream, String, Face[]> {
+        private ProgressDialog mDialog = new ProgressDialog(IdentifyActivity.this);
 
         @Override
         protected Face[] doInBackground(InputStream... inputStreams) {
             try {
-                i++;
-                publishProgress("Detecting...");
+                publishProgress("인식중입니다...");
                 result = faceServiceClient.detect(inputStreams[0], true, false, null);
 
                 if(result == null){
@@ -127,43 +137,49 @@ public class IdentifyActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-           // mDialog.show();
+            mDialog.show();
         }
 
         @Override
         protected void onPostExecute(Face[] faces) {
             // mDialog.dismiss();
-            if (result.length == 0){
-                //Toast.makeText(getApplicationContext(), "detect failed  " + String.valueOf(i), Toast.LENGTH_SHORT).show();
+            if(result != null){
+                if (result.length == 0){    // 인식 안됨
+                    //Toast.makeText(getApplicationContext(), "detect failed  " + String.valueOf(i), Toast.LENGTH_SHORT).show();
 
-                if(flag == false){
-                    i++;
-                    new detectTask().execute(inputStream2);
-                    flag = true;
+                    if(flag == false){      // 첫번째
+                        i++;
+                        new detectTask().execute(inputStream2);
+                        flag = true;
+                    }
+                    else{       // 두번째
+                        Toast.makeText(getApplicationContext(), "얼굴이 인식되지 않았습니다. 처음으로 돌아갑니다.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
-                else{
-                    Toast.makeText(getApplicationContext(), "얼굴이 인식되지 않았습니다. 처음으로 돌아갑니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), CameraActivity.class);
-                    startActivity(intent);
-                    finish();
+
+                else{       // detect 성공
+                    //Toast.makeText(getApplicationContext(),"detect finished  "+ String.valueOf(i), Toast.LENGTH_SHORT).show();
+
+
+                    final UUID[] faceIds = new UUID[result.length];
+                    for (int i=0;i<result.length;i++){
+                        faceIds[i] = result[i].faceId;
+                    }
+                    new IdentificationTask(personGroupId).execute(faceIds);
+
+                    Log.d("i : ", String.valueOf(i));
                 }
             }
 
-            else{
-                //Toast.makeText(getApplicationContext(),"detect finished  "+ String.valueOf(i), Toast.LENGTH_SHORT).show();
-
-                final UUID[] faceIds = new UUID[result.length];
-                for (int i=0;i<result.length;i++){
-                    faceIds[i] = result[i].faceId;
-                }
-                new IdentificationTask(personGroupId).execute(faceIds);
-            }
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
-          //  mDialog.setMessage(values[0]);
+            mDialog.setMessage(values[0]);
         }
     }
 
@@ -171,19 +187,19 @@ public class IdentifyActivity extends AppCompatActivity {
         String personGroupId;
         private boolean mSucceed = true;
 
-        //private ProgressDialog mDialog = new ProgressDialog(IdentifyActivity.this);
+        private ProgressDialog mDialog = new ProgressDialog(IdentifyActivity.this);
         public IdentificationTask(String personGroupId) {
             this.personGroupId = personGroupId;
         }
 
         @Override
         protected void onPreExecute() {
-        //    mDialog.show();
+            mDialog.show();
         }
 
         @Override
         protected void onPostExecute(IdentifyResult[] identifyResults) {
-       //     mDialog.dismiss();
+            mDialog.dismiss();
             if(mSucceed){
                 if(identifyResults.length != 0 && identifyResults[0].candidates.size() != 0){
                     Log.d("train complete",String.valueOf(mSucceed));
@@ -262,11 +278,13 @@ public class IdentifyActivity extends AppCompatActivity {
             editor.putString("Customer_ID", person.personId.toString());
             editor.commit();
             Toast.makeText(getApplicationContext(),person.name + " 님", Toast.LENGTH_SHORT).show();
+
+            new AddFaceTask().execute(person.personId);
+
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.putExtra("personId", person.personId);
             startActivity(intent);
             finish();
-            new AddFaceTask().execute(person.personId);
         }
 
         @Override
@@ -284,6 +302,7 @@ public class IdentifyActivity extends AppCompatActivity {
 
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
+                Log.d("test", String.valueOf(i));
                 if(i == 0)
                     orgImage.compress(Bitmap.CompressFormat.JPEG, 100, stream);
                 else if(i ==1)
