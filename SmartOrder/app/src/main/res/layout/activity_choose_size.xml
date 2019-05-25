@@ -26,22 +26,27 @@
             android:layout_weight="4"
             android:layout_width="match_parent"
             android:layout_height="0dp">
+
             <ImageButton
-                android:background="@drawable/round"
-                android:layout_weight="1"
+                android:id="@+id/small"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:id="@+id/small"
-                android:src="@drawable/size_small"
                 android:layout_marginLeft="13dp"
-                android:layout_marginRight="6.5dp"/>
+                android:layout_marginRight="6.5dp"
+                android:padding="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/round"
+                android:scaleType="fitCenter"
+                android:src="@drawable/size_small_img" />
             <ImageButton
                 android:background="@drawable/round"
                 android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:id="@+id/large"
-                android:src="@drawable/size_large"
+                android:src="@drawable/size_large_img"
+                android:scaleType="fitCenter"
+                android:padding="60dp"
                 android:layout_marginLeft="6.5dp"
                 android:layout_marginRight="13dp"/>
         </LinearLayout>
@@ -81,21 +86,20 @@
             android:layout_height="400dp"
             android:scrollbars="vertical"></ListView>
 
+
+        <LinearLayout
+            android:layout_margin="3dp"
+            android:background="#dda287"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"></LinearLayout>
         <TextView
-                    android:fontFamily="@font/gyeonggilight"
+            android:fontFamily="@font/gyeonggilight"
             android:textSize="18sp"
             android:id="@+id/txttotal"
             android:layout_margin="8dp"
             android:text="총 가격: "
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <Button
-            android:fontFamily="@font/gyeonggilight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="결제하기" />
-
 
     </LinearLayout>
 

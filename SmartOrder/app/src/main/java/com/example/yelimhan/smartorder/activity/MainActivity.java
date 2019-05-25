@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         editor.putBoolean("Voice", false);
-        String personId = getIntent().getStringExtra("personId");
+        //String personId = getIntent().getStringExtra("personId");
         editor.commit();
 
 

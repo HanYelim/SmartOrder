@@ -13,13 +13,14 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <Button             android:fontFamily="@font/gyeonggilight"
+        <Button
+            android:fontFamily="@font/gyeonggilight"
             android:clickable="false"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:layout_margin="13dp"
-            android:text="전체 메뉴 보기"
+            android:text=""
             android:textSize="25sp"
             android:background="@drawable/round" />
         <LinearLayout
@@ -68,7 +69,7 @@
         android:orientation="vertical">
 
         <TextView
-                    android:fontFamily="@font/gyeonggilight"
+            android:fontFamily="@font/gyeonggilight"
             android:layout_margin="10dp"
             android:gravity="center"
             android:text="주문 목록"
@@ -84,24 +85,17 @@
 
         <LinearLayout
             android:layout_margin="3dp"
-            android:background="#000000"
+            android:background="#dda287"
             android:layout_width="match_parent"
             android:layout_height="1dp"></LinearLayout>
         <TextView
-                    android:fontFamily="@font/gyeonggilight"
+            android:fontFamily="@font/gyeonggilight"
             android:textSize="18sp"
             android:id="@+id/txttotal"
             android:layout_margin="8dp"
             android:text="총 가격: "
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-
-        <Button             android:fontFamily="@font/gyeonggilight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="결제하기" />
-
-
     </LinearLayout>
 
 

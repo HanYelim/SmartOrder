@@ -34,43 +34,44 @@
         </provider>
 
         <activity android:name=".activity.RegisterFaceActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="sensorLandscape">
+        </activity>
         <activity
             android:name=".activity.VoiceActivity"
-            android:screenOrientation="landscape"
+            android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activity.SpeechActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".activity.MainActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
 
         </activity>
         <activity
             android:name=".activity.SelectActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".activity.ChooseTypeActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".activity.ChooseSizeActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".activity.OptionActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".activity.SubmitActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".activity.OptionVoiceActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".activity.IdentifyActivity"
-            android:screenOrientation="landscape"></activity>
+            android:screenOrientation="sensorLandscape"></activity>
         <activity
             android:name=".activity.CameraActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -78,20 +79,20 @@
             </intent-filter>
         </activity>
         <activity android:name=".persongroupmanagment.PersonActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
         </activity>
         <activity android:name=".persongroupmanagment.SelectImageActivity"
             android:configChanges="screenSize|orientation"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
         </activity>
         <activity android:name=".persongroupmanagment.AddFaceToPersonActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
         </activity>
         <activity android:name=".persongroupmanagment.PersonGroupActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
         </activity>
         <activity android:name=".persongroupmanagment.PersonGroupListActivity"
-            android:screenOrientation="landscape">
+            android:screenOrientation="sensorLandscape">
 
         </activity>
         <uses-library android:name="org.apache.http.legacy" android:required="false" />

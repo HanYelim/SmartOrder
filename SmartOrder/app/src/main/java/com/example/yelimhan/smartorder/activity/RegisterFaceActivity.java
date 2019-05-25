@@ -3,12 +3,9 @@ package com.example.yelimhan.smartorder.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.os.ParcelFileDescriptor;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -114,6 +111,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new
                 StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -141,19 +139,26 @@ public class RegisterFaceActivity extends AppCompatActivity {
         addPersonBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                mBitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
-                ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
+                if(mBitmap == null){
+                    Toast.makeText(getApplicationContext(),"카메라 버튼을 눌러 사진을 찍어주세요",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    if(editPersonName.getText().toString().equals("")){
+                        Toast.makeText(getApplicationContext(),"닉네임을 입력해주세요",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                        mBitmap.compress(Bitmap.CompressFormat.PNG,100,outputStream);
+                        ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
 
-                new detectTask().execute(inputStream);
+                        new detectTask().execute(inputStream);
+                    }
+                }
+
 
                 // 사람 추가
 //                new AddPersonToGroupTask(personGroupId, editPersonName.getText().toString()).execute(inputStream);
 //                new TrainingTask(personGroupId).execute(personGroupId);
-
-
-
-
             }
         });
     }
@@ -224,39 +229,42 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-           //mDialog.show();
+           mDialog.show();
         }
 
         @Override
         protected void onPostExecute(CreatePersonResult person) {
-            //mDialog.dismiss();
+            mDialog.dismiss();
 
-            Toast.makeText(getApplicationContext(),personName + "님 가입을 환영합니다!", Toast.LENGTH_SHORT).show();
+            if(person != null){
+                Toast.makeText(getApplicationContext(),personName + "님 가입을 환영합니다!", Toast.LENGTH_SHORT).show();
 
 
-            String s = String.valueOf(person.personId);
-            insertCustomerDisposable = ApiService.getCUSTOMER_SERVICE().insertCustomer(editPersonName.getText().toString(), s)
-                    .subscribeOn(Schedulers.io()) // 회원가입쓰
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Consumer<BaseResponse>() {
-                        @Override
-                        public void accept(BaseResponse baseResponse) {
-                            Log.d("update", baseResponse.status);
-                        }
-                    }, new Consumer<Throwable>() {
-                        @Override
-                        public void accept(Throwable throwable) {
-                        }
-                    });
-            Intent intent = new Intent(RegisterFaceActivity.this, CameraActivity.class);
-            startActivity(intent);
-            finish();
+                String s = String.valueOf(person.personId);
+                insertCustomerDisposable = ApiService.getCUSTOMER_SERVICE().insertCustomer(editPersonName.getText().toString(), s)
+                        .subscribeOn(Schedulers.io()) // 회원가입쓰
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Consumer<BaseResponse>() {
+                            @Override
+                            public void accept(BaseResponse baseResponse) {
+                                Log.d("update", baseResponse.status);
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable throwable) {
+                            }
+                        });
+
+                Intent intent = new Intent(RegisterFaceActivity.this, CameraActivity.class);
+                startActivity(intent);
+                finish();
+            }
+
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
-           //mDialog.setMessage(values[0]);
-
+           mDialog.setMessage(values[0]);
         }
 
         @Override
@@ -308,12 +316,12 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-          // mDialog.show();
+           mDialog.show();
         }
 
         @Override
         protected void onPostExecute(Face[] faces) {
-           // mDialog.dismiss();
+            mDialog.dismiss();
             //facesDetected = faces;
 
             if(result.length == 0){
@@ -333,7 +341,7 @@ public class RegisterFaceActivity extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(String... values) {
-           //mDialog.setMessage(values[0]);
+           mDialog.setMessage(values[0]);
         }
     }
 
