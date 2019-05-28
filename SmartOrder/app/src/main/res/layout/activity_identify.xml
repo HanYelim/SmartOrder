@@ -21,23 +21,25 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="6dp">
 
-        <Button             android:fontFamily="@font/gyeonggilight"
+        <Button
+            android:fontFamily="@font/gyeonggilight"
             android:id="@+id/btn_identify"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginRight="10dp"
-            android:background="@drawable/gray_round"
+            android:background="@drawable/btn_round"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="얼굴 인식하기" />
 
-        <Button             android:fontFamily="@font/gyeonggilight"
+        <Button
+            android:fontFamily="@font/gyeonggilight"
             android:id="@+id/button_reg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/gray_round"
+            android:background="@drawable/btn_round"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:text="다시 찍기" />

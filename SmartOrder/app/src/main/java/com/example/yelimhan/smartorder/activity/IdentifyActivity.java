@@ -62,6 +62,7 @@ public class IdentifyActivity extends AppCompatActivity {
     Button btn_identify;
     Button btn_re;
     Bitmap orgImage2;
+    int coupon;
 
 
     int i = 0;
@@ -277,6 +278,12 @@ public class IdentifyActivity extends AppCompatActivity {
                             public void accept(Customer customer) throws Exception {
                                 person.name = customer.getNickname();
                                 coupon = customer.getCoupon();
+                                pref = getSharedPreferences("pref", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = pref.edit();
+                                editor.putString("Customer_nickname", person.name);
+                                editor.putString("Customer_ID", String.valueOf(person.personId));
+                                editor.putInt("Customer_coupon", coupon);
+                                editor.commit();
                             }
                         });
 
@@ -284,7 +291,6 @@ public class IdentifyActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString("Customer_nickname", person.name);
                 editor.putString("Customer_ID", String.valueOf(person.personId));
-                editor.putInt("Customer_coupon",coupon);
                 editor.commit();
                 Toast.makeText(getApplicationContext(), person.name + " 님", Toast.LENGTH_LONG).show();
 
