@@ -38,6 +38,7 @@ public class SubmitActivity extends AppCompatActivity {
     Date date;
     SimpleDateFormat sdf = new SimpleDateFormat("yyMMddhhmm");
 
+    int coupon = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,9 @@ public class SubmitActivity extends AppCompatActivity {
             str  = customer_ID + name + type + option + String.valueOf(mindex) + String.valueOf(count) + String.valueOf(price);
             Log.d("str : ", str);
 
+            coupon++;
+            // 쿠폰 customer에 넣기
+
             insertOrderDisposable = ApiService.getMENU_SERVICE().insertOrder(customer_ID, name, size, type, option, mindex, count, price)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
@@ -84,7 +88,7 @@ public class SubmitActivity extends AppCompatActivity {
                         }
                     });
             AlertDialog.Builder ab = new AlertDialog.Builder(SubmitActivity.this);
-            ab.setMessage(Html.fromHtml("주문이 완료되었습니다."));
+            ab.setMessage(Html.fromHtml("주문이 완료되었습니다.")+ "\n쿠폰 개수 : "+ String.valueOf(coupon));
             ab.setPositiveButton("ok", yesButtonClickListener);
             ab.show();
 

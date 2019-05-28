@@ -53,7 +53,7 @@ public class VoiceActivity extends AppCompatActivity {
     List<Menu> all_menu = new ArrayList<>();
     int price;
     OrderItem o, oi;
-    Button button;
+    Button button, re_button;
     ArrayList<String> NNG, VA, XR, VV, NNP, NR, MDN;
     ImageView menu_image;
     GridView grid_all_menu;
@@ -67,6 +67,7 @@ public class VoiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_voice);
         tv = findViewById(R.id.tv);
         button = findViewById(R.id.button);
+        re_button = findViewById(R.id.re_button);
         i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
         i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
@@ -146,6 +147,31 @@ public class VoiceActivity extends AppCompatActivity {
                 reRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
                 reRecognizer.setRecognitionListener(relistener);
                 mRecognizer.startListening(i);
+            }
+        });
+
+        re_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VA.clear();
+                XR.clear();
+                VV.clear();
+                NNP.clear();
+                NR.clear();
+                MDN.clear();
+                NNG.clear();
+
+//                text_linear.setVisibility(View.GONE);
+//                tv.setText("원하시는 메뉴를 말해주세요");
+
+
+                mRecognizer.destroy();
+                reRecognizer.destroy();
+                mRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
+                mRecognizer.setRecognitionListener(listener);
+                reRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
+                reRecognizer.setRecognitionListener(relistener);
+                reRecognizer.startListening(i);
             }
         });
     }

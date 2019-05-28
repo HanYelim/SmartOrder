@@ -58,6 +58,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
     GridView gridView, re_gridView;
     Intent intent, submit_intent;
     OrderItem voiceO;
+    int coupon = 0;
+    TextView tvCoupon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +70,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         setContentView(R.layout.activity_select_new);
 
         listView = (findViewById(R.id.listView));
-
+        tvCoupon = findViewById(R.id.cou_text);
         favoriteImg = findViewById(R.id.favoriteImg);
         favoriteText = findViewById(R.id.favoriteText);
         lastOrderImg[0] = findViewById(R.id.lastOrderImg1);
@@ -100,6 +102,8 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
 
         tvTotal = findViewById(R.id.txttotal);
 
+        /// 쿠폰 받아오기
+        tvCoupon.append(String.valueOf(coupon));
 
         disposable_favorite = ApiService.getMENU_SERVICE().getFavoriteMenu(customer_ID)
                 .subscribeOn(Schedulers.io())

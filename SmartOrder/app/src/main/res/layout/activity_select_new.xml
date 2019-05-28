@@ -30,19 +30,36 @@
                 android:layout_marginBottom="5dp"
                 android:orientation="vertical"
                 android:weightSum="6">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
                 <TextView
                     android:fontFamily="@font/gyeonggilight"
                     android:textColor="@color/colorBlack"
                     android:layout_marginTop="10dp"
                     android:gravity="center_vertical"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:id="@+id/select_view_text"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="한예림 님을 위한 추천 메뉴"
                     android:textSize="17sp"
                     android:paddingLeft="20dp"/>
+                    <TextView
+                        android:fontFamily="@font/gyeonggilight"
+                        android:textColor="@color/colorBlack"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="70dp"
+                        android:gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/cou_text"
+                        android:text="현재 쿠폰 개수: "
+                        android:textSize="17sp"
+                        android:paddingLeft="20dp"/>
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -76,15 +76,27 @@
             </LinearLayout>
 
         </LinearLayout>
-
-        <Button             android:fontFamily="@font/gyeonggilight"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+        <Button
+            android:fontFamily="@font/gyeonggilight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/round"
             android:layout_gravity="center"
-            android:text="다시 말하기"
+            android:text="처음부터 말하기"
             android:id="@+id/button"/>
 
+        <Button
+            android:fontFamily="@font/gyeonggilight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round"
+            android:id="@+id/re_button"
+            android:text="다시 말하기"/>
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
