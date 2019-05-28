@@ -651,6 +651,6 @@ public class VoiceActivity extends AppCompatActivity {
         }
         text_linear.setVisibility(View.VISIBLE);
 
-        Toast.makeText(this, o.mName+" "+o.mTemp +" " +o.mSize + " " + o.mCount, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, o.mName+" "+o.mTemp +" " +o.mSize + " " + o.mCount, Toast.LENGTH_SHORT).show();
     }
 }

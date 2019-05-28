@@ -50,6 +50,7 @@ public class SubmitActivity extends AppCompatActivity {
         SharedPreferences pref = getSharedPreferences("pref", MODE_PRIVATE);
         String customer_nickname = pref.getString("Customer_nickname", "");
         String customer_ID = pref.getString("Customer_ID", "");
+        coupon = pref.getInt("Customer_coupon",0);
         String option, type, size, mCustomer, name;
         int count, price, mindex;
         mNow = System.currentTimeMillis();
@@ -59,6 +60,9 @@ public class SubmitActivity extends AppCompatActivity {
 
 
         String str = "";
+
+        coupon++;
+
         for(int i = 0; i < oData.size(); i++){
             name = oData.get(i).mName;
             size = oData.get(i).mSize;
@@ -70,7 +74,6 @@ public class SubmitActivity extends AppCompatActivity {
             str  = customer_ID + name + type + option + String.valueOf(mindex) + String.valueOf(count) + String.valueOf(price);
             Log.d("str : ", str);
 
-            coupon++;
             // 쿠폰 customer에 넣기
 
             insertOrderDisposable = ApiService.getMENU_SERVICE().insertOrder(customer_ID, name, size, type, option, mindex, count, price)
