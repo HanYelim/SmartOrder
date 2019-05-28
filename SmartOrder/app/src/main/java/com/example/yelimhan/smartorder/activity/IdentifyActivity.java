@@ -71,6 +71,7 @@ public class IdentifyActivity extends AppCompatActivity {
     Bitmap orgImage = null;
     Boolean flag = false;
     ProgressDialog mDialog;
+    int coupon=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -275,7 +276,7 @@ public class IdentifyActivity extends AppCompatActivity {
                             @Override
                             public void accept(Customer customer) throws Exception {
                                 person.name = customer.getNickname();
-
+                                coupon = customer.getCoupon();
                             }
                         });
 
@@ -283,6 +284,7 @@ public class IdentifyActivity extends AppCompatActivity {
                 SharedPreferences.Editor editor = pref.edit();
                 editor.putString("Customer_nickname", person.name);
                 editor.putString("Customer_ID", String.valueOf(person.personId));
+                editor.putInt("Customer_coupon",coupon);
                 editor.commit();
                 Toast.makeText(getApplicationContext(), person.name + " 님", Toast.LENGTH_LONG).show();
 

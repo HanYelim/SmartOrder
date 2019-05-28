@@ -57,11 +57,6 @@
         <activity
             android:name=".activity.ChooseSizeActivity"
             android:screenOrientation="sensorLandscape">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".activity.OptionActivity"
@@ -78,6 +73,11 @@
         <activity
             android:name=".activity.CameraActivity"
             android:screenOrientation="sensorLandscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity android:name=".persongroupmanagment.PersonActivity"

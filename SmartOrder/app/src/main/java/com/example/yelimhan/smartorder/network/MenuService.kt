@@ -27,6 +27,7 @@ fun getFavoriteMenu(@Query("mCustomer") name: String): Observable<Menu>
                              @Field("option") option: String,
                              @Field("mindex") mindex: Int,
                              @Field("count") count: Int,
-                             @Field("price") price: Int): Observable<BaseResponse>
+                             @Field("price") price: Int,
+                             @Field("coupon") coupon: Int): Observable<BaseResponse>
 
 }

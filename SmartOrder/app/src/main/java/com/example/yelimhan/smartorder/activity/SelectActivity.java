@@ -90,6 +90,7 @@ public class SelectActivity extends AppCompatActivity implements ListAdapter.Lis
         boolean flag = pref.getBoolean("Voice", false);
         String customer_nickname = pref.getString("Customer_nickname", "");
         String customer_ID = pref.getString("Customer_ID", "");
+        coupon = pref.getInt("Customer_coupon",0);
         Log.d("customer nick : ", customer_nickname);
         Log.d("customer id : ", customer_ID);
         select_text.setText(customer_nickname + " 님을 위한 추천 메뉴");
