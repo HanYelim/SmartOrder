@@ -61,7 +61,6 @@ public class SubmitActivity extends AppCompatActivity {
 
         String str = "";
 
-        coupon++;
 
         for(int i = 0; i < oData.size(); i++){
             name = oData.get(i).mName;
@@ -75,6 +74,7 @@ public class SubmitActivity extends AppCompatActivity {
             Log.d("str : ", str);
 
             // 쿠폰 customer에 넣기
+            coupon++;
 
             insertOrderDisposable = ApiService.getMENU_SERVICE().insertOrder(customer_ID, name, size, type, option, mindex, count, price, coupon)
                     .subscribeOn(Schedulers.io())

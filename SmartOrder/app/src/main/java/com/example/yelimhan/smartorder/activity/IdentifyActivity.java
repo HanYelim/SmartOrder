@@ -62,7 +62,6 @@ public class IdentifyActivity extends AppCompatActivity {
     Button btn_identify;
     Button btn_re;
     Bitmap orgImage2;
-    int coupon;
 
 
     int i = 0;
