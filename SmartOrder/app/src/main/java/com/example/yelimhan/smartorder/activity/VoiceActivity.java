@@ -140,13 +140,20 @@ public class VoiceActivity extends AppCompatActivity {
                 text_temp.setText("");
                 text_size.setText("");
 
-                mRecognizer.destroy();
-                reRecognizer.destroy();
+                //mRecognizer.destroy();
+                //reRecognizer.destroy();
+                mRecognizer.stopListening();
+                reRecognizer.stopListening();
+
                 mRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
                 mRecognizer.setRecognitionListener(listener);
                 reRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
                 reRecognizer.setRecognitionListener(relistener);
                 mRecognizer.startListening(i);
+
+                Log.d("button mr",String.valueOf(mRecognizer.isRecognitionAvailable(getApplicationContext())));
+                Log.d("button mr",String.valueOf(reRecognizer.isRecognitionAvailable(getApplicationContext())));
+
             }
         });
 
@@ -165,13 +172,24 @@ public class VoiceActivity extends AppCompatActivity {
 //                tv.setText("원하시는 메뉴를 말해주세요");
 
 
-                mRecognizer.destroy();
-                reRecognizer.destroy();
-                mRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
-                mRecognizer.setRecognitionListener(listener);
-                reRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
-                reRecognizer.setRecognitionListener(relistener);
-                reRecognizer.startListening(i);
+//                mRecognizer.destroy();
+//                reRecognizer.destroy();
+//                mRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
+//                mRecognizer.setRecognitionListener(listener);
+//                reRecognizer = SpeechRecognizer.createSpeechRecognizer(getApplicationContext());
+//                reRecognizer.setRecognitionListener(relistener);
+                Log.d("rebutton mr",String.valueOf(mRecognizer.isRecognitionAvailable(getApplicationContext())));
+                Log.d("rebutton mr",String.valueOf(reRecognizer.isRecognitionAvailable(getApplicationContext())));
+
+                if(o.mName.equals("")){
+                    mRecognizer.stopListening();
+                    mRecognizer.startListening(i);
+
+                }
+                else{
+                    reRecognizer.stopListening();
+                    reRecognizer.startListening(i);
+                }
             }
         });
     }
